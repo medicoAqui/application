@@ -1,0 +1,24 @@
+{
+  "name": "server-medicoaqui",
+  "version": "1.0.0",
+  "description": "serviço aplicado ao app medico aqui , api do sistema",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "bernard lenin",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "cors": "^2.8.4",
+    "express": "^4.16.3",
+    "jsonwebtoken": "^8.2.1",
+    "mongodb": "^3.0.7",
+    "mongoose": "^5.0.17",
+    "monk": "^6.0.5",
+    "morgan": "^1.9.0",
+    "npm": "^6.0.0",
+    "router": "^1.3.2",
+    "update": "^0.7.4"
+  }
+}
