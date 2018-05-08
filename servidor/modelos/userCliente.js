@@ -25,7 +25,8 @@ var usuarioSchema = new Schema({
 	},
 	cpf:{
 		type:Number,
-		required: true
+		required: true,
+		unique:true
 	},
 	estadoCivil:{
 		type:String,

@@ -12,7 +12,8 @@ var medicoSchema = new Schema({
 	},
 	cpf:{
 		type:Number,
-		required:true
+		required:true,
+		unique:true
 	},
 	sexo:{
 		type:String,
@@ -21,6 +22,11 @@ var medicoSchema = new Schema({
 	especialização:{
 		type:String,
 		required:true
+	},
+	regsitro:{
+		type:String,
+		required:true,
+		unique:true
 	}
 },{strict:false});
 
