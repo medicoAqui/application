@@ -5,6 +5,8 @@ var UserCliente = require('../modelos/userCliente');
 var jwt = require('jsonwebtoken');
 var bctryp = require('bcryptjs');
 var config = require('../config');
+var checarToken = require('./checarToken');
+
 
 
 router.post('/register', function(req, res) {
@@ -42,7 +44,7 @@ router.get('/logout', function(req, res) {
     res.status(200).send({ auth: false, token: null });
 });
 
-router.get('/me', VerifyToken, function(req, res, next) {
+router.get('/me', checarToken, function(req, res, next) {
 
     User.findById(req.userId, { password: 0 }, function (err, user) {
         if (err) return res.status(500).send("There was a problem finding the user.");
@@ -55,5 +57,7 @@ router.get('/me', VerifyToken, function(req, res, next) {
 
 router.use(bodyParser.urlencoded({ extended: false }));
 router.use(bodyParser.json());
+
+module.exports = router;
 
 

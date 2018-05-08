@@ -13,6 +13,7 @@ var app = express();
 
 var rotaCliente = require('./rotas/cliente');
 var rotaMedico = require('./rotas/medico');
+var rotaAcesso = require('./rotas/acesso');
 
 app.use(cors());
 app.use(morgan('dev'));
@@ -30,6 +31,7 @@ app.use(bodyParser.json());
 
 app.use('/cliente',rotaCliente)
 app.use('/medico',rotaMedico);
+app.use('/auth', rotaAcesso);
 
 
 app.set('superSecret', config.secret);
