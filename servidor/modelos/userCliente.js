@@ -3,12 +3,8 @@ var Schema = mongoose.Schema;
 
 
 var usuarioSchema = new Schema({
-	nome: {
+	name:{
 		type:String,
-		required: true
-	},
-	dataNascimento:{
-		type:Date,
 		required:true
 	},
 	email:{
@@ -19,25 +15,21 @@ var usuarioSchema = new Schema({
 		type:String,
 		required: true
 	},
-	tefefone:{
-		type:String,
-		required:true
-	},
-	cpf:{
-		type:Number,
-		required: true,
-		unique:true
-	},
-	estadoCivil:{
-		type:String,
-		required: true,
-	},
+	cpf: {
+        type: Number,
+        required:true,
+        unique: true
+    },
 	password:{
 		type:String,
 		required:true
-	}
+	},
+    telefone:{
+	    type:String,
+        required:true
+    }
 
-},{ strict: false });
+});
 
 var usuario = mongoose.model('Usuario',usuarioSchema);
 

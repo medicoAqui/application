@@ -26,8 +26,9 @@ mongoose.connect('mongodb://localhost:27017/medicoAqui',function(err,db){
   }
 });
 
-app.use(bodyParser.urlencoded({extended: true}))
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}))
+
 
 app.use('/cliente',rotaCliente)
 app.use('/medico',rotaMedico);

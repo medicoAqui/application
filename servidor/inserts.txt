@@ -1,0 +1,2 @@
+{nome:"joze da silv", dataNascimento:"05071990", email:"joze123@gmail.com", sexo:"M", telefone:"99999999",cpf:"1471451457",estadoCivil:"casado",password:"12345678"}
+

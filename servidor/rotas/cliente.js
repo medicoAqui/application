@@ -2,7 +2,7 @@ var express = require('express');
 var usuarioRouter =  express.Router();
 var Usuario = require('../modelos/userCliente.js');
 
-var checarToken = require('../rotas/checarToken');
+//var checarToken = require('../rotas/checarToken');
 
 
 usuarioRouter.use(function(req, res, next) {
@@ -15,18 +15,27 @@ usuarioRouter.use(function(req, res, next) {
 });
 
 // define the home page route
-usuarioRouter.get('/', function(req, res) {
-  res.send('pega dados do cliente');
+usuarioRouter.get('/clientes', function(req, res) {
+    var clientes = Usuario.find({});
+    clientes.exec(function(err, data) {
+        if (err) {
+            res.sendStatus(500);
+        } else {
+            res.json(data);
+        }
+    });
 });
 
 
 
-usuarioRouter.post('', function(req,res){
+usuarioRouter.post('/add', function(req,res){
 	var novoUsuario = new Usuario(req.body);
 
 	novoUsuario.save(function(err, data) {
+        console.log(novoUsuario);
 
-		console.log(data);
+
+        console.log(data);
 
 		if (err) {
 			res.status(400).json(err);

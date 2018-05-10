@@ -1,9 +1,9 @@
 var express = require('express');
 var router = express.Router();
 var bodyParser = require('body-parser');
-var UserCliente = require('../modelos/userCliente');
+var UserCliente = require('../modelos/userCliente.js');
 var jwt = require('jsonwebtoken');
-var bctryp = require('bcryptjs');
+var bcrypt = require('bcryptjs');
 var config = require('../config');
 var checarToken = require('./checarToken');
 
@@ -15,7 +15,11 @@ router.post('/register', function(req, res) {
 
 
     UserCliente.create((req.body),
+
         function (err, user) {
+            console.log(user.nome);
+            console.log(user.cpf);
+            console.log(user.password);
             if (err) return res.status(500).send("There was a problem registering the user.")
             // create a token
             var token = jwt.sign({ id: user._id }, config.secret, {
