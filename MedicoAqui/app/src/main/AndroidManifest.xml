@@ -21,10 +21,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".TelaCadastro" />
         <activity
             android:name=".TelaLogin"
-            android:label="@string/title_activity_tela_login"></activity>
+            android:label= "Login" />
+        <activity
+            android:name=".TelaCadastro"
+            android:label = "Cadastro"/>
     </application>
 
 </manifest>

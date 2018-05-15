@@ -14,4 +14,12 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+    <!-- String to cadastro -->
+    <string-array name="lista_sexo">
+        <item>Masculino</item>
+        <item>Feminino</item>
+    </string-array>
+    <string name="title_activity_tela_cadastro">TelaCadastro</string>
+    <string name="title_activity_tela">Tela</string>
+
 </resources>
