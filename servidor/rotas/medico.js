@@ -18,10 +18,11 @@ medicoRouter.get('/', function(req, res) {
 
 
 
-medicoRouter.post('', function(req,res){
+medicoRouter.post('/add', function(req,res){
 	var novoMedico = new Medico(req.body);
 
 	novoMedico.save(function(err, data) {
+		console.log(novoMedico);
 
 		console.log(data);
 

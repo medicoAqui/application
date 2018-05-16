@@ -19,16 +19,16 @@ var medicoSchema = new Schema({
 		type:String,
 		required:true
 	},
-	especialização:{
+	especializacao:{
 		type:String,
 		required:true
 	},
-	regsitro:{
+	registro:{
 		type:String,
 		required:true,
 		unique:true
 	}
-},{strict:false});
+});
 
 var medico = mongoose.model('Medico',medicoSchema);
 
