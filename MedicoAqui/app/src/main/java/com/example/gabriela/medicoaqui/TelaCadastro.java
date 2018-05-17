@@ -1,13 +1,7 @@
 package com.example.gabriela.medicoaqui;
 
-
-import android.app.ProgressDialog;
-import android.content.Intent;
-import android.os.AsyncTask;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -15,16 +9,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
+import com.example.gabriela.medicoaqui.WebClient;
 
-import okhttp3.ResponseBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import java.io.IOException;
 
 
 public class TelaCadastro extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
-
+    private WebClient jsonT;
     // Declaring names of variables
     EditText input_nome;
     EditText input_sobrenome;
@@ -32,10 +24,6 @@ public class TelaCadastro extends AppCompatActivity implements AdapterView.OnIte
     EditText input_cpf;
     EditText input_password;
     EditText input_telefone;
-    Cadastro cadastro = new Cadastro();
-    ProgressDialog progress;
-    Button botaoCadastrar;
-    Spinner spinSexo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,9 +33,8 @@ public class TelaCadastro extends AppCompatActivity implements AdapterView.OnIte
         // Getting the instance of Spinner0
         // Declaring Button Cadastro
 
-        spinSexo = findViewById(R.id.spinner);
-        botaoCadastrar = (Button) findViewById(R.id.button_tela_cadastro);
-        listenersButtons();
+        final Spinner spinSexo = findViewById(R.id.spinner);
+        Button botaoCadastrar = (Button) findViewById(R.id.button_tela_cadastro);
         botaoCadastrar.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -67,6 +54,14 @@ public class TelaCadastro extends AppCompatActivity implements AdapterView.OnIte
                 String password = input_password.getText().toString();
                 String telefone = input_telefone.getText().toString();
                 String sexo = (String) spinSexo.getSelectedItem();
+
+                String json = "{nome:nome, email:email, cpf:cpf, password:password, telefone:telefone, sexo:sexo}";
+
+                try {
+                    jsonT.post(json);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
 
             }
 
@@ -91,100 +86,6 @@ public class TelaCadastro extends AppCompatActivity implements AdapterView.OnIte
 // TODO Auto-generated method stub
 
     }
-
-    /**
-     * Chama os listeners para os botões
-     */
-    public void listenersButtons() {
-        botaoCadastrar = (Button) findViewById(R.id.button_tela_cadastro);
-        botaoCadastrar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                input_nome = findViewById(R.id.Text_Nome);
-                input_sobrenome = findViewById(R.id.Text_Sobrenome);
-                input_email = findViewById(R.id.Text_Email);
-                input_cpf = findViewById(R.id.Text_CPF);
-                input_password = findViewById(R.id.Text_Pass);
-                input_telefone = findViewById(R.id.Text_Telefone);
-                spinSexo = findViewById(R.id.spinner);
-
-                String nome = input_nome.getText().toString();
-                String sobrenome = input_sobrenome.getText().toString();
-                String email = input_email.getText().toString();
-                String cpf = input_cpf.getText().toString();
-                String password = input_password.getText().toString();
-                String telefone = input_telefone.getText().toString();
-                String sexo = (String) spinSexo.getSelectedItem();
-
-
-                //chama o retrofit para fazer a requisição no webservice
-                retrofitConverter(nome, email, cpf, password, telefone, sexo);
-
-            }
-        });
-    }
-
-
-    public void retrofitConverter(String nome, String email, String cpf, String password, String telefone, String sexo) {
-
-        RetrofitService service = ServiceGenerator.createService(RetrofitService.class);
-
-        Call<Cadastro> call = service.converterUnidade(nome, email, cpf, password, telefone, sexo);
-
-        call.enqueue(new Callback<Cadastro>() {
-            @Override
-            public void onResponse(Call<Cadastro> call, Response<Cadastro> response) {
-
-                if (response.isSuccessful()) {
-
-                    Cadastro Cadastro = response.body();
-
-                    //verifica aqui se o corpo da resposta não é nulo
-                    if (Cadastro != null) {
-
-                        if((Cadastro.getName() != null) && (Cadastro.getEmail() != null)
-                            && (Cadastro.getCpf() != null) && (Cadastro.getPassword() != null)
-                             && (Cadastro.getTelefone() != null) && (Cadastro.getSexo() != null)) {
-
-                            cadastro.setName(Cadastro.getName());
-                            cadastro.setEmail(Cadastro.getEmail());
-                            cadastro.setCpf(Cadastro.getCpf());
-                            cadastro.setPassword(Cadastro.getPassword());
-                            cadastro.setTelefone(Cadastro.getTelefone());
-                            cadastro.setSexo(Cadastro.getSexo());
-
-                            progress.dismiss();
-
-                        } else{
-
-                            Toast.makeText(getApplicationContext(),"Insira unidade e valores válidos", Toast.LENGTH_SHORT).show();
-                        }
-
-                    } else {
-
-                        Toast.makeText(getApplicationContext(),"Resposta nula do servidor", Toast.LENGTH_SHORT).show();
-                    }
-
-                } else {
-
-                    Toast.makeText(getApplicationContext(),"Resposta não foi sucesso", Toast.LENGTH_SHORT).show();
-                    // segura os erros de requisição
-                    ResponseBody errorBody = response.errorBody();
-                }
-
-                progress.dismiss();
-            }
-
-            @Override
-            public void onFailure(Call<Cadastro> call, Throwable t) {
-
-                Toast.makeText(getApplicationContext(),"Erro na chamada ao servidor", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-    }
-}
 
 /*    private void attemptLogin() {
         if (mAuthTask != null) {
@@ -244,3 +145,4 @@ public class TelaCadastro extends AppCompatActivity implements AdapterView.OnIte
     } */
 
 
+}
