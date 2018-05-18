@@ -1,7 +1,9 @@
 package com.example.gabriela.medicoaqui;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -9,14 +11,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
-import com.example.gabriela.medicoaqui.WebClient;
-
+import org.json.*;
 import java.io.IOException;
 
 
-public class TelaCadastro extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class TelaCadastro extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
 
-    private WebClient jsonT;
+    private WebClient jsonT = new WebClient();
+    private JSONObject jsonTT = new JSONObject();
     // Declaring names of variables
     EditText input_nome;
     EditText input_sobrenome;
@@ -24,6 +26,8 @@ public class TelaCadastro extends AppCompatActivity implements AdapterView.OnIte
     EditText input_cpf;
     EditText input_password;
     EditText input_telefone;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +38,7 @@ public class TelaCadastro extends AppCompatActivity implements AdapterView.OnIte
         // Declaring Button Cadastro
 
         final Spinner spinSexo = findViewById(R.id.spinner);
-        Button botaoCadastrar = (Button) findViewById(R.id.button_tela_cadastro);
+        Button botaoCadastrar = /*(Button)*/ findViewById(R.id.button_tela_cadastro);
         botaoCadastrar.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -55,11 +59,25 @@ public class TelaCadastro extends AppCompatActivity implements AdapterView.OnIte
                 String telefone = input_telefone.getText().toString();
                 String sexo = (String) spinSexo.getSelectedItem();
 
-                String json = "{nome:nome, email:email, cpf:cpf, password:password, telefone:telefone, sexo:sexo}";
+                Intent it = new Intent(TelaCadastro.this, TelaPrincipal.class);
+                startActivity(it);
+
+
 
                 try {
-                    jsonT.post(json);
+                    jsonTT.put("nome", nome);
+                    jsonTT.put("email", email);
+                    jsonTT.put("cpf", cpf);
+                    jsonTT.put("password", password);
+                    jsonTT.put("telefone", telefone);
+                    jsonTT.put("sexo", sexo);
+
+                    jsonT.post(jsonTT.toString());
+                    Log.d("Json:", jsonTT.toString());
+
                 } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
                     e.printStackTrace();
                 }
 

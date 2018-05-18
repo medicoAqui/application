@@ -21,5 +21,8 @@
     </string-array>
     <string name="title_activity_tela_cadastro">TelaCadastro</string>
     <string name="title_activity_tela">Tela</string>
+    <string name="title_activity_tela_continuacao">Login</string>
+    <string name="logout">LOGOUT</string>
+    <string name="voc_est_logado">VOCÊ ESTÁ LOGADO.</string>
 
 </resources>
