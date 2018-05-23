@@ -16,6 +16,7 @@
     </string>
     <!-- String to cadastro -->
     <string-array name="lista_sexo">
+        <item></item>
         <item>Masculino</item>
         <item>Feminino</item>
     </string-array>
