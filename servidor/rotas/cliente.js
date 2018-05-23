@@ -32,8 +32,6 @@ usuarioRouter.post('/add', function(req,res){
 	var novoUsuario = new Usuario(req.body);
 
 	novoUsuario.save(function(err, data) {
-        console.log(novoUsuario);
-
 
         console.log(data);
 

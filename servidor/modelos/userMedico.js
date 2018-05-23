@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var medicoSchema = new Schema({
-	nome:{
+	name:{
 		type:String,
 		required:true
 	},
@@ -19,16 +19,16 @@ var medicoSchema = new Schema({
 		type:String,
 		required:true
 	},
-	especialização:{
+	especializacao:{
 		type:String,
 		required:true
 	},
-	regsitro:{
+	registro:{
 		type:String,
 		required:true,
 		unique:true
 	}
-},{strict:false});
+});
 
 var medico = mongoose.model('Medico',medicoSchema);
 

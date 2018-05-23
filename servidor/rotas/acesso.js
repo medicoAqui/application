@@ -1,17 +1,20 @@
 var express = require('express');
 var router = express.Router();
-var bodyParser = require('body-parser');
 var UserCliente = require('../modelos/userCliente.js');
 var jwt = require('jsonwebtoken');
-var app = express();
 var config = require('../config');
 
+var app = express();
 
 router.post('/authenticate', function(req, res) {
 
     UserCliente.findOne({cpf: req.body.cpf}, function (err, user) {
         console.log(req.body.cpf );
         console.log(user);
+        console.log(user.cpf);
+
+        var to = jwt.sign(user.cpf, 'shhhhh');
+         console.log(to);
 
         if (err) {
             throw err;
@@ -27,9 +30,9 @@ router.post('/authenticate', function(req, res) {
             } else {
 
                 // cria o token
-                var token = jwt.sign(user, 'schotpilgrim', {
-                    expiresIn: 86400 // expires in 24 hours
-                });
+                console.log('aqui é o config  '+ config.secret);
+                var token = jwt.sign(user.cpf, config.secret);
+                console.log(token);
 
                 res.json({
                     usuario: user,

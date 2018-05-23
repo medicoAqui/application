@@ -1,6 +1,7 @@
 module.exports = {
 
 	'secret': 'schotpilgrimm',
-	'database': 'mongodb://localhost:27017/medicoAqui'
+	'database': 'mongodb://localhost:27017/medicoAqui',
+	'jwtsession':{session:false}
 
 };
