@@ -37,7 +37,10 @@ public class TelaCadastro extends AppCompatActivity implements AdapterView.OnIte
     // Henrique Autenticacao - 24/05 - INICIO
     private static final String TAG = "EmailPassword";
     private FirebaseAuth mAuth;
+    boolean sucessoCadastro;
     // Henrique Autenticacao - 24/05 - FIM
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +48,7 @@ public class TelaCadastro extends AppCompatActivity implements AdapterView.OnIte
         setContentView(R.layout.activity_tela_cadastro);
         // Henrique Autenticacao - 24/05 - INICIO
         mAuth = FirebaseAuth.getInstance();
+        sucessoCadastro= false;
         // Henrique Autenticacao - 24/05 - FIM
 
         final Spinner spinSexo = findViewById(R.id.spinner);                     // Getting the instance of Spinner
@@ -59,7 +63,6 @@ public class TelaCadastro extends AppCompatActivity implements AdapterView.OnIte
 
                 final android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(TelaCadastro.this);
                 builder.setTitle("Inserindo usuário");
-
 
                 if(cadastroIsValid(nome, email, cpf, password, telefone, sexo)) {
 
@@ -76,42 +79,36 @@ public class TelaCadastro extends AppCompatActivity implements AdapterView.OnIte
                                             public void onComplete(@NonNull Task<AuthResult> task) {
                                                 if (task.isSuccessful()) {
                                                     // Sign in success, update UI with the signed-in user's information
+                                                    sucessoCadastro = true;
                                                     Log.d(TAG, "createUserWithEmail:success");
                                                     FirebaseUser user = mAuth.getCurrentUser();
 
-                                                    builder.setMessage("Cadastro efetuado com sucesso!");
-                                                    android.app.AlertDialog dialog = builder.create();
-                                                    dialog.show();
                                                 } else {
                                                     // If sign in fails, display a message to the user.
+                                                    sucessoCadastro = false;
                                                     Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                                                    Toast.makeText(TelaCadastro.this, "Authentication failed.",
-                                                            Toast.LENGTH_SHORT).show();
-                                                    builder.setMessage("Falha ao efetuar o cadastro de usuário");
-                                                    android.app.AlertDialog dialog = builder.create();
-                                                    dialog.show();
+                                                    Toast.makeText(TelaCadastro.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
                                                 }
                                             }
                                         });
                                 // Henrique Autenticacao - 24/05 - FIM
 
-                                new Thread(new Runnable(){
-                                    @Override
-                                    public void run() {
-                                        try {
-                                            http.sendPost("http://medicoishere.herokuapp.com/cliente/add", jsonTT.toString());
-                                        } catch (HttpConnections.MinhaException e) {
-                                            e.printStackTrace();
+                                if (sucessoCadastro) {
+                                    new Thread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            try {
+                                                http.sendPost("http://medicoishere.herokuapp.com/cliente/add", jsonTT.toString());
+                                            } catch (HttpConnections.MinhaException e) {
+                                                e.printStackTrace();
+                                            }
                                         }
-                                    }
-                                }).start();
+                                    }).start();
+                                }
 
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
-
-                            Intent it = new Intent(TelaCadastro.this, TelaPrincipal.class);
-                            startActivity(it);
 
                         } else {
                             builder.setMessage("O número de telefone é inválido.");
@@ -125,8 +122,22 @@ public class TelaCadastro extends AppCompatActivity implements AdapterView.OnIte
                     builder.setMessage("Não é permitido campos em branco.");
                     android.app.AlertDialog dialog = builder.create();
                     dialog.show();}
+
+                if (sucessoCadastro){
+                    builder.setMessage("Cadastro efetuado com sucesso");
+                    Intent it = new Intent(TelaCadastro.this, TelaPrincipal.class);
+                    startActivity(it);
+                }else{
+                    builder.setMessage("Ocorreu uma falha ao efetuar seu cadastro, verifique se já não possui um cadastro");
+                }
+                android.app.AlertDialog dialog2 = builder.create();
+                dialog2.show();
+
+
+
             }
         });
+
 
         //Creating the ArrayAdapter instance having the bank name list
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.lista_sexo, android.R.layout.simple_spinner_item);
