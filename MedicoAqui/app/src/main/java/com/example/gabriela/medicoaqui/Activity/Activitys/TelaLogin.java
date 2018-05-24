@@ -3,6 +3,7 @@ package com.example.gabriela.medicoaqui.Activity.Activitys;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
@@ -113,23 +114,38 @@ public class TelaLogin extends AppCompatActivity implements LoaderCallbacks<Curs
             }
         });
 
+
         Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 // Henrique Autenticacao - 24/05 - INICIO
-                mAuth.signInWithEmailAndPassword(mEmailView.getText().toString(), mPasswordView.getText().toString()).addOnCompleteListener(TelaLogin.this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
+                // 1. Instantiate an AlertDialog.Builder with its constructor
+                final AlertDialog.Builder builder = new AlertDialog.Builder(TelaLogin.this);
+                builder.setTitle("Falha de autenticação");
 
-                        if (!task.isSuccessful()) {
-                            Log.w("AUTH", "Falha ao efetuar o Login: ", task.getException());
-                        }else{
-                            Log.d("AUTH", "Login Efetuado com sucesso!!!");
-                            attemptLogin();
+                if ( !("".equals(mEmailView.getText().toString()) || "".equals(mPasswordView.getText().toString()))) {
+                    mAuth.signInWithEmailAndPassword(mEmailView.getText().toString(), mPasswordView.getText().toString()).addOnCompleteListener(TelaLogin.this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+
+                            if (!task.isSuccessful()) {
+                                Log.w("AUTH", "Falha ao efetuar o Login: ", task.getException());
+                                builder.setMessage("Falha ao efetuar o Login, favor verificar email e senha");
+                                AlertDialog dialog = builder.create();
+                                dialog.show();
+                            } else {
+                                Log.d("AUTH", "Login Efetuado com sucesso!!!");
+                                attemptLogin();
+                            }
                         }
-                    }
-                });
+                    });
+                }
+                else{
+                    builder.setMessage("Favor insira os dados de email e senha");
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+                }
                 // Henrique Autenticacao - 24/05 - FIM
             }
         });
