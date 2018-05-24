@@ -57,13 +57,17 @@ public class TelaCadastro extends AppCompatActivity implements AdapterView.OnIte
                 findInputs();                                                    // Find inputs by id
                 setStrings(spinSexo);                                            // Set inputs in Strings
 
+                final android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(TelaCadastro.this);
+                builder.setTitle("Inserindo usuário");
+
+
                 if(cadastroIsValid(nome, email, cpf, password, telefone, sexo)) {
+
                     if(email.contains("@") && (email.contains(".com") || email.contains(".br") || email.contains(".org"))){
                         if(telefone.length() == 11 || telefone.length() == 10){
 
                             try {
                                 setValuesToJson();                               // Fill JSON Object
-
 
                                 // Henrique Autenticacao - 24/05 - INICIO
                                 mAuth.createUserWithEmailAndPassword(email, password)
@@ -74,11 +78,18 @@ public class TelaCadastro extends AppCompatActivity implements AdapterView.OnIte
                                                     // Sign in success, update UI with the signed-in user's information
                                                     Log.d(TAG, "createUserWithEmail:success");
                                                     FirebaseUser user = mAuth.getCurrentUser();
+
+                                                    builder.setMessage("Cadastro efetuado com sucesso!");
+                                                    android.app.AlertDialog dialog = builder.create();
+                                                    dialog.show();
                                                 } else {
                                                     // If sign in fails, display a message to the user.
                                                     Log.w(TAG, "createUserWithEmail:failure", task.getException());
                                                     Toast.makeText(TelaCadastro.this, "Authentication failed.",
                                                             Toast.LENGTH_SHORT).show();
+                                                    builder.setMessage("Falha ao efetuar o cadastro de usuário");
+                                                    android.app.AlertDialog dialog = builder.create();
+                                                    dialog.show();
                                                 }
                                             }
                                         });
@@ -99,13 +110,21 @@ public class TelaCadastro extends AppCompatActivity implements AdapterView.OnIte
                                 e.printStackTrace();
                             }
 
-                            showMessage("Cadastro efetuado com sucesso!");
                             Intent it = new Intent(TelaCadastro.this, TelaPrincipal.class);
                             startActivity(it);
 
-                        } else { showMessage("O número de telefone é inválido."); }
-                    } else { showMessage("O e-mail é inválido."); }
-                } else { showMessage("Não é permitido campos em branco."); }
+                        } else {
+                            builder.setMessage("O número de telefone é inválido.");
+                            android.app.AlertDialog dialog = builder.create();
+                            dialog.show();}
+                    } else {
+                        builder.setMessage("O e-mail é inválido.");
+                        android.app.AlertDialog dialog = builder.create();
+                        dialog.show(); }
+                } else {
+                    builder.setMessage("Não é permitido campos em branco.");
+                    android.app.AlertDialog dialog = builder.create();
+                    dialog.show();}
             }
         });
 
