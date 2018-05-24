@@ -2,11 +2,18 @@ package com.example.gabriela.medicoaqui.Activity.Activitys;
 
 import com.example.gabriela.medicoaqui.Activity.Service.HttpConnections;
 import com.example.gabriela.medicoaqui.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
+import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -16,6 +23,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 import org.json.*;
 
+import java.io.IOException;
 
 public class TelaCadastro extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
@@ -26,12 +34,18 @@ public class TelaCadastro extends AppCompatActivity implements AdapterView.OnIte
     EditText input_nome, input_sobrenome, input_email, input_cpf, input_password, input_telefone;
     String nome, sobrenome, email, cpf, password, telefone, sexo;
 
+    // Henrique Autenticacao - 24/05 - INICIO
+    private static final String TAG = "EmailPassword";
+    private FirebaseAuth mAuth;
+    // Henrique Autenticacao - 24/05 - FIM
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tela_cadastro);
-
+        // Henrique Autenticacao - 24/05 - INICIO
+        mAuth = FirebaseAuth.getInstance();
+        // Henrique Autenticacao - 24/05 - FIM
 
         final Spinner spinSexo = findViewById(R.id.spinner);                     // Getting the instance of Spinner
         Button botaoCadastrar = findViewById(R.id.button_tela_cadastro);         // Declaring Button Cadastro
@@ -48,8 +62,27 @@ public class TelaCadastro extends AppCompatActivity implements AdapterView.OnIte
                         if(telefone.length() == 11 || telefone.length() == 10){
 
                             try {
-
                                 setValuesToJson();                               // Fill JSON Object
+
+
+                                // Henrique Autenticacao - 24/05 - INICIO
+                                mAuth.createUserWithEmailAndPassword(email, password)
+                                        .addOnCompleteListener(TelaCadastro.this, new OnCompleteListener<AuthResult>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                                if (task.isSuccessful()) {
+                                                    // Sign in success, update UI with the signed-in user's information
+                                                    Log.d(TAG, "createUserWithEmail:success");
+                                                    FirebaseUser user = mAuth.getCurrentUser();
+                                                } else {
+                                                    // If sign in fails, display a message to the user.
+                                                    Log.w(TAG, "createUserWithEmail:failure", task.getException());
+                                                    Toast.makeText(TelaCadastro.this, "Authentication failed.",
+                                                            Toast.LENGTH_SHORT).show();
+                                                }
+                                            }
+                                        });
+                                // Henrique Autenticacao - 24/05 - FIM
 
                                 new Thread(new Runnable(){
                                     @Override
@@ -141,7 +174,5 @@ public class TelaCadastro extends AppCompatActivity implements AdapterView.OnIte
     public boolean isNotEmpty(String texto){
         return !(texto.isEmpty());
     }
-
-
 
 }
