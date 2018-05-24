@@ -15,18 +15,25 @@ import android.widget.Spinner;
 import android.widget.Toast;
 import org.json.*;
 
+import java.io.IOException;
+
 
 public class TelaCadastro extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
-    private WebClient jsonT = new WebClient();
+    //private static HttpConnections http = new HttpConnections();
     private JSONObject jsonTT = new JSONObject();
+
+
     // Declaring names of variables
+
     EditText input_nome;
     EditText input_sobrenome;
     EditText input_email;
     EditText input_cpf;
     EditText input_password;
     EditText input_telefone;
+
+    private static HttpConnections http = new HttpConnections();
 
 
 
@@ -58,11 +65,38 @@ public class TelaCadastro extends AppCompatActivity implements AdapterView.OnIte
                 String telefone = input_telefone.getText().toString();
                 String sexo = (String) spinSexo.getSelectedItem();
 
-                nome.isEmpty();
-
                 if(cadastroIsValid(nome, email, cpf, password, telefone, sexo)) {
                     if(email.contains("@")){
                         if(telefone.length() == 11 || telefone.length() == 10){
+
+                            try {
+                                jsonTT.put("name", nome);
+                                jsonTT.put("email", email);
+                                jsonTT.put("sexo", sexo);
+                                jsonTT.put("cpf", cpf);
+                                jsonTT.put("password", password);
+                                jsonTT.put("telefone", telefone);
+
+                                new Thread(new Runnable(){
+                                    @Override
+                                    public void run() {
+                                        try {
+                                            http.sendPost("http://medicoishere.herokuapp.com/cliente/add", jsonTT.toString());
+                                        } catch (HttpConnections.MinhaException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                }).start();
+
+
+                                //http.sendPost("http://medicoishere.herokuapp.com/cliente/add", jsonTT.toString());
+
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            } /*catch (HttpConnections.MinhaException e) {
+                                e.printStackTrace();
+                            }*/
 
                             Intent it = new Intent(TelaCadastro.this, TelaPrincipal.class);
                             startActivity(it);
@@ -78,23 +112,6 @@ public class TelaCadastro extends AppCompatActivity implements AdapterView.OnIte
                 }
 
 
-
-                /*try {
-                    jsonTT.put("nome", nome);
-                    jsonTT.put("email", email);
-                    jsonTT.put("cpf", cpf);
-                    jsonTT.put("password", password);
-                    jsonTT.put("telefone", telefone);
-                    jsonTT.put("sexo", sexo);
-
-                    jsonT.post(jsonTT.toString());
-                    Log.d("Json:", jsonTT.toString());
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                } */
 
             }
 
@@ -137,6 +154,7 @@ public class TelaCadastro extends AppCompatActivity implements AdapterView.OnIte
     public boolean isNotEmpty(String texto){
         return !(texto.isEmpty());
     }
+
 
 
 }
