@@ -1,4 +1,4 @@
-package com.example.gabriela.medicoaqui.Activity;
+package com.example.gabriela.medicoaqui.Activity.Activitys;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;

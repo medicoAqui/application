@@ -668,10 +668,20 @@
             ]
         },
         {
-            "outputFile": "C:\\Users\\Gabriela\\AndroidStudioProjects\\MedicoAqui\\app\\build\\intermediates\\res\\merged\\debug\\values-pt-rPT_values-pt-rPT.arsc.flat",
+            "outputFile": "C:\\Users\\Gabriela\\AndroidStudioProjects\\MedicoAqui\\app\\build\\intermediates\\res\\merged\\debug\\values-da_values-da.arsc.flat",
             "map": [
                 {
-                    "source": "C:\\Users\\Gabriela\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-27.1.1.aar\\2a86ef7619d1188ed3f89f4b58ea3180\\res\\values-pt-rPT\\values-pt-rPT.xml",
+                    "source": "C:\\Users\\Gabriela\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-27.1.1.aar\\7fe150a5847e0c68f4a2456879df0d31\\res\\values-da\\values-da.xml",
+                    "from": {
+                        "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "105,208,307,419,502,602,715,792,869,948,1057,1165,1261,1375,1477,1578,1731,1828",
+                        "endColumns": "102,98,111,82,99,112,76,76,78,108,107,95,113,101,100,152,96,78",
+                        "endOffsets": "203,302,414,497,597,710,787,864,943,1052,1160,1256,1370,1472,1573,1726,1823,1902"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\Gabriela\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-27.1.1.aar\\2a86ef7619d1188ed3f89f4b58ea3180\\res\\values-da\\values-da.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",
@@ -682,19 +692,9 @@
                     "to": {
                         "startLines": "20",
                         "startColumns": "4",
-                        "startOffsets": "2002",
+                        "startOffsets": "1907",
                         "endColumns": "100",
-                        "endOffsets": "2098"
-                    }
-                },
-                {
-                    "source": "C:\\Users\\Gabriela\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-27.1.1.aar\\7fe150a5847e0c68f4a2456879df0d31\\res\\values-pt-rPT\\values-pt-rPT.xml",
-                    "from": {
-                        "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19",
-                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
-                        "startOffsets": "105,225,331,438,527,628,752,836,917,1004,1111,1223,1325,1433,1540,1647,1818,1917",
-                        "endColumns": "119,105,106,88,100,123,83,80,86,106,111,101,107,106,106,170,98,84",
-                        "endOffsets": "220,326,433,522,623,747,831,912,999,1106,1218,1320,1428,1535,1642,1813,1912,1997"
+                        "endOffsets": "2003"
                     }
                 }
             ]
@@ -732,20 +732,10 @@
             ]
         },
         {
-            "outputFile": "C:\\Users\\Gabriela\\AndroidStudioProjects\\MedicoAqui\\app\\build\\intermediates\\res\\merged\\debug\\values-da_values-da.arsc.flat",
+            "outputFile": "C:\\Users\\Gabriela\\AndroidStudioProjects\\MedicoAqui\\app\\build\\intermediates\\res\\merged\\debug\\values-pt-rPT_values-pt-rPT.arsc.flat",
             "map": [
                 {
-                    "source": "C:\\Users\\Gabriela\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-27.1.1.aar\\7fe150a5847e0c68f4a2456879df0d31\\res\\values-da\\values-da.xml",
-                    "from": {
-                        "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19",
-                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
-                        "startOffsets": "105,208,307,419,502,602,715,792,869,948,1057,1165,1261,1375,1477,1578,1731,1828",
-                        "endColumns": "102,98,111,82,99,112,76,76,78,108,107,95,113,101,100,152,96,78",
-                        "endOffsets": "203,302,414,497,597,710,787,864,943,1052,1160,1256,1370,1472,1573,1726,1823,1902"
-                    }
-                },
-                {
-                    "source": "C:\\Users\\Gabriela\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-27.1.1.aar\\2a86ef7619d1188ed3f89f4b58ea3180\\res\\values-da\\values-da.xml",
+                    "source": "C:\\Users\\Gabriela\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-27.1.1.aar\\2a86ef7619d1188ed3f89f4b58ea3180\\res\\values-pt-rPT\\values-pt-rPT.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",
@@ -756,9 +746,19 @@
                     "to": {
                         "startLines": "20",
                         "startColumns": "4",
-                        "startOffsets": "1907",
+                        "startOffsets": "2002",
                         "endColumns": "100",
-                        "endOffsets": "2003"
+                        "endOffsets": "2098"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\Gabriela\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-27.1.1.aar\\7fe150a5847e0c68f4a2456879df0d31\\res\\values-pt-rPT\\values-pt-rPT.xml",
+                    "from": {
+                        "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "105,225,331,438,527,628,752,836,917,1004,1111,1223,1325,1433,1540,1647,1818,1917",
+                        "endColumns": "119,105,106,88,100,123,83,80,86,106,111,101,107,106,106,170,98,84",
+                        "endOffsets": "220,326,433,522,623,747,831,912,999,1106,1218,1320,1428,1535,1642,1813,1912,1997"
                     }
                 }
             ]
@@ -1196,38 +1196,6 @@
             ]
         },
         {
-            "outputFile": "C:\\Users\\Gabriela\\AndroidStudioProjects\\MedicoAqui\\app\\build\\intermediates\\res\\merged\\debug\\values-uk_values-uk.arsc.flat",
-            "map": [
-                {
-                    "source": "C:\\Users\\Gabriela\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-27.1.1.aar\\2a86ef7619d1188ed3f89f4b58ea3180\\res\\values-uk\\values-uk.xml",
-                    "from": {
-                        "startLines": "2",
-                        "startColumns": "4",
-                        "startOffsets": "55",
-                        "endColumns": "100",
-                        "endOffsets": "151"
-                    },
-                    "to": {
-                        "startLines": "20",
-                        "startColumns": "4",
-                        "startOffsets": "1960",
-                        "endColumns": "100",
-                        "endOffsets": "2056"
-                    }
-                },
-                {
-                    "source": "C:\\Users\\Gabriela\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-27.1.1.aar\\7fe150a5847e0c68f4a2456879df0d31\\res\\values-uk\\values-uk.xml",
-                    "from": {
-                        "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19",
-                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
-                        "startOffsets": "105,215,317,423,509,617,735,814,894,975,1081,1188,1286,1394,1500,1609,1779,1879",
-                        "endColumns": "109,101,105,85,107,117,78,79,80,105,106,97,107,105,108,169,99,80",
-                        "endOffsets": "210,312,418,504,612,730,809,889,970,1076,1183,1281,1389,1495,1604,1774,1874,1955"
-                    }
-                }
-            ]
-        },
-        {
             "outputFile": "C:\\Users\\Gabriela\\AndroidStudioProjects\\MedicoAqui\\app\\build\\intermediates\\res\\merged\\debug\\values-vi_values-vi.arsc.flat",
             "map": [
                 {
@@ -1255,6 +1223,38 @@
                         "startOffsets": "105,219,327,436,520,623,742,819,896,980,1084,1193,1294,1399,1513,1618,1775,1874",
                         "endColumns": "113,107,108,83,102,118,76,76,83,103,108,100,104,113,104,156,98,83",
                         "endOffsets": "214,322,431,515,618,737,814,891,975,1079,1188,1289,1394,1508,1613,1770,1869,1953"
+                    }
+                }
+            ]
+        },
+        {
+            "outputFile": "C:\\Users\\Gabriela\\AndroidStudioProjects\\MedicoAqui\\app\\build\\intermediates\\res\\merged\\debug\\values-uk_values-uk.arsc.flat",
+            "map": [
+                {
+                    "source": "C:\\Users\\Gabriela\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-27.1.1.aar\\2a86ef7619d1188ed3f89f4b58ea3180\\res\\values-uk\\values-uk.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "100",
+                        "endOffsets": "151"
+                    },
+                    "to": {
+                        "startLines": "20",
+                        "startColumns": "4",
+                        "startOffsets": "1960",
+                        "endColumns": "100",
+                        "endOffsets": "2056"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\Gabriela\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-27.1.1.aar\\7fe150a5847e0c68f4a2456879df0d31\\res\\values-uk\\values-uk.xml",
+                    "from": {
+                        "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "105,215,317,423,509,617,735,814,894,975,1081,1188,1286,1394,1500,1609,1779,1879",
+                        "endColumns": "109,101,105,85,107,117,78,79,80,105,106,97,107,105,108,169,99,80",
+                        "endOffsets": "210,312,418,504,612,730,809,889,970,1076,1183,1281,1389,1495,1604,1774,1874,1955"
                     }
                 }
             ]

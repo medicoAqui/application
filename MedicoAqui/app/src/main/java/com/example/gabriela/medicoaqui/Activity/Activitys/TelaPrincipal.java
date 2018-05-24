@@ -1,4 +1,4 @@
-package com.example.gabriela.medicoaqui.Activity;
+package com.example.gabriela.medicoaqui.Activity.Activitys;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;

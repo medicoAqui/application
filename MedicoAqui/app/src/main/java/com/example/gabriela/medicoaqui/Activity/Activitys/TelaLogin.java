@@ -1,4 +1,4 @@
-package com.example.gabriela.medicoaqui.Activity;
+package com.example.gabriela.medicoaqui.Activity.Activitys;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;

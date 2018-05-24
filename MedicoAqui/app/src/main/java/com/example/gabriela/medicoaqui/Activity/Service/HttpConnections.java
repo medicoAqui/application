@@ -1,4 +1,4 @@
-package com.example.gabriela.medicoaqui.Activity;
+package com.example.gabriela.medicoaqui.Activity.Service;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -13,9 +13,9 @@ import org.json.*;
 
 
 public class HttpConnections {
-	
-	
-	
+
+
+
 
  //m�todo get
 public static String get(String urlString){
@@ -111,10 +111,3 @@ public static class MinhaException extends Exception {
 
 
 }
-
-
-//String resposta = HttpConnections.get(" http://rate-exchange-1.appspot.com/currency?from=EUR&to=DKK");
-//JSONObject obj = new JSONObject(resposta);
-//String to = obj.getString("to");
-//Double rate = obj.getDouble("rate");
-//String from = obj.getString("from");
