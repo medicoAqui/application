@@ -1,8 +1,9 @@
-package com.example.gabriela.medicoaqui;
+package com.example.gabriela.medicoaqui.Activity.Activitys;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -19,6 +20,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -28,6 +30,13 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import com.example.gabriela.medicoaqui.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,9 +71,31 @@ public class TelaLogin extends AppCompatActivity implements LoaderCallbacks<Curs
     private View mProgressView;
     private View mLoginFormView;
 
+    // Henrique Autenticacao - 24/05 - INICIO
+    private FirebaseAuth mAuth;
+    private FirebaseAuth.AuthStateListener mAuthListener;
+    // Henrique Autenticacao - 24/05 - FIM
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
+        // Henrique Autenticacao - 24/05 - INICIO
+        mAuth = FirebaseAuth.getInstance();
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                if (user != null) {
+                    Log.d("AUTH", "onAuthStateChanged:signed_in:" + user.getUid());
+                } else {
+                    Log.d("AUTH", "onAuthStateChanged:signed_out");
+                }
+
+            }
+        };
+        // Henrique Autenticacao - 24/05 - FIM
+
         setContentView(R.layout.activity_tela_login);
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
@@ -75,7 +106,7 @@ public class TelaLogin extends AppCompatActivity implements LoaderCallbacks<Curs
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
                 if (id == EditorInfo.IME_ACTION_DONE || id == EditorInfo.IME_NULL) {
-                    attemptLogin();
+                    //attemptLogin();
                     return true;
                 }
                 return false;
@@ -86,13 +117,43 @@ public class TelaLogin extends AppCompatActivity implements LoaderCallbacks<Curs
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                attemptLogin();
+                // Henrique Autenticacao - 24/05 - INICIO
+                mAuth.signInWithEmailAndPassword(mEmailView.getText().toString(), mPasswordView.getText().toString()).addOnCompleteListener(TelaLogin.this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+
+                        if (!task.isSuccessful()) {
+                            Log.w("AUTH", "Falha ao efetuar o Login: ", task.getException());
+                        }else{
+                            Log.d("AUTH", "Login Efetuado com sucesso!!!");
+                            attemptLogin();
+                        }
+                    }
+                });
+                // Henrique Autenticacao - 24/05 - FIM
             }
         });
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
     }
+
+    // Henrique Autenticacao - 24/05 - INICIO
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        mAuth.addAuthStateListener(mAuthListener);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (mAuthListener != null) {
+            mAuth.removeAuthStateListener(mAuthListener);
+        }
+    }
+    // Henrique Autenticacao - 24/05 - FIM
 
     private void populateAutoComplete() {
         if (!mayRequestContacts()) {
@@ -187,6 +248,9 @@ public class TelaLogin extends AppCompatActivity implements LoaderCallbacks<Curs
             showProgress(true);
             mAuthTask = new UserLoginTask(email, password);
             mAuthTask.execute((Void) null);
+            Intent sendIntent = new Intent(this, MedicoAqui.class);
+            sendIntent.putExtra(Intent.EXTRA_TEXT, "test");
+            startActivity(sendIntent);
         }
     }
 
