@@ -37,7 +37,6 @@ public class TelaCadastro extends AppCompatActivity implements AdapterView.OnIte
     // Henrique Autenticacao - 24/05 - INICIO
     private static final String TAG = "EmailPassword";
     private FirebaseAuth mAuth;
-    boolean sucessoCadastro;
     // Henrique Autenticacao - 24/05 - FIM
 
 
@@ -48,9 +47,7 @@ public class TelaCadastro extends AppCompatActivity implements AdapterView.OnIte
         setContentView(R.layout.activity_tela_cadastro);
         // Henrique Autenticacao - 24/05 - INICIO
         mAuth = FirebaseAuth.getInstance();
-        sucessoCadastro= false;
         // Henrique Autenticacao - 24/05 - FIM
-
         final Spinner spinSexo = findViewById(R.id.spinner);                     // Getting the instance of Spinner
         Button botaoCadastrar = findViewById(R.id.button_tela_cadastro);         // Declaring Button Cadastro
         botaoCadastrar.setOnClickListener(new View.OnClickListener() {
@@ -79,13 +76,11 @@ public class TelaCadastro extends AppCompatActivity implements AdapterView.OnIte
                                             public void onComplete(@NonNull Task<AuthResult> task) {
                                                 if (task.isSuccessful()) {
                                                     // Sign in success, update UI with the signed-in user's information
-                                                    sucessoCadastro = true;
                                                     Log.d(TAG, "createUserWithEmail:success");
                                                     FirebaseUser user = mAuth.getCurrentUser();
 
                                                 } else {
                                                     // If sign in fails, display a message to the user.
-                                                    sucessoCadastro = false;
                                                     Log.w(TAG, "createUserWithEmail:failure", task.getException());
                                                     Toast.makeText(TelaCadastro.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
                                                 }
@@ -93,7 +88,6 @@ public class TelaCadastro extends AppCompatActivity implements AdapterView.OnIte
                                         });
                                 // Henrique Autenticacao - 24/05 - FIM
 
-                                if (sucessoCadastro) {
                                     new Thread(new Runnable() {
                                         @Override
                                         public void run() {
@@ -104,7 +98,6 @@ public class TelaCadastro extends AppCompatActivity implements AdapterView.OnIte
                                             }
                                         }
                                     }).start();
-                                }
 
                             } catch (JSONException e) {
                                 e.printStackTrace();
@@ -123,17 +116,8 @@ public class TelaCadastro extends AppCompatActivity implements AdapterView.OnIte
                     android.app.AlertDialog dialog = builder.create();
                     dialog.show();}
 
-                if (sucessoCadastro){
-                    builder.setMessage("Cadastro efetuado com sucesso");
                     Intent it = new Intent(TelaCadastro.this, TelaPrincipal.class);
                     startActivity(it);
-                }else{
-                    builder.setMessage("Ocorreu uma falha ao efetuar seu cadastro, verifique se já não possui um cadastro");
-                }
-                android.app.AlertDialog dialog2 = builder.create();
-                dialog2.show();
-
-
 
             }
         });
