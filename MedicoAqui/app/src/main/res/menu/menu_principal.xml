@@ -3,6 +3,8 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <item android:id="@+id/visualizar_perfil"
+        android:title="Visualizar Perfil"/>
     <item android:id="@+id/visualizar_historico"
         android:title="Visualizar Histórico" />
     <item android:id="@+id/marcar_consulta"

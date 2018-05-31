@@ -45,6 +45,11 @@ public class MedicoAqui extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.visualizar_perfil:
+                Intent sendIntentPerfil = new Intent(this, VisualizarPerfil.class);
+                Log.e("visualizarPerfil", "visualizarPerfil");
+                startActivity(sendIntentPerfil);
+                return true;
             case R.id.visualizar_historico:
                 Intent sendIntent = new Intent(this, VisualizarHistorico.class);
                 Log.e("visualizar", "visualizar");
