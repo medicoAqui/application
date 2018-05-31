@@ -44,7 +44,11 @@
         <activity
             android:name=".Activity.Activitys.VisualizarHistorico"
             android:label="@string/title_activity_visualizar_historico"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".Activity.Activitys.MarcarConsultaActivity"
+            android:label="@string/title_activity_marcar_consulta" />
+        <activity android:name=".Activity.Activitys.PerguntasFrequentesActivity"
+            android:label="@string/title_activity_perguntas_frequentes" />
     </application>
 
 </manifest>

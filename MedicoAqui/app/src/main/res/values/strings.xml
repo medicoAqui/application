@@ -1,18 +1,17 @@
 <resources>
     <string name="app_name">MedicoAqui</string>
-    <string name="title_activity_tela_login">Sign in</string>
+    <string name="title_activity_tela_login">Entrar</string>
 
     <!-- Strings related to login -->
-    <string name="prompt_email">Email</string>
-    <string name="prompt_password">Password</string>
-    <string name="action_sign_in">Sign in</string>
-    <string name="action_sign_in_short">Sign in</string>
-    <string name="error_invalid_email">This email address is invalid</string>
-    <string name="error_invalid_password">This password is too short</string>
-    <string name="error_incorrect_password">This password is incorrect</string>
-    <string name="error_field_required">This field is required</string>
-    <string name="permission_rationale">"Contacts permissions are needed for providing email
-        completions."
+    <string name="prompt_email">E-mail</string>
+    <string name="prompt_password">Senha</string>
+    <string name="action_sign_in">Entrar</string>
+    <string name="action_sign_in_short">Entrar</string>
+    <string name="error_invalid_email">E-mail inválido</string>
+    <string name="error_invalid_password">Senha muito curta</string>
+    <string name="error_incorrect_password">Senha incorreta</string>
+    <string name="error_field_required">Campo obrigatório</string>
+    <string name="permission_rationale">"Para sugerir o e-mail é necessário que autorize a visualização dos contatos."
     </string>
     <!-- String to cadastro -->
     <string-array name="lista_sexo">
@@ -20,12 +19,14 @@
         <item>Masculino</item>
         <item>Feminino</item>
     </string-array>
-    <string name="title_activity_tela_cadastro">TelaCadastro</string>
+    <string name="title_activity_tela_cadastro">Cadastro</string>
     <string name="title_activity_tela">Tela</string>
-    <string name="title_activity_lista_de_consultas">ListaDeConsultas</string>
-    <string name="title_activity_visualizar_historico">VisualizarHistorico</string>
+    <string name="title_activity_lista_de_consultas">Lista de Consultas</string>
+    <string name="title_activity_visualizar_historico">Visualizar Historico</string>
+    <string name="title_activity_marcar_consulta">Marcar Consulta</string>
+    <string name="title_activity_perguntas_frequentes">Perguntas Frequentes</string>
     <string name="title_activity_tela_continuacao">Login</string>
-    <string name="logout">LOGOUT</string>
+    <string name="logout">SAIR</string>
     <string name="voc_est_logado">VOCÊ ESTÁ LOGADO.</string>
 
 </resources>
