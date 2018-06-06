@@ -1,6 +1,7 @@
-var express = require('express');
+﻿var express = require('express');
 var medicoRouter =  express.Router();
 var Medico = require('../modelos/userMedico.js');
+var Consulta = require('../modelos/consulta');
 
 medicoRouter.use(function(req, res, next) {
 
@@ -13,7 +14,15 @@ medicoRouter.use(function(req, res, next) {
 
 // define the home page route
 medicoRouter.get('/medicos', function(req, res) {
-  res.send('pega dados do medico');
+  var medico = Medico.find({});
+
+  medico.exec(function(err,data){
+  	if(err){
+  		res.sendStatus(500);
+  	}else{
+  		res.json(data);
+  	}
+  });
 });
 
 
@@ -49,6 +58,26 @@ medicoRouter.delete('/:id', function(req,res){
 			res.json(data);
 		}
 	});
+
+});
+
+medicoRouter.post('/consulta',function(req,res){
+	
+	var consulta = new Consulta(req.body);
+
+	consulta.save(function(err, data) {
+		console.log(consulta);
+
+		console.log(data);
+
+		if (err) {
+			res.status(400).json(err);
+		} else {
+				res.status(201).json(data);
+			}
+
+	});
+		
 
 });
 

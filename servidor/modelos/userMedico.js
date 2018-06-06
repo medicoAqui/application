@@ -23,7 +23,7 @@ var medicoSchema = new Schema({
 		type:String,
 		required:true
 	},
-	registro:{
+	rcm:{
 		type:String,
 		required:true,
 		unique:true
