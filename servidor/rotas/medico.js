@@ -81,4 +81,35 @@ medicoRouter.post('/consulta',function(req,res){
 
 });
 
+medicoRouter.put('/consulta/update', function(req,res){
+	res.send('att a consulta');
+});
+
+medicoRouter.put('/update/:id',function(req,res){
+	var idMedico = {_id: req.params.id};
+	var corpo = req.body;
+
+	Medico.update(idMedico,corpo, function(err,data){
+		if(err){
+			res.status(400).json(err);
+		}else{
+			res.json(data);
+		}
+	})
+
+});
+/*
+filmeRouter.put('/:id', function(req, res) {
+  	var idFilme = { _id: req.params.id };
+	var modelo = req.body;
+
+	Filme.update(idFilme, modelo, function(err, data) {
+		if (err) {
+			return res.status(400).json(err);
+		}
+		res.json(modelo);
+	});
+});
+*/
+
 module.exports = medicoRouter;
