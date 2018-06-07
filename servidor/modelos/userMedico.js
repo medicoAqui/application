@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var medicoSchema = new Schema({
-	nome:{
+	name:{
 		type:String,
 		required:true
 	},
@@ -23,7 +23,7 @@ var medicoSchema = new Schema({
 		type:String,
 		required:true
 	},
-	registro:{
+	rcm:{
 		type:String,
 		required:true,
 		unique:true

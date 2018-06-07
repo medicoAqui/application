@@ -1,0 +1,48 @@
+///////// urls  /////////////
+principal == http://medicoishere.herokuapp.com
+login == http://medicoishere.herokuapp.com/auth/authenticate
+        exemplo de entrada  {
+ "cpf": 9223432312,"password": "1234567"
+}
+
+        saida {
+"usuario": {
+"_id": "5afd8d4516c41a0004ad5680",
+                          "name": "joao da silva",
+                         "email": "joao@gmail.com",
+                          "sexo": "masculino",
+                           "cpf": 9223432312,
+                      "password": "1234567",
+                      "telefone": "9967876",
+                           "__v": 0
+    }
+               ,
+ "success": true,
+                 "message": "Aqui o token!",
+                   "token": "eyJhbGciOiJIUzI1NiJ9.OTIyMzQzMjMxMg.iA0tJD4sBcE747l5xNiiBwL5hTouU9DINP8-OUxgYtY"  
+}
+
+get do cliente ( retorna um array de clintes )   == http://medicoishere.herokuapp.com/cliente/clientes
+       saida   [{"_id":"5afd8d4516c41a0004ad5680","name":"joao da silva","email":"joao@gmail.com","sexo":"masculino","cpf":9223432312,"password":"1234567","telefone":"9967876","__v":0},
+                {"_id":"5b05c9afe927f31874482e4d","name":"lucas xavier","email":"lucas@gmail.com","sexo":"masculino","cpf":142536,"password":"1234567","telefone":"9967876","__v":0},
+                {"_id":"5b05e05e9c0576000409889d","password":"1234567","telefone":"9554587","cpf":121348,"name":"bernard lenin","sexo":"masculino","email":"bernard@gmail.com","__v":0}]
+
+cadastro do cliente == http://medicoishere.herokuapp.com/cliente/add
+            entrada atual { "name": "joao da silva",
+                         "email": "joao@gmail.com",
+                          "sexo": "masculino",
+                           "cpf": 9223432312,
+                      "password": "1234567",
+                      "telefone": "9967876"}
+
+           saida é os dados do cliente cadastrado, ainda mudar pra retornar 200 melhr
+
+editar cliente === http://medicoishere.herokuapp.com/cliente/:id
+deletar cliente === http://medicoishere.herokuapp.com/cliente/:id
+
+////////////////medico/////////////
+
+get medico ( retorna o array dos medicos) === http://medicoishere.herokuapp.com/medico/medicos
+post medico   === http://medicoishere.herokuapp.com/medico/add
+edit medico ====  http://medicoishere.herokuapp.com/medico/:id
+delete medico ==== http://medicoishere.herokuapp.com/medico/:id

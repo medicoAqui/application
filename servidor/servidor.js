@@ -17,12 +17,12 @@ var app = express();
 var rotaCliente = require('./rotas/cliente');
 var rotaMedico = require('./rotas/medico');
 var rotaAcesso = require('./rotas/acesso');
-//var outraRota =  require('./rotas/checarToken');
+var rotaConsulta =  require('./rotas/consultaR');
 
 app.use(cors());
 app.use(morgan('dev'));
 
-mongoose.connect('mongodb://localhost:27017/medicoAqui',function(err,db){
+mongoose.connect('mongodb://medicoaqui:medicoaqui123@ds155674.mlab.com:55674/medicoaqui',function(err,db){
   if(err) {
     console.log("erro: " + err);
   } else {
@@ -38,13 +38,13 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use('/cliente',rotaCliente)
 app.use('/medico',rotaMedico);
 app.use('/auth', rotaAcesso);
-//app.use('/to',outraRota);
+app.use('/consulta',rotaConsulta);
 
 //app.set('superSecret', config.secret);
 
 
-app.listen(3000, function () {
-  console.log('Example app listening on port 3000!');
+app.listen(process.env.PORT || 8080, function(){
+  console.log("Express server listening on port %d in %s mode", this.address().port, app.settings.env);
 });
 
 ///////////////// rotas do cliente //////////////////////////////////////
