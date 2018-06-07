@@ -25,6 +25,18 @@ medicoRouter.get('/medicos', function(req, res) {
   });
 });
 
+medicoRouter.get('/:id',function(res,req){
+	var medico = Medico.find({_id: req.param.id});
+
+	medico.exec(function(err,data){
+		if(err) {
+            res.sendStatus(400).json('Medico nao encontrado no sistema');
+        }else{
+			res.json(data);
+		}
+	});
+});
+
 
 
 medicoRouter.post('/add', function(req,res){
@@ -44,7 +56,43 @@ medicoRouter.post('/add', function(req,res){
 
 });
 
-medicoRouter.put('/:id', function(red,res){
+medicoRouter.post('/me',function(req,res){
+  
+    Medico.findOne({_id: req.body.id}, function(err,data){
+        console.log(data)
+        if(err){
+            res.status(500).send('Medico nao cadastrado');
+        }else{
+            res.send(data);
+        }
+    });
+});
+
+medicoRouter.put('/:id', function(req,res){
+    var corpo = req.body;
+    console.log(corpo);
+
+    Medico.findByIdAndUpdate(req.params.id,corpo,{new: true}, function(err,data){
+        if(err){
+            res.status(500).send(err);
+        }else{
+            res.send(data)
+        }
+    });
+
+});
+
+medicoRouter.put('/consulta/:id', function(red,res){
+    var corpo = req.body;
+    console.log(corpo);
+
+    Consulta.findByIdAndUpdate(req.params.id,corpo,{new: true}, function(err,data){
+        if(err){
+            res.status(500).send(err);
+        }else{
+            res.send(data)
+        }
+    });
 
 });
 
@@ -81,35 +129,5 @@ medicoRouter.post('/consulta',function(req,res){
 
 });
 
-medicoRouter.put('/consulta/update', function(req,res){
-	res.send('att a consulta');
-});
-
-medicoRouter.put('/update/:id',function(req,res){
-	var idMedico = {_id: req.params.id};
-	var corpo = req.body;
-
-	Medico.update(idMedico,corpo, function(err,data){
-		if(err){
-			res.status(400).json(err);
-		}else{
-			res.json(data);
-		}
-	})
-
-});
-/*
-filmeRouter.put('/:id', function(req, res) {
-  	var idFilme = { _id: req.params.id };
-	var modelo = req.body;
-
-	Filme.update(idFilme, modelo, function(err, data) {
-		if (err) {
-			return res.status(400).json(err);
-		}
-		res.json(modelo);
-	});
-});
-*/
 
 module.exports = medicoRouter;
