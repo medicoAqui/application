@@ -39,6 +39,16 @@ public class MedicoAqui extends AppCompatActivity {
     }
 
 
+    public void clickVisualizarPerfil(View v) {
+        Intent sendIntentPerfil = new Intent(this, VisualizarPerfil.class);
+        startActivity(sendIntentPerfil);
+    }
+
+    public void clickEditarPerfil(View v) {
+        Intent sendIntentEdPerfil = new Intent(this, EditarPerfil.class);
+        startActivity(sendIntentEdPerfil);
+    }
+
     public void clickMarcarConsulta(View v) {
         Intent sendIntent = new Intent(this, MarcarConsultaActivity.class);
         startActivity(sendIntent);

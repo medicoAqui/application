@@ -42,6 +42,10 @@
             android:label="VisualizarPerfil"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
+            android:name=".Activity.Activitys.EditarPerfil"
+            android:label="EditarPerfil"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
             android:name=".Activity.Activitys.VisualizarHistorico"
             android:label="@string/title_activity_visualizar_historico"
             android:theme="@style/AppTheme.NoActionBar"/>

@@ -14,7 +14,7 @@ import com.example.gabriela.medicoaqui.R;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class VisualizarPerfil extends AppCompatActivity {
+public class EditarPerfil extends AppCompatActivity {
 
     private JSONObject jsonTT = new JSONObject();
     private static HttpConnections http = new HttpConnections();
@@ -24,12 +24,12 @@ public class VisualizarPerfil extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_visualizar_perfil);
+        setContentView(R.layout.activity_editar_perfil);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        Toast.makeText(this, "Bem vindo ao Visualizar Perfil", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Bem vindo ao Editar Perfil", Toast.LENGTH_SHORT).show();
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_perfil);
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.edita_perfil);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -39,17 +39,5 @@ public class VisualizarPerfil extends AppCompatActivity {
         });
     }
 
-    public void consultaPerfil(View view){
-
-        String url = "http://medicoishere.herokuapp.com/cliente/clientes";
-        HttpConnections httpConnections = new HttpConnections();
-        String resposta = httpConnections.get(url);
-
-    }
-
-
 
 }
-
-
-
