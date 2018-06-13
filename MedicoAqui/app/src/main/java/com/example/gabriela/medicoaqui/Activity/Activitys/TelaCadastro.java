@@ -40,6 +40,8 @@ public class TelaCadastro extends AppCompatActivity implements AdapterView.OnIte
     public String vida;
 
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
