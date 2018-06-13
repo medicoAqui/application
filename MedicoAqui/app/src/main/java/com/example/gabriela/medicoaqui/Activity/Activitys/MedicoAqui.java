@@ -2,20 +2,21 @@ package com.example.gabriela.medicoaqui.Activity.Activitys;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
+import com.example.gabriela.medicoaqui.Activity.Service.HttpConnections;
 import com.example.gabriela.medicoaqui.R;
 
 public class MedicoAqui extends AppCompatActivity {
+
+    String resposta = "Init";
+    private static HttpConnections http = new HttpConnections();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,16 +24,20 @@ public class MedicoAqui extends AppCompatActivity {
         setContentView(R.layout.activity_lista_de_consultas);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        Toast.makeText(this, "Bem vindo ao MedicoAqui", Toast.LENGTH_SHORT).show();
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        new Thread(new Runnable() {
             @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+            public void run() {
+                try {
+                    resposta =  http.get("http://medicoishere.herokuapp.com/medico/medicos");
+
+                } finally {
+                    // Não faz nada.
+                }
             }
-        });
+        }).start();
+
+
     }
 
     @Override
@@ -45,18 +50,37 @@ public class MedicoAqui extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.visualizar_historico:
-                Intent sendIntent = new Intent(this, VisualizarHistorico.class);
-                Log.e("visualizar", "visualizar");
-                startActivity(sendIntent);
-                return true;
-            case R.id.marcar_consulta:
-                //to do
-                Log.e("consulta", "consulta");
+            case R.id.logout:
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
+
+    public void clickVisualizarPerfil(View v) {
+        Intent sendIntentPerfil = new Intent(this, VisualizarPerfil.class);
+        startActivity(sendIntentPerfil);
+    }
+
+    public void clickEditarPerfil(View v) {
+        Intent sendIntentEdPerfil = new Intent(this, EditarPerfil.class);
+        startActivity(sendIntentEdPerfil);
+    }
+
+    public void clickMarcarConsulta(View v) {
+        Intent sendIntent = new Intent(this, MarcarConsultaActivity.class);
+        sendIntent.putExtra("intent", resposta);
+        startActivity(sendIntent);
+    }
+
+    public void clickHistoricoConsulta(View v) {
+        Intent sendIntent = new Intent(this, VisualizarHistorico.class);
+        startActivity(sendIntent);
+    }
+
+    public void clickPerguntasFrequentes(View v) {
+        Intent sendIntent = new Intent(this, PerguntasFrequentesActivity.class);
+        startActivity(sendIntent);
+    }
 }

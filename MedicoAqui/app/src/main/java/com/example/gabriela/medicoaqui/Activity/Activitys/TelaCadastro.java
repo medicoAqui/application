@@ -23,7 +23,6 @@ import android.widget.Spinner;
 import android.widget.Toast;
 import org.json.*;
 
-import java.io.IOException;
 
 public class TelaCadastro extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
@@ -38,6 +37,8 @@ public class TelaCadastro extends AppCompatActivity implements AdapterView.OnIte
     private static final String TAG = "EmailPassword";
     private FirebaseAuth mAuth;
     // Henrique Autenticacao - 24/05 - FIM
+    public String vida;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +47,6 @@ public class TelaCadastro extends AppCompatActivity implements AdapterView.OnIte
         // Henrique Autenticacao - 24/05 - INICIO
         mAuth = FirebaseAuth.getInstance();
         // Henrique Autenticacao - 24/05 - FIM
-
         final Spinner spinSexo = findViewById(R.id.spinner);                     // Getting the instance of Spinner
         Button botaoCadastrar = findViewById(R.id.button_tela_cadastro);         // Declaring Button Cadastro
         botaoCadastrar.setOnClickListener(new View.OnClickListener() {
@@ -57,13 +57,16 @@ public class TelaCadastro extends AppCompatActivity implements AdapterView.OnIte
                 findInputs();                                                    // Find inputs by id
                 setStrings(spinSexo);                                            // Set inputs in Strings
 
+                final android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(TelaCadastro.this);
+                builder.setTitle("Inserindo usuário");
+
                 if(cadastroIsValid(nome, email, cpf, password, telefone, sexo)) {
+
                     if(email.contains("@") && (email.contains(".com") || email.contains(".br") || email.contains(".org"))){
                         if(telefone.length() == 11 || telefone.length() == 10){
 
                             try {
                                 setValuesToJson();                               // Fill JSON Object
-
 
                                 // Henrique Autenticacao - 24/05 - INICIO
                                 mAuth.createUserWithEmailAndPassword(email, password)
@@ -74,40 +77,50 @@ public class TelaCadastro extends AppCompatActivity implements AdapterView.OnIte
                                                     // Sign in success, update UI with the signed-in user's information
                                                     Log.d(TAG, "createUserWithEmail:success");
                                                     FirebaseUser user = mAuth.getCurrentUser();
+
                                                 } else {
                                                     // If sign in fails, display a message to the user.
                                                     Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                                                    Toast.makeText(TelaCadastro.this, "Authentication failed.",
-                                                            Toast.LENGTH_SHORT).show();
+                                                    Toast.makeText(TelaCadastro.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
                                                 }
                                             }
                                         });
                                 // Henrique Autenticacao - 24/05 - FIM
 
-                                new Thread(new Runnable(){
-                                    @Override
-                                    public void run() {
-                                        try {
-                                            http.sendPost("http://medicoishere.herokuapp.com/cliente/add", jsonTT.toString());
-                                        } catch (HttpConnections.MinhaException e) {
-                                            e.printStackTrace();
+                                    new Thread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            try {
+                                                http.sendPost("http://medicoishere.herokuapp.com/cliente/add", jsonTT.toString());
+                                            } catch (HttpConnections.MinhaException e) {
+                                                e.printStackTrace();
+                                            }
                                         }
-                                    }
-                                }).start();
+                                    }).start();
 
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
 
-                            showMessage("Cadastro efetuado com sucesso!");
-                            Intent it = new Intent(TelaCadastro.this, TelaPrincipal.class);
-                            startActivity(it);
+                        } else {
+                            builder.setMessage("O número de telefone é inválido.");
+                            android.app.AlertDialog dialog = builder.create();
+                            dialog.show();}
+                    } else {
+                        builder.setMessage("O e-mail é inválido.");
+                        android.app.AlertDialog dialog = builder.create();
+                        dialog.show(); }
+                } else {
+                    builder.setMessage("Não é permitido campos em branco.");
+                    android.app.AlertDialog dialog = builder.create();
+                    dialog.show();}
 
-                        } else { showMessage("O número de telefone é inválido."); }
-                    } else { showMessage("O e-mail é inválido."); }
-                } else { showMessage("Não é permitido campos em branco."); }
+                    Intent it = new Intent(TelaCadastro.this, TelaPrincipal.class);
+                    startActivity(it);
+
             }
         });
+
 
         //Creating the ArrayAdapter instance having the bank name list
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.lista_sexo, android.R.layout.simple_spinner_item);

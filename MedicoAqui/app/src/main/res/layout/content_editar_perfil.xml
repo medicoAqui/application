@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".Activity.Activitys.EditarPerfil"
+    tools:showIn="@layout/activity_editar_perfil">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+    </LinearLayout>
+
+    <TableLayout
+        android:layout_width="300dp"
+        android:layout_height="550dp"
+        tools:layout_editor_absoluteX="50dp"
+        tools:layout_editor_absoluteY="0dp">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/perfil5"
+                tools:layout_editor_absoluteX="21dp"
+                tools:layout_editor_absoluteY="0dp" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:orientation="horizontal"
+                tools:layout_editor_absoluteX="50dp"
+                tools:layout_editor_absoluteY="228dp"/>
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:orientation="horizontal"
+                tools:layout_editor_absoluteX="50dp"
+                tools:layout_editor_absoluteY="228dp">
+
+                <TextView
+                    android:id="@+id/nomeDesc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Nome" />
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="65dp"
+                    android:layout_height="wrap_content"
+                    tools:layout_editor_absoluteX="74dp"
+                    tools:layout_editor_absoluteY="409dp"
+                    android:visibility="visible"
+                    android:contentDescription="Nome">
+
+                    <android.support.design.widget.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Sobrenome"
+                        />
+                </android.support.design.widget.TextInputLayout>
+
+            </LinearLayout>
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:orientation="horizontal"
+                tools:layout_editor_absoluteX="50dp"
+                tools:layout_editor_absoluteY="228dp"/>
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <LinearLayout
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:orientation="horizontal"
+                tools:layout_editor_absoluteX="50dp"
+                tools:layout_editor_absoluteY="228dp">
+
+                <TextView
+                    android:id="@+id/sobrenomeDesc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Sobrenome" />
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="65dp"
+                    android:layout_height="wrap_content"
+                    tools:layout_editor_absoluteX="74dp"
+                    tools:layout_editor_absoluteY="409dp">
+
+                    <android.support.design.widget.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Sobrenome" />
+                </android.support.design.widget.TextInputLayout>
+
+            </LinearLayout>
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:orientation="horizontal"
+                tools:layout_editor_absoluteX="50dp"
+                tools:layout_editor_absoluteY="228dp"/>
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <LinearLayout
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:orientation="horizontal"
+                tools:layout_editor_absoluteX="50dp"
+                tools:layout_editor_absoluteY="228dp">
+
+                <TextView
+                    android:id="@+id/cpfDesc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="CPF" />
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="65dp"
+                    android:layout_height="wrap_content"
+                    tools:layout_editor_absoluteX="74dp"
+                    tools:layout_editor_absoluteY="409dp">
+
+                    <android.support.design.widget.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="CPF" />
+                </android.support.design.widget.TextInputLayout>
+
+            </LinearLayout>
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:orientation="horizontal"
+                tools:layout_editor_absoluteX="50dp"
+                tools:layout_editor_absoluteY="228dp"/>
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <LinearLayout
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:orientation="horizontal"
+                tools:layout_editor_absoluteX="50dp"
+                tools:layout_editor_absoluteY="228dp">
+
+                <TextView
+                    android:id="@+id/emailDesc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Email" />
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="65dp"
+                    android:layout_height="wrap_content"
+                    tools:layout_editor_absoluteX="74dp"
+                    tools:layout_editor_absoluteY="409dp">
+
+                    <android.support.design.widget.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Email" />
+                </android.support.design.widget.TextInputLayout>
+
+            </LinearLayout>
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:orientation="horizontal"
+                tools:layout_editor_absoluteX="50dp"
+                tools:layout_editor_absoluteY="228dp"/>
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <LinearLayout
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:orientation="horizontal"
+                tools:layout_editor_absoluteX="50dp"
+                tools:layout_editor_absoluteY="228dp">
+
+                <TextView
+                    android:id="@+id/sexoDesc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Sexo" />
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="65dp"
+                    android:layout_height="wrap_content"
+                    tools:layout_editor_absoluteX="74dp"
+                    tools:layout_editor_absoluteY="409dp">
+
+                    <android.support.design.widget.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Sexo" />
+                </android.support.design.widget.TextInputLayout>
+
+            </LinearLayout>
+
+        </TableRow>
+
+    </TableLayout>
+
+</android.support.constraint.ConstraintLayout>
