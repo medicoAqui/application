@@ -1,5 +1,7 @@
 package com.example.gabriela.medicoaqui.Activity.Activitys;
 
+import com.example.gabriela.medicoaqui.Activity.Entities.Cliente;
+import com.example.gabriela.medicoaqui.Activity.JsonOperators.JSONReader;
 import com.example.gabriela.medicoaqui.Activity.Service.HttpConnections;
 import com.example.gabriela.medicoaqui.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -23,10 +25,13 @@ import android.widget.Spinner;
 import android.widget.Toast;
 import org.json.*;
 
+import java.util.List;
+
 
 public class TelaCadastro extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     private JSONObject jsonTT = new JSONObject();
+    private JSONReader jsonre = new JSONReader();
     private static HttpConnections http = new HttpConnections();
 
     // Declaring names of variables
@@ -48,6 +53,23 @@ public class TelaCadastro extends AppCompatActivity implements AdapterView.OnIte
         setContentView(R.layout.activity_tela_cadastro);
         // Henrique Autenticacao - 24/05 - INICIO
         mAuth = FirebaseAuth.getInstance();
+
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                String clientes = http.get("http://medicoishere.herokuapp.com/cliente/clientes");
+
+                List<Cliente> clientesList = jsonre.getClientes(clientes);
+
+                Log.v("QTD_CLIENTESLIST ", Integer.toString(clientesList.size()));
+                Log.v("CLIENTE_NUMBER1: ", clientesList.get(0).getNome());
+
+                Log.v("CLIENTES", clientes);
+            }
+        }).start();
+
+
         // Henrique Autenticacao - 24/05 - FIM
         final Spinner spinSexo = findViewById(R.id.spinner);                     // Getting the instance of Spinner
         Button botaoCadastrar = findViewById(R.id.button_tela_cadastro);         // Declaring Button Cadastro
