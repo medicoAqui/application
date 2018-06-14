@@ -1,6 +1,7 @@
 package com.example.gabriela.medicoaqui.Activity.Activitys;
 
 import com.example.gabriela.medicoaqui.Activity.Entities.Cliente;
+import com.example.gabriela.medicoaqui.Activity.Entities.Medico;
 import com.example.gabriela.medicoaqui.Activity.JsonOperators.JSONReader;
 import com.example.gabriela.medicoaqui.Activity.Service.HttpConnections;
 import com.example.gabriela.medicoaqui.R;
@@ -25,6 +26,8 @@ import android.widget.Spinner;
 import android.widget.Toast;
 import org.json.*;
 
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 
 
@@ -45,8 +48,6 @@ public class TelaCadastro extends AppCompatActivity implements AdapterView.OnIte
     public String vida;
 
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,14 +59,22 @@ public class TelaCadastro extends AppCompatActivity implements AdapterView.OnIte
         new Thread(new Runnable() {
             @Override
             public void run() {
-                String clientes = http.get("http://medicoishere.herokuapp.com/cliente/clientes");
+                String clientes = http.get("http://medicoishere.herokuapp.com/medico/medicos");
 
-                List<Cliente> clientesList = jsonre.getClientes(clientes);
+                List<Medico> clientesList = jsonre.getMedicos(clientes);
 
-                Log.v("QTD_CLIENTESLIST ", Integer.toString(clientesList.size()));
-                Log.v("CLIENTE_NUMBER1: ", clientesList.get(0).getNome());
+                Log.w("QTD_CLIENTESLIST ", Integer.toString(clientesList.size()));
+                Log.w("CLIENTE_NUMBER1: ", clientesList.get(0).getNome());
 
-                Log.v("CLIENTES", clientes);
+                Log.w("CLIENTES", clientes);
+
+                HashSet<String> especialidades = jsonre.getEspecialidadesMedicas(clientes);
+
+                Iterator<String> itr = especialidades.iterator();
+                while(itr.hasNext()) {
+                    System.out.println(itr.next());
+                }
+
             }
         }).start();
 
