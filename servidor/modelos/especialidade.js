@@ -1,14 +1,17 @@
 var mongoose = require('mongoose');
+const AutoIncrement = require('mongoose-sequence')(mongoose);
 var Schema = mongoose.Schema;
 
 var especi_Schema = new Schema({
+  
 	especialidade:{ type: String, required: true, unique:true}
 
 });
-
+especi_Schema.plugin(AutoIncrement, {inc_field: 'id'});
+/*
 function getNextSequenceValue(sequenceName){
 
-   var sequenceDocument = db.counters.findAndModify({
+   var sequenceDocument = Especilidade.findAndModify({
       query:{_id: sequenceName },
       update: {$inc:{sequence_value:1}},
       new:true
@@ -17,14 +20,7 @@ function getNextSequenceValue(sequenceName){
    return sequenceDocument.sequence_value;
 }
 
->db.products.insert({
-   "_id":getNextSequenceValue("productid"),
-   "product_name":"Apple iPhone",
-   "category":"mobiles"
-})
+*/
+var especilidade = mongoose.model('Especilidade', especi_Schema);
 
->db.products.insert({
-   "_id":getNextSequenceValue("productid"),
-   "product_name":"Samsung S3",
-   "category":"mobiles"
-})
+module.exports = especilidade;
