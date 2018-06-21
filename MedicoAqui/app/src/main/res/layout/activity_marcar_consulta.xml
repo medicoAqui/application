@@ -59,12 +59,13 @@
         </LinearLayout>
 
         <Button
-            android:layout_marginTop="32dp"
+            android:id="@+id/button_consulta"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginTop="32dp"
             android:background="@drawable/rounded_button"
             android:backgroundTint="#1e90ff"
-            android:textColor="#fff"
-            android:text="Consultar Disponibilidade"/>
+            android:text="Consultar Disponibilidade"
+            android:textColor="#fff" />
     </LinearLayout>
 </ScrollView>

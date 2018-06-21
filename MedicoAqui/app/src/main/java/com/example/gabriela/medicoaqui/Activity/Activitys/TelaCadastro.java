@@ -23,7 +23,6 @@ import android.widget.Spinner;
 import android.widget.Toast;
 import org.json.*;
 
-import java.io.IOException;
 
 public class TelaCadastro extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
@@ -38,6 +37,8 @@ public class TelaCadastro extends AppCompatActivity implements AdapterView.OnIte
     private static final String TAG = "EmailPassword";
     private FirebaseAuth mAuth;
     // Henrique Autenticacao - 24/05 - FIM
+    public String vida;
+
 
 
 
