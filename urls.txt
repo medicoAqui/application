@@ -38,11 +38,90 @@ cadastro do cliente == http://medicoishere.herokuapp.com/cliente/add
            saida é os dados do cliente cadastrado, ainda mudar pra retornar 200 melhr
 
 editar cliente === http://medicoishere.herokuapp.com/cliente/:id
+     metodo put
+               edita o cliente de acordo com o campor que quer
+               exemplo {name: 'Daniela"}   so vai mudar esse campo
+
 deletar cliente === http://medicoishere.herokuapp.com/cliente/:id
+                    deleta o cliente de acordo com o id
+pegar so um cliente 
+metodo post ===== http://medicoishere.herokuapp.com/cliente/me
+                  exige que vc mande o id do cliente que quer ver tipo {id: parametroId}
+
+marcar consulta ===== http://medicoishere.herokuapp.com/cliente/consulta/:id
+                      metodo que edita a consulta e coloca o campo id do cliente na marcação de consulta
+                      o id é referente a consulta que sera marcada, deve enviar o id do paciente
+              exemplo https://medicoishere.herokuapp.com/cliente/consulta/5b17dcd222a5f600045829a4 ( esse id é da consulta)
+                      {idPaciente: 5b062bccb4da4a0004b1c874}
+              saida 
+                      {
+    "_id": "5b17dcd222a5f600045829a4",
+
+                           "idMedico": "5b17da7a05d9ea0004fab8fb",
+
+                           "data": "2018-12-07T00:00:00.000Z",
+
+                           "hora": "15:00",
+
+                            "__v": 0,
+                       
+     "idPaciente": "5b062bccb4da4a0004b1c874"
+}
 
 ////////////////medico/////////////
 
 get medico ( retorna o array dos medicos) === http://medicoishere.herokuapp.com/medico/medicos
+             igual ao de clientes
 post medico   === http://medicoishere.herokuapp.com/medico/add
+        metodo post de medico 
+                            name:{
+		type:String,
+		required:true
+	},
+	DataNascimento:{
+		type:String,
+		required:true
+	},
+	cpf:{
+		type:Number,
+		required:true,
+		unique:true
+	},
+	sexo:{
+		type:String,
+		required:true
+	},
+	especializacao:{
+		type:String,
+		required:true
+	},
+	rcm:{
+		type:String,
+		required:true,
+		unique:true
+	}
 edit medico ====  http://medicoishere.herokuapp.com/medico/:id
-delete medico ==== http://medicoishere.herokuapp.com/medico/:id
+     metodo put
+            edita os campos de medico igual ao de cliente , necessario o id do medico e o corpo que quer editar
+get medico ==== http://medicoishere.herokuapp.com/medico/me
+    metodo post
+              traz os dados do medico em especifico, necessario o corpo { id: parametroId}
+
+deletar medico ====  http://medicoishere.herokuapp.com/medico/:id
+               deleta o medico de acordo com o id especifico
+
+put consulta feita pelo medico ====  http://medicoishere.herokuapp.com/medico/consulta/:id
+metodo put da consulta criada pelo medico
+            o id é referenre ao id da consulta que tem hora e data propria, cada id é diferente da consulta 
+            colocar o id da consulta e o corpo do campo que quer mudar
+            exemplo http://medicoishere.herokuapp.com/medico/consulta/kjfp43434ldkslkdsd   corpo{hora: 15:00}
+
+
+post consulta feita pelo medico ====  http://medicoishere.herokuapp.com/medico/consulta
+   metodo post
+              cria a consulta... Corpo
+
+             idMedico:{type: String,required:true},
+             idPaciente:{type:String},
+	     data:{type:Date, required:true},
+	     hora:{type:String,required:true}

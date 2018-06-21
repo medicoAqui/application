@@ -16,4 +16,5 @@ consultaR.get('/consultas',function(req,res){
 
 });
 
+consultaR.get('medico/id')
 module.exports = consultaR; 

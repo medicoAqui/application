@@ -18,7 +18,7 @@ public class HttpConnections {
 
 
  //m�todo get
-public static String get(String urlString){
+public String get(String urlString){
     HttpURLConnection urlConnection = null;
     BufferedReader reader = null;
     String resposta = null;
