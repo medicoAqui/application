@@ -16,5 +16,47 @@ consultaR.get('/consultas',function(req,res){
 
 });
 
-consultaR.get('medico/id')
+consultaR.get('medico/id', function(req,res){
+	var consulta = Consulta.find({idMedico: req.params.id});
+
+	consulta.exec(function(err,data){
+		if(err){
+			res.sendStatus(400).json('Não ha consultas para este medico');
+		}else{
+			res.sendStatus(201).json(data);
+		}
+
+	});
+
+});
+
+consultaR.get('/hora',function(req,res){
+	var consulta = Consulta.find({hora: req.params.hora});
+
+	consulta.exec(function(err,data){
+		if(err){
+			res.sendStatus(400).json('Não ha consultas para este horario');
+		}else{
+			res.sendStatus(201).json(data);
+		}
+
+	});
+
+});
+
+consultaR.get('/data',function(req,res){
+	var consulta = Consulta.find({data: req.params.data});
+
+	consulta.exec(function(err,data){
+		if(err){
+			res.sendStatus(400).json('Não ha consultas para esta data');
+		}else{
+			res.sendStatus(201).json(data);
+		}
+
+	});
+});
+
+
+
 module.exports = consultaR; 

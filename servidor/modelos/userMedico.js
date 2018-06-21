@@ -19,9 +19,9 @@ var medicoSchema = new Schema({
 		type:String,
 		required:true
 	},
-	especializacao:{
+	idEspecializacao:{  
 		type:String,
-		required:true
+		required:true  		
 	},
 	rcm:{
 		type:String,

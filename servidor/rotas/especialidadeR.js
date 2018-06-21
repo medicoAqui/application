@@ -15,7 +15,7 @@ function getNextSequenceValue(sequenceName){
    return sequenceDocument.sequence_value;
 }
 
-espe_Rota.get('/especilidades',function(req,res){
+espe_Rota.get('/especialidades',function(req,res){
 	var array_espe = Especialidade.find({});
 
 	array_espe.exec(function(err,data){
@@ -30,10 +30,10 @@ espe_Rota.get('/especilidades',function(req,res){
 
 espe_Rota.post('/add',function(req,res){
 	var especilidade = new Especialidade(req.body);
-y
+
 	especilidade.save(function(err,data){
 		if( err ){
-			res.sendStatus(400).json('Especilidade ja existe no sistema');
+			res.sendStatus(400).json('Especialidade ja existe no sistema');
 		}else{
 			res.status(201).json(data);
 		}

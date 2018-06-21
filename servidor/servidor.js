@@ -40,7 +40,7 @@ app.use('/cliente',rotaCliente)
 app.use('/medico',rotaMedico);
 app.use('/auth', rotaAcesso);
 app.use('/consulta',rotaConsulta);
-app.use('/especilidade',rotaEspecialidade);
+app.use('/especialidade',rotaEspecialidade);
 
 //app.set('superSecret', config.secret);
 
