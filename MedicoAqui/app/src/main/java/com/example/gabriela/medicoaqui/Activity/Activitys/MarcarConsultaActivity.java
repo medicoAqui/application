@@ -133,9 +133,9 @@ public class MarcarConsultaActivity extends AppCompatActivity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                String medicos = http.get("http://medicoishere.herokuapp.com/medico/medicos");
+                String especialidadesBD = http.get("https://medicoishere.herokuapp.com/especialidade/especialidades");
 
-                HashSet<String> especialidades = jsonReader.getEspecialidadesMedicas(medicos);
+                HashSet<String> especialidades = jsonReader.getEspecialidadesMedicas(especialidadesBD);
 
                 lista_especialidades.addAll(especialidades);
             }

@@ -55,30 +55,6 @@ public class TelaCadastro extends AppCompatActivity implements AdapterView.OnIte
         // Henrique Autenticacao - 24/05 - INICIO
         mAuth = FirebaseAuth.getInstance();
 
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                String clientes = http.get("http://medicoishere.herokuapp.com/medico/medicos");
-
-                List<Medico> clientesList = jsonre.getMedicos(clientes);
-
-                Log.w("QTD_CLIENTESLIST ", Integer.toString(clientesList.size()));
-                Log.w("CLIENTE_NUMBER1: ", clientesList.get(0).getNome());
-
-                Log.w("CLIENTES", clientes);
-
-                HashSet<String> especialidades = jsonre.getEspecialidadesMedicas(clientes);
-
-                Iterator<String> itr = especialidades.iterator();
-                while(itr.hasNext()) {
-                    System.out.println(itr.next());
-                }
-
-            }
-        }).start();
-
-
         // Henrique Autenticacao - 24/05 - FIM
         final Spinner spinSexo = findViewById(R.id.spinner);                     // Getting the instance of Spinner
         Button botaoCadastrar = findViewById(R.id.button_tela_cadastro);         // Declaring Button Cadastro
