@@ -16,8 +16,8 @@ consultaR.get('/consultas',function(req,res){
 
 });
 
-consultaR.get('medico/id', function(req,res){
-	var consulta = Consulta.find({idMedico: req.params.id});
+consultaR.get('medico', function(req,res){
+	var consulta = Consulta.find({cpfMedico: req.params.cpf});
 
 	consulta.exec(function(err,data){
 		if(err){

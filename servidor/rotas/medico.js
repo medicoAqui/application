@@ -58,7 +58,7 @@ medicoRouter.post('/add', function(req,res){
 
 medicoRouter.post('/me',function(req,res){
   
-    Medico.findOne({_id: req.body.id}, function(err,data){
+    Medico.findOne({rcm: req.body.rcm}, function(err,data){
         console.log(data)
         if(err){
             res.status(500).send('Medico nao cadastrado');
@@ -68,11 +68,11 @@ medicoRouter.post('/me',function(req,res){
     });
 });
 
-medicoRouter.put('/:id', function(req,res){
+medicoRouter.put('/:rcm', function(req,res){
     var corpo = req.body;
     console.log(corpo);
 
-    Medico.findByIdAndUpdate(req.params.id,corpo,{new: true}, function(err,data){
+    Medico.findByIdAndUpdate(req.params.rcm,corpo,{new: true}, function(err,data){
         if(err){
             res.status(500).send(err);
         }else{
@@ -82,11 +82,11 @@ medicoRouter.put('/:id', function(req,res){
 
 });
 
-medicoRouter.put('/consulta/:id', function(red,res){
+medicoRouter.put('/consulta/:rcm', function(red,res){
     var corpo = req.body;
     console.log(corpo);
 
-    Consulta.findByIdAndUpdate(req.params.id,corpo,{new: true}, function(err,data){
+    Consulta.findByIdAndUpdate(req.params.rcm,corpo,{new: true}, function(err,data){
         if(err){
             res.status(500).send(err);
         }else{
@@ -96,8 +96,8 @@ medicoRouter.put('/consulta/:id', function(red,res){
 
 });
 
-medicoRouter.delete('/:id', function(req,res){
-	var idUsuario = { _id: req.params.id };
+medicoRouter.delete('/:rcm', function(req,res){
+	var idUsuario = { rcm: req.params.rcm };
 
 	Medico.remove(idUsuario, function(err, data) {
 		if (err) {
