@@ -47,11 +47,11 @@
             android:orientation="horizontal">
 
             <TextView
-                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="Horário:"
-                android:layout_marginRight="8dp"/>
+                android:layout_marginRight="8dp"
+                android:text="Horário da consulta:"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium" />
 
             <Spinner
                 android:id="@+id/spinner_horario"
