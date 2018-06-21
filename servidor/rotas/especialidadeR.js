@@ -17,6 +17,7 @@ function getNextSequenceValue(sequenceName){
 
 espe_Rota.get('/especialidades',function(req,res){
 	var array_espe = Especialidade.find({});
+	
 
 	array_espe.exec(function(err,data){
 		if(err){

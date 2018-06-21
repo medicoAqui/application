@@ -103,6 +103,10 @@ post medico   === http://medicoishere.herokuapp.com/medico/add
 edit medico ====  http://medicoishere.herokuapp.com/medico/:id
      metodo put
             edita os campos de medico igual ao de cliente , necessario o id do medico e o corpo que quer editar
+
+
+
+
 get medico ==== http://medicoishere.herokuapp.com/medico/me
     metodo post
               traz os dados do medico em especifico, necessario o corpo { cpf: parametroCPF}
@@ -122,7 +126,18 @@ post consulta feita pelo medico ====  http://medicoishere.herokuapp.com/medico/c
               cria a consulta... Corpo
 
              cpfMedico:{type: String,required:true},
-             idPaciente:{type:String},
+             cpfPaciente:{type:String},
 	     data:{type:Date, required:true},
 	     hora:{type:String,required:true}
              disopibilidade:{type:Boolean}
+
+
+
+
+
+
+
+
+getPost( http://medicoishere.herokuapp.com/medico/me, {cpf: cpf}) 
+
+

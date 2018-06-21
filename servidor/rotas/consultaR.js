@@ -16,7 +16,7 @@ consultaR.get('/consultas',function(req,res){
 
 });
 
-consultaR.get('medico', function(req,res){
+consultaR.get('/medico', function(req,res){
 	var consulta = Consulta.find({cpfMedico: req.params.cpf});
 
 	consulta.exec(function(err,data){
@@ -57,6 +57,40 @@ consultaR.get('/data',function(req,res){
 	});
 });
 
+consultaR.get('/medicosByEspecialidade',function(req,res){
+	var especialidade = Especialidade.findOne({nomeEspecialidade: req.body.nomeEspecialidade});
+
+	var medico = Medico.find({idEspecializacao: especialidade.id});
+
+	medico.exec(function(err,data){
+		if (err){
+			res.sendStatus(400).json(err);
+		}else{
+			res.json(data);
+		}
+	})
+
+
+});
+
+
+
+
+consultaR.get('/nomesMedicosByEspecialidade',function(req,res){
+	var especialidade = Especialidade.findOne({nomeEspecialidade: req.body.nomeEspecialidade});
+
+	var medico = Medico.find({},{idEspecializacao: especialidade.id},1);
+
+	medico.exec(function(err,data){
+		if (err){
+			res.sendStatus(400).json(err);
+		}else{
+			res.json(data.name);
+		}
+	})
+
+
+});
 
 
 module.exports = consultaR; 

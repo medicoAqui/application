@@ -4,7 +4,7 @@ var Schema = mongoose.Schema;
 
 var especi_Schema = new Schema({
   
-	especialidade:{ type: String, required: true, unique:true}
+	nomeEspecialidade:{ type: String, required: true, unique:true}
 
 });
 especi_Schema.plugin(AutoIncrement, {inc_field: 'id'});
