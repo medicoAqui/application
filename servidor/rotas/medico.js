@@ -1,7 +1,10 @@
 ﻿var express = require('express');
 var medicoRouter =  express.Router();
+
 var Medico = require('../modelos/userMedico.js');
 var Consulta = require('../modelos/consulta');
+var Especialidade = require('../modelos/especialidade');
+var Med_Espe = require('../modelos/medico_especialidades');
 
 medicoRouter.use(function(req, res, next) {
 
@@ -37,13 +40,12 @@ medicoRouter.get('/:id',function(res,req){
 	});
 });
 
-
+/// aqui adiciona medico , cria a especialidade e a tebela medico especialidade
 
 medicoRouter.post('/add', function(req,res){
 	var novoMedico = new Medico(req.body);
-
-	novoMedico.save(function(err, data) {
-		console.log(novoMedico);
+    
+	novoMedico.save(function(err, data) {		
 
 		console.log(data);
 
@@ -54,11 +56,47 @@ medicoRouter.post('/add', function(req,res){
 		}
 	});
 
+    var especialidade = new Especialidade({nomeEspecialidade: req.body.nomeEspecialidade});
+    
+    especialidade.save(function(err, data) {
+        
+        console.log(data);
+
+        if (err) {
+            res.status(400).json(err);
+        } else {
+            var idEsp = data.id;
+            console.log(idEsp);
+            res.status(201).json(data);
+        }
+    });
+    /// ate aqui funciona
+  
+   // var idDaEspecialidade = Especialidade.findOne({nomeEspecialidade:req.param.nomeEspecialidade});
+   // console.log('aqui é a pesquisa '+ idDaEspecialidade.id);
+/*   
+    console.log(especialidade.id);
+    var medico_especi = new Med_Espe({
+        crmMedico:  req.body.crm,
+        idEspecialidade: idEsp
+    });
+
+    medico_especi.save(function(err, data) {
+        
+        console.log(data);
+
+        if (err) {
+            res.status(400).json(err);
+        } else {
+            res.status(201).json(data);
+        }
+    });
+   */
 });
 
 medicoRouter.post('/me',function(req,res){
   
-    Medico.findOne({rcm: req.body.rcm}, function(err,data){
+    Medico.findOne({crm: req.body.rcm}, function(err,data){
         console.log(data)
         if(err){
             res.status(500).send('Medico nao cadastrado');
@@ -68,11 +106,11 @@ medicoRouter.post('/me',function(req,res){
     });
 });
 
-medicoRouter.put('/:rcm', function(req,res){
+medicoRouter.put('/:crm', function(req,res){
     var corpo = req.body;
     console.log(corpo);
 
-    Medico.findByIdAndUpdate(req.params.rcm,corpo,{new: true}, function(err,data){
+    Medico.findByIdAndUpdate(req.params.crm,corpo,{new: true}, function(err,data){
         if(err){
             res.status(500).send(err);
         }else{
@@ -82,11 +120,11 @@ medicoRouter.put('/:rcm', function(req,res){
 
 });
 
-medicoRouter.put('/consulta/:rcm', function(red,res){
+medicoRouter.put('/consulta/:crm', function(red,res){
     var corpo = req.body;
     console.log(corpo);
 
-    Consulta.findByIdAndUpdate(req.params.rcm,corpo,{new: true}, function(err,data){
+    Consulta.findByIdAndUpdate(req.params.crm,corpo,{new: true}, function(err,data){
         if(err){
             res.status(500).send(err);
         }else{
@@ -96,8 +134,8 @@ medicoRouter.put('/consulta/:rcm', function(red,res){
 
 });
 
-medicoRouter.delete('/:rcm', function(req,res){
-	var idUsuario = { rcm: req.params.rcm };
+medicoRouter.delete('/:crm', function(req,res){
+	var idUsuario = { crm: req.params.crm };
 
 	Medico.remove(idUsuario, function(err, data) {
 		if (err) {

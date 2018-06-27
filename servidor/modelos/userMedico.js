@@ -19,11 +19,7 @@ var medicoSchema = new Schema({
 		type:String,
 		required:true
 	},
-	idEspecializacao:{  
-		type:String,
-		required:true  		
-	},
-	rcm:{
+	crm:{
 		type:String,
 		required:true,
 		unique:true
