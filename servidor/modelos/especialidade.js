@@ -21,6 +21,6 @@ function getNextSequenceValue(sequenceName){
 }
 
 */
-var especilidade = mongoose.model('Especilidade', especi_Schema);
+var especilidade = mongoose.model('Especialidade', especi_Schema);
 
 module.exports = especilidade;

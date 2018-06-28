@@ -1,4 +1,4 @@
-const EspecialidadeTeste = require('../models/EspecialidadeTeste.js');
+const EspecialidadeTeste = require('../modelos/EspecialidadeTeste.js');
 const mongoose = require('mongoose'), Schema = mongoose.Schema;
 
 const medicoTesteSchema = mongoose.Schema({

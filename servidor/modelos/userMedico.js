@@ -23,7 +23,8 @@ var medicoSchema = new Schema({
 		type:String,
 		required:true,
 		unique:true
-	}
+	},
+	especialidades : [{ type: Schema.Types.ObjectId, ref: 'Especialidade' }]
 });
 
 var medico = mongoose.model('Medico',medicoSchema);

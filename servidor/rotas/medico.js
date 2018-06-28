@@ -42,47 +42,23 @@ medicoRouter.get('/:id',function(res,req){
 
 /// aqui adiciona medico , cria a especialidade e a tebela medico especialidade
 
-medicoRouter.post('/add', function(req,res){
-	var novoMedico = new Medico(req.body);
-    
-	novoMedico.save(function(err, data) {		
-
-		console.log(data);
-
-		if (err) {
-			res.status(400).json(err);
-		} else {
-			res.status(201).json(data);
-		}
-	});
+medicoRouter.post('/add', function(req,res){	
 
     var especialidade = new Especialidade({nomeEspecialidade: req.body.nomeEspecialidade});
     
-    especialidade.save(function(err, data) {
+    especialidade.save(function(err) {     
         
-        console.log(data);
-
         if (err) {
             res.status(400).json(err);
-        } else {
-            var idEsp = data.id;
-            console.log(idEsp);
-            res.status(201).json(data);
         }
     });
-    /// ate aqui funciona
-  
-   // var idDaEspecialidade = Especialidade.findOne({nomeEspecialidade:req.param.nomeEspecialidade});
-   // console.log('aqui é a pesquisa '+ idDaEspecialidade.id);
-/*   
-    console.log(especialidade.id);
-    var medico_especi = new Med_Espe({
-        crmMedico:  req.body.crm,
-        idEspecialidade: idEsp
-    });
 
-    medico_especi.save(function(err, data) {
-        
+    var novoMedico = new Medico(req.body);
+
+    novoMedico.especialidades.push(especialidade._id);    
+    
+    novoMedico.save(function(err, data) {       
+
         console.log(data);
 
         if (err) {
@@ -91,7 +67,8 @@ medicoRouter.post('/add', function(req,res){
             res.status(201).json(data);
         }
     });
-   */
+   
+   
 });
 
 medicoRouter.post('/me',function(req,res){
