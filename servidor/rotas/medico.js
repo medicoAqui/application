@@ -12,7 +12,7 @@ medicoRouter.use(function(req, res, next) {
     console.log(req.method, req.url);
 
     // continue doing what we were doing and go to the route
-    next(); 
+    next();
 });
 
 // define the home page route
@@ -42,22 +42,30 @@ medicoRouter.get('/:id',function(res,req){
 
 /// aqui adiciona medico , cria a especialidade e a tebela medico especialidade
 
-medicoRouter.post('/add', function(req,res){	
+medicoRouter.post('/add', function(req,res){
 
-    var especialidade = new Especialidade({nomeEspecialidade: req.body.nomeEspecialidade});
-    
-    especialidade.save(function(err) {     
-        
-        if (err) {
-            res.status(400).json(err);
+    Especialidade.findOne({nomeEspecialidade: req.body.nomeEspecialidade }, function(err,data){
+        console.log(data)
+        if(err){
+          var especialidade = new Especialidade({ nomeEspecialidade: req.body.nomeEspecialidade });
+
+          especialidade.save(function(err,data) {
+
+            if (err) {
+                res.status(400).json(err);
+            } else {
+                res.status(201).json(data);
+            }
+          });
         }
     });
 
+
     var novoMedico = new Medico(req.body);
 
-    novoMedico.especialidades.push(especialidade._id);    
-    
-    novoMedico.save(function(err, data) {       
+    novoMedico.especialidades.push(req.body.nomeEspecialidade);
+
+    novoMedico.save(function(err, data) {
 
         console.log(data);
 
@@ -67,12 +75,26 @@ medicoRouter.post('/add', function(req,res){
             res.status(201).json(data);
         }
     });
-   
-   
-});
 
+
+});
+// Não funciona
+/*
+medicoRouter.delete('/delete', function(req,res){
+	var idMedico = { crm: req.params.crm };
+
+	Medico.remove(idMedico, function(err, data) {
+		if (err) {
+			res.status(400).json(err);
+		} else {
+			res.json(data);
+		}
+	});
+
+});
+*/
 medicoRouter.post('/me',function(req,res){
-  
+
     Medico.findOne({crm: req.body.rcm}, function(err,data){
         console.log(data)
         if(err){
@@ -125,7 +147,7 @@ medicoRouter.delete('/:crm', function(req,res){
 });
 
 medicoRouter.post('/consulta',function(req,res){
-	
+
 	var consulta = new Consulta(req.body);
 
 	consulta.save(function(err, data) {
@@ -140,7 +162,7 @@ medicoRouter.post('/consulta',function(req,res){
 			}
 
 	});
-		
+
 
 });
 
