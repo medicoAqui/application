@@ -145,7 +145,7 @@ public class JSONReader {
     }
 
     //Retorna uma lista de Especialidades dos medicos ja cadastrados com as informações retornadas do JSON
-    public HashSet<String> getEspecialidadesMedicas(String jsonString) {
+    public HashSet<String> getEspecialidadesMedicasByMedicos(String jsonString) {
 
         HashSet<String> especialidades = new HashSet<String>();
 
@@ -156,13 +156,33 @@ public class JSONReader {
         for (int i = 0; i < medicosJson.length(); i++) {
             jsonObjectMedico = new JSONObject(medicosJson.getString(i));
             Log.i("MEDICO ENCONTRADO: ","nome=" + jsonObjectMedico.getString("name"));
-            String especialidade = jsonObjectMedico.getString("especializacao");
+            String especialidade = jsonObjectMedico.getString("idEspecializacao");
             especialidades.add(especialidade.substring(0,1).toUpperCase().concat(especialidade.substring(1)));
         }
 
         } catch (JSONException e) {
             Log.e("Erro", "Erro no parsing do JSON", e);
         }
+        return especialidades;
+    }
+
+    public HashSet<String> getEspecialidadesMedicas(String jsonString) {
+        HashSet<String> especialidades = new HashSet<String>();
+
+            try {
+                JSONArray especialidadesJson = new JSONArray(jsonString);
+                JSONObject jsonObjectEspecialidade;
+
+                for (int i = 0; i < especialidadesJson.length(); i++) {
+                    jsonObjectEspecialidade = new JSONObject(especialidadesJson.getString(i));
+                    Log.i("Especialidade: ","especialidade=" + jsonObjectEspecialidade.getString("especialidade"));
+                    String especialidade = jsonObjectEspecialidade.getString("especialidade");
+                    especialidades.add(especialidade.substring(0,1).toUpperCase().concat(especialidade.substring(1)));
+                }
+
+            } catch (JSONException e) {
+                Log.e("Erro", "Erro no parsing do JSON", e);
+            }
         return especialidades;
     }
 

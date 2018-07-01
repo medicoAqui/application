@@ -5,14 +5,12 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.Spinner;
 
-import org.json.*;
 
 
 import com.example.gabriela.medicoaqui.Activity.Entities.Medico;
@@ -30,7 +28,7 @@ import java.util.List;
 public class MarcarConsultaActivity extends AppCompatActivity {
 
     ArrayList<String> lista_especialidades = new ArrayList<String>(){};
-    String[] tratamento;
+    ArrayList<String> lista_horarios = new ArrayList<String>(){};
     String resposta;
     JSONReader jsonReader = new JSONReader();
     HttpConnections http = new HttpConnections();
@@ -42,6 +40,7 @@ public class MarcarConsultaActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_marcar_consulta);
         final Spinner spinEspecialidade = findViewById(R.id.spinner_especialidade);
+        final Spinner spinHorario = findViewById(R.id.spinner_horario);
         final CalendarView dataConsulta = findViewById(R.id.data_calendar);
         final Date data = new Date();
 
@@ -50,14 +49,20 @@ public class MarcarConsultaActivity extends AppCompatActivity {
         resposta = getIntent().getExtras().getString("intent");
 
         lista_especialidades.add("Selecione");
+        lista_horarios.add("Selecione");
+        lista_horarios.add("08:00");
+        lista_horarios.add("12:00");
 
-        carregaEspecialidadesEmLista();
-       // tratamentoDeListaMedicos();
-       //  colocaPrimeiraLetraMaiuscula();
+        // carregaEspecialidadesEmLista();
 
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, lista_especialidades );
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinEspecialidade.setAdapter(dataAdapter);
+
+        ArrayAdapter<String> dataAdapterEspecialidades = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, lista_especialidades );
+        dataAdapterEspecialidades.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinEspecialidade.setAdapter(dataAdapterEspecialidades);
+
+        ArrayAdapter<String> dataAdapterHorarios = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, lista_horarios );
+        dataAdapterHorarios.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinHorario.setAdapter(dataAdapterHorarios);
 
 
         dataConsulta.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
@@ -97,48 +102,18 @@ public class MarcarConsultaActivity extends AppCompatActivity {
         });
     }
 
-    private void colocaPrimeiraLetraMaiuscula() {
-        for (int i = 0; i < lista_especialidades.size(); i++) {
-            String aux =  lista_especialidades.get(i).substring(0,1)
-                        .toUpperCase().concat(lista_especialidades.get(i).substring(1));
-            lista_especialidades.remove(i);
-            lista_especialidades.add(i,aux);
 
-        }
-    }
-
-
-    private void tratamentoDeListaMedicos() {
-        tratamento = resposta.split(",");
-        for (int i = 0; i < tratamento.length; i++) {
-            if(tratamento[i].contains("especializacao")){
-                String[] aux = tratamento[i].split(":");
-                String[] aux2 = aux[1].split("");
-                aux[1] = "";
-                for (int j = 2; j < aux2.length-1; j++) {
-                    aux[1] += aux2[j];
-
-                }
-                if(!(lista_especialidades.contains(aux[1]))){
-                    lista_especialidades.add(aux[1]);
-                }
-
-            }
-
-        }
-    }
-
-    private void carregaEspecialidadesEmLista() {
+    /*private void carregaEspecialidadesEmLista() {
 
         new Thread(new Runnable() {
             @Override
             public void run() {
-                String medicos = http.get("http://medicoishere.herokuapp.com/medico/medicos");
+                String especialidadesBD = http.get("https://medicoishere.herokuapp.com/especialidade/especialidades");
 
-                HashSet<String> especialidades = jsonReader.getEspecialidadesMedicas(medicos);
+                HashSet<String> especialidades = jsonReader.getEspecialidadesMedicas(especialidadesBD);
 
                 lista_especialidades.addAll(especialidades);
             }
         }).start();
-    }
+    }*/
 }
