@@ -1,9 +1,7 @@
 var express = require('express');
 var usuarioRouter =  express.Router();
 var Usuario = require('../modelos/userCliente.js');
-
-//var checarToken = require('../rotas/checarToken');
-
+var Consulta = require('../modelos/consulta');
 
 usuarioRouter.use(function(req, res, next) {
 
@@ -26,6 +24,18 @@ usuarioRouter.get('/clientes', function(req, res) {
     });
 });
 
+usuarioRouter.post('/me',function(req,res){
+  
+    Usuario.findOne({_id: req.body.id}, function(err,data){
+        console.log(data)
+        if(err){
+            res.status(500).send(err);
+        }else{
+            res.send(data);
+        }
+    });
+});
+
 
 
 usuarioRouter.post('/add', function(req,res){
@@ -44,13 +54,36 @@ usuarioRouter.post('/add', function(req,res){
 
 });
 
-usuarioRouter.put('/:id', /* checarToken, */ function (req, res) {
-    Usuario.findByIdAndUpdate(req.params.id, req.body, {new: true}, function (err, user) {
-        if (err) return res.status(500).send("There was a problem updating the user.");
-        res.status(200).send(user);
+
+usuarioRouter.put('/:id',function(req,res){
+    //var idCliente = {_id: req.params.id};
+    var corpo = req.body;
+    console.log(corpo);
+
+    Usuario.findByIdAndUpdate(req.params.id,corpo,{new: true}, function(err,data){
+        if(err){
+             res.status(500).send(err);
+        }else{
+             res.send(data)
+        }
     });
 });
 
+
+usuarioRouter.put('/consulta/:id', function(req,res){
+    var corpo = req.body;
+    console.log(corpo);
+
+    Consulta.findByIdAndUpdate(req.params.id,corpo,{new: true}, function(err,data){
+        console.log(data);
+        if(err){
+            res.status(500).send(err);
+        }else{
+            res.send(data)
+        }
+    });
+
+});
 
 
 usuarioRouter.delete('/:id', function(req,res){
