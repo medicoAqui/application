@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -11,12 +12,13 @@ import android.view.View;
 
 import com.example.gabriela.medicoaqui.Activity.Service.HttpConnections;
 import com.example.gabriela.medicoaqui.R;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class MedicoAqui extends AppCompatActivity {
 
     String resposta = "Init";
     private static HttpConnections http = new HttpConnections();
-
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,8 +51,14 @@ public class MedicoAqui extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        mAuth = FirebaseAuth.getInstance();
         switch (item.getItemId()) {
             case R.id.logout:
+                Intent intentFazerLogout = new Intent(getApplicationContext(), TelaLogin.class);
+                startActivity(intentFazerLogout);
+                finish();
+                mAuth.signOut();
+                Log.d("Logout", "saindo da aplicação");
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
