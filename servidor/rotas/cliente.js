@@ -59,7 +59,7 @@ usuarioRouter.put('/:cpf',function(req,res){
     //var idCliente = {_id: req.params.id};
     var corpo = req.body;
     console.log(corpo);
-
+console.log(req.params.cpf);
     Usuario.findByIdAndUpdate(req.params.cpf,corpo,{new: true}, function(err,data){
         if(err){
              res.status(500).send(err);
@@ -96,6 +96,19 @@ usuarioRouter.delete('/:cpf', function(req,res){
 			res.json(data);
 		}
 	});
+
+});
+
+usuarioRouter.post('/clientePorEmail', function(req,res){
+    
+    Usuario.findOne({email: req.body.email}, function(err,data){
+        console.log(data)
+        if(data == null){
+            res.status(400).json('Email não encontrado.');
+        }else{
+            res.send(data);
+        }
+    });
 
 });
 
