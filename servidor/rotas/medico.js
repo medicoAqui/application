@@ -1,6 +1,7 @@
-var express = require('express');
+﻿var express = require('express');
 var medicoRouter =  express.Router();
 var Medico = require('../modelos/userMedico.js');
+var Consulta = require('../modelos/consulta');
 
 medicoRouter.use(function(req, res, next) {
 
@@ -12,8 +13,28 @@ medicoRouter.use(function(req, res, next) {
 });
 
 // define the home page route
-medicoRouter.get('/', function(req, res) {
-  res.send('pega dados do medico');
+medicoRouter.get('/medicos', function(req, res) {
+  var medico = Medico.find({});
+
+  medico.exec(function(err,data){
+  	if(err){
+  		res.sendStatus(500);
+  	}else{
+  		res.json(data);
+  	}
+  });
+});
+
+medicoRouter.get('/:id',function(res,req){
+	var medico = Medico.find({_id: req.param.id});
+
+	medico.exec(function(err,data){
+		if(err) {
+            res.sendStatus(400).json('Medico nao encontrado no sistema');
+        }else{
+			res.json(data);
+		}
+	});
 });
 
 
@@ -35,7 +56,43 @@ medicoRouter.post('/add', function(req,res){
 
 });
 
-medicoRouter.put('/:id', function(red,res){
+medicoRouter.post('/me',function(req,res){
+  
+    Medico.findOne({_id: req.body.id}, function(err,data){
+        console.log(data)
+        if(err){
+            res.status(500).send('Medico nao cadastrado');
+        }else{
+            res.send(data);
+        }
+    });
+});
+
+medicoRouter.put('/:id', function(req,res){
+    var corpo = req.body;
+    console.log(corpo);
+
+    Medico.findByIdAndUpdate(req.params.id,corpo,{new: true}, function(err,data){
+        if(err){
+            res.status(500).send(err);
+        }else{
+            res.send(data)
+        }
+    });
+
+});
+
+medicoRouter.put('/consulta/:id', function(red,res){
+    var corpo = req.body;
+    console.log(corpo);
+
+    Consulta.findByIdAndUpdate(req.params.id,corpo,{new: true}, function(err,data){
+        if(err){
+            res.status(500).send(err);
+        }else{
+            res.send(data)
+        }
+    });
 
 });
 
@@ -51,5 +108,26 @@ medicoRouter.delete('/:id', function(req,res){
 	});
 
 });
+
+medicoRouter.post('/consulta',function(req,res){
+	
+	var consulta = new Consulta(req.body);
+
+	consulta.save(function(err, data) {
+		console.log(consulta);
+
+		console.log(data);
+
+		if (err) {
+			res.status(400).json(err);
+		} else {
+				res.status(201).json(data);
+			}
+
+	});
+		
+
+});
+
 
 module.exports = medicoRouter;
