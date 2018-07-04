@@ -55,7 +55,8 @@ public class MarcarConsultaActivity extends AppCompatActivity {
         dataAdapter(spinMedicos, lista_medicos);
 
         carregaEspecialidadesEmLista();
-        //carregaMedicosEmLista("Ginecologia");
+
+
 
         dataConsulta.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
 
@@ -79,8 +80,16 @@ public class MarcarConsultaActivity extends AppCompatActivity {
                         spinMedicos.setEnabled(false);
                     } else {
                         spinMedicos.setEnabled(true);
+                        limpaListaDeMedicos();
                         carregaMedicosEmLista(especializacao);
+
                     }
+            }
+
+            private void limpaListaDeMedicos() {
+                for (int i = lista_medicos.size() - 1; i > 0; i--) {
+                    lista_medicos.remove(i);
+                }
             }
 
             @Override
@@ -94,15 +103,16 @@ public class MarcarConsultaActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                String especialidade = spinEspecialidade.getSelectedItem().toString();
-                String res = lista_medicos.get(1);
+
+                String dia = String.valueOf(data.getDate())+"/"+String.valueOf(data.getMonth())+"/"+String.valueOf(data.getYear());
+                String res = spinEspecialidade.getSelectedItem().toString() +"-"+ spinMedicos.getSelectedItem().toString() +"-"+ dia;
                 // preparando AlertDialog: instanciando e setando valores o objeto AlertDialog
                 // Instância
                 AlertDialog.Builder dialogo = new AlertDialog.Builder(MarcarConsultaActivity.this);
                 // setando título
                 dialogo.setTitle("Resultado");
                 // setando mensagem
-                dialogo.setMessage(res + data.toString());
+                dialogo.setMessage(res);
                 // setando botão
                 dialogo.setNeutralButton("OK", null);
                 // chamando o AlertDialog
@@ -139,10 +149,6 @@ public class MarcarConsultaActivity extends AppCompatActivity {
         }).start();
     }
 
-    private void limpaListaMedicos(){
-        ArrayList<String> lista_aux = new ArrayList<>();
-        lista_medicos = lista_aux;
-    }
 
     private void carregaMedicosEmLista(String especialidade) {
         final JSONObject jsonTT = new JSONObject();
