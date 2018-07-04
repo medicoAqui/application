@@ -144,6 +144,26 @@ public class JSONReader {
         return medico;
     }
 
+    public HashSet<String> getMedicosByEspecialidade(String jsonString) {
+        HashSet<String> nomes = new HashSet<String>();
+
+        try {
+            JSONArray nomesJson = new JSONArray(jsonString);
+            JSONObject jsonObjectNome;
+
+            for (int i = 0; i < nomesJson.length(); i++) {
+                jsonObjectNome = new JSONObject(nomesJson.getString(i));
+                Log.i("Nome: ","nome=" + jsonObjectNome.getString("name"));
+                String nome = jsonObjectNome.getString("name");
+                nomes.add(nome.substring(0,1).toUpperCase().concat(nome.substring(1)));
+            }
+
+        } catch (JSONException e) {
+            Log.e("Erro", "Erro no parsing do JSON", e);
+        }
+        return nomes;
+    }
+
     //Retorna uma lista de Especialidades dos medicos ja cadastrados com as informações retornadas do JSON
     public HashSet<String> getEspecialidadesMedicasByMedicos(String jsonString) {
 
@@ -175,8 +195,8 @@ public class JSONReader {
 
                 for (int i = 0; i < especialidadesJson.length(); i++) {
                     jsonObjectEspecialidade = new JSONObject(especialidadesJson.getString(i));
-                    Log.i("Especialidade: ","especialidade=" + jsonObjectEspecialidade.getString("especialidade"));
-                    String especialidade = jsonObjectEspecialidade.getString("especialidade");
+                    Log.i("Especialidade: ","especialidade=" + jsonObjectEspecialidade.getString("nomeEspecialidade"));
+                    String especialidade = jsonObjectEspecialidade.getString("nomeEspecialidade");
                     especialidades.add(especialidade.substring(0,1).toUpperCase().concat(especialidade.substring(1)));
                 }
 
