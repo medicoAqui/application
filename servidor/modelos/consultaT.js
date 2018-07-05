@@ -5,7 +5,7 @@ const AutoIncrement = require('mongoose-sequence')(mongoose);
 var consultaTSchema = new Schema({
 
 	observacao:{type:String},
-	dataConsulta:{type:Date, required:true},
+	dataConsulta:{type:String, required:true},
 	hora:{type:String,required:true},
 	status:{type:String, required:true },
   consultorio : { type: Schema.Types.ObjectId, ref: 'Consultorio' },

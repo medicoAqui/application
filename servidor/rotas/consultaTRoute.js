@@ -40,19 +40,41 @@ consultaTRouter.get('/:id',function(res,req){
 		}
 	});
 });
-// Consulta nao funcionat1
-consultaTRouter.post('/consultasByDate',function(res,req){
-	var consulta = ConsultaT.find({dataConsulta: { $lte: new Date(req.params.dataConsulta) }});
 
-	consulta.exec(function(err,data1){
+consultaTRouter.post('/consultasByDateAndCrm',function(req,res){
+
+  var medico = Medico.find({crm: req.body.crm});
+  medico.exec(function(err,data){
+      console.log(data)
+      if(err){
+          res.status(500).send(err);
+      }else{
+        var consulta = ConsultaT.find({dataConsulta: req.body.dataConsulta, medico: data});
+        consulta.exec(function(err,data2){
+            console.log(data2)
+            if(err){
+                res.status(500).send(err);
+            }else{
+               res.send(data2);
+            }
+        });
+      }
+  });
+
+});
+
+consultaTRouter.get('/:id',function(res,req){
+	var consulta = ConsultaT.find({_id: req.param.id});
+
+	consulta.exec(function(err,data){
 		if(err) {
             res.sendStatus(400).json('ConsultaT nao encontrada no sistema');
         }else{
-			res.json(data1);
+			res.json(data);
 		}
 	});
 });
-
+// Consulta nao funcionat1
 
 consultaTRouter.post('/add', function(req,res){
 
