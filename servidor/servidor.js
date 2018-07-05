@@ -20,6 +20,9 @@ var rotaAcesso = require('./rotas/acesso');
 var rotaConsulta =  require('./rotas/consultaR');
 var rotaEspecialidade = require('./rotas/especialidadeR');
 
+//var rotaMedicoTeste = require('./rotas/medicoTesteRoute');
+//var rotaEspecialidadeTeste = require('./rotas/especialidadeTesteRoute');
+
 app.use(cors());
 app.use(morgan('dev'));
 
@@ -40,7 +43,10 @@ app.use('/cliente',rotaCliente)
 app.use('/medico',rotaMedico);
 app.use('/auth', rotaAcesso);
 app.use('/consulta',rotaConsulta);
-app.use('/especilidade',rotaEspecialidade);
+app.use('/especialidade',rotaEspecialidade);
+
+//app.use('/medicoTeste',rotaMedicoTeste);
+//app.use('/especialidadeTeste',rotaEspecialidadeTeste);
 
 //app.set('superSecret', config.secret);
 

@@ -26,7 +26,7 @@ usuarioRouter.get('/clientes', function(req, res) {
 
 usuarioRouter.post('/me',function(req,res){
   
-    Usuario.findOne({_id: req.body.id}, function(err,data){
+    Usuario.findOne({cpf: req.body.cpf}, function(err,data){
         console.log(data)
         if(err){
             res.status(500).send(err);
@@ -55,12 +55,12 @@ usuarioRouter.post('/add', function(req,res){
 });
 
 
-usuarioRouter.put('/:id',function(req,res){
+usuarioRouter.put('/:cpf',function(req,res){
     //var idCliente = {_id: req.params.id};
     var corpo = req.body;
     console.log(corpo);
-
-    Usuario.findByIdAndUpdate(req.params.id,corpo,{new: true}, function(err,data){
+console.log(req.params.cpf);
+    Usuario.findByIdAndUpdate(req.params.cpf,corpo,{new: true}, function(err,data){
         if(err){
              res.status(500).send(err);
         }else{
@@ -70,11 +70,11 @@ usuarioRouter.put('/:id',function(req,res){
 });
 
 
-usuarioRouter.put('/consulta/:id', function(req,res){
+usuarioRouter.put('/consulta/:cpf', function(req,res){
     var corpo = req.body;
     console.log(corpo);
 
-    Consulta.findByIdAndUpdate(req.params.id,corpo,{new: true}, function(err,data){
+    Consulta.findByIdAndUpdate(req.params.cpf,corpo,{new: true}, function(err,data){
         console.log(data);
         if(err){
             res.status(500).send(err);
@@ -86,8 +86,8 @@ usuarioRouter.put('/consulta/:id', function(req,res){
 });
 
 
-usuarioRouter.delete('/:id', function(req,res){
-	var idUsuario = { _id: req.params.id };
+usuarioRouter.delete('/:cpf', function(req,res){
+	var idUsuario = { cpf: req.params.cpf };
 
 	Usuario.remove(idUsuario, function(err, data) {
 		if (err) {
@@ -96,6 +96,19 @@ usuarioRouter.delete('/:id', function(req,res){
 			res.json(data);
 		}
 	});
+
+});
+
+usuarioRouter.post('/clientePorEmail', function(req,res){
+    
+    Usuario.findOne({email: req.body.email}, function(err,data){
+        console.log(data)
+        if(data == null){
+            res.status(400).json('Email não encontrado.');
+        }else{
+            res.send(data);
+        }
+    });
 
 });
 

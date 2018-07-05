@@ -4,7 +4,7 @@ var Schema = mongoose.Schema;
 
 var especi_Schema = new Schema({
   
-	especialidade:{ type: String, required: true, unique:true}
+	nomeEspecialidade:{ type: String, required: true, unique:true}
 
 });
 especi_Schema.plugin(AutoIncrement, {inc_field: 'id'});
@@ -21,6 +21,6 @@ function getNextSequenceValue(sequenceName){
 }
 
 */
-var especilidade = mongoose.model('Especilidade', especi_Schema);
+var especilidade = mongoose.model('Especialidade', especi_Schema);
 
 module.exports = especilidade;

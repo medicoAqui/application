@@ -32,12 +32,18 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.gabriela.medicoaqui.Activity.Entities.Cliente;
+import com.example.gabriela.medicoaqui.Activity.JsonOperators.JSONReader;
+import com.example.gabriela.medicoaqui.Activity.Service.HttpConnections;
 import com.example.gabriela.medicoaqui.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -76,6 +82,12 @@ public class TelaLogin extends AppCompatActivity implements LoaderCallbacks<Curs
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     // Henrique Autenticacao - 24/05 - FIM
+
+    private JSONObject jsonTT = new JSONObject();
+    private JSONReader jsonReader = new JSONReader();
+    private static HttpConnections http = new HttpConnections();
+    public Cliente cliente;
+    public String clienteBD;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

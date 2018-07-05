@@ -17,6 +17,7 @@ import org.json.JSONObject;
 
     import java.io.FileWriter;
     import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
@@ -205,5 +206,38 @@ public class JSONReader {
             }
         return especialidades;
     }
+
+    public Cliente getClienteByEmail(String jsonString, String email) {
+        Cliente cliente = new Cliente();
+        try {
+            JSONArray clienteJson = new JSONArray(jsonString);
+            JSONObject jsonObjectCliente;
+
+            for (int i = 0; i < clienteJson.length(); i++) {
+                jsonObjectCliente = new JSONObject(clienteJson.getString(i));
+                Log.i("CLIENTE ENCONTRADO: ","nome=" + jsonObjectCliente.getString("name"));
+                if (email.equals(jsonObjectCliente.getString("email"))){
+
+                    SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+
+                    cliente.setNome(jsonObjectCliente.getString("name"));
+                    cliente.setCpf(jsonObjectCliente.getString("cpf"));
+                    cliente.setGenero(jsonObjectCliente.getString("genero"));
+                    cliente.setEmail(jsonObjectCliente.getString("email"));
+                    cliente.setTelefone(jsonObjectCliente.getString("telefone"));
+                    //cliente.setData_nascimento(formato.parse(jsonObjectCliente.getString("")));
+                    //tipo sanguíneo
+                    //alergias
+
+                    break;
+                }
+            }
+
+        } catch (JSONException e) {
+            Log.e("Erro", "Erro no parsing do JSON", e);
+        }
+        return cliente;
+    }
+
 
 }

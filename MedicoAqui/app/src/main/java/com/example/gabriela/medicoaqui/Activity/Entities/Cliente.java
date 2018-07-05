@@ -9,11 +9,13 @@ import java.util.Date;
 public class Cliente extends Pessoa {
     public String email;
     public String telefone;
+    public String id;
 
-    public Cliente(String nome, String cpf, Date data, String genero, String email, String telefone) {
+    public Cliente(String nome, String cpf, Date data, String genero, String email, String telefone, String id) {
         super(nome, cpf, data, genero);
         this.email = email;
         this.telefone = telefone;
+        this.id = id;
     }
     public Cliente(){
         super();
@@ -33,5 +35,13 @@ public class Cliente extends Pessoa {
 
     public void setTelefone(String telefone) {
         this.telefone = telefone;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }
