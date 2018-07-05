@@ -89,7 +89,7 @@ public class TelaLogin extends AppCompatActivity implements LoaderCallbacks<Curs
     public Cliente cliente;
     public String clienteBD;
     public static String emailCliente;
-    public Cliente clientePerfil;
+    public static Cliente clientePerfil;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -480,4 +480,5 @@ public class TelaLogin extends AppCompatActivity implements LoaderCallbacks<Curs
         clientePerfil = cliente;
     }
 
+    public static Cliente getClientePerfil() { return clientePerfil; }
 }

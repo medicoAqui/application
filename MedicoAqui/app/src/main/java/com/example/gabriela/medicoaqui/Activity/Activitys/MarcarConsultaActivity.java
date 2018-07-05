@@ -1,3 +1,4 @@
+
 package com.example.gabriela.medicoaqui.Activity.Activitys;
 
 import android.content.Intent;
@@ -55,7 +56,6 @@ public class MarcarConsultaActivity extends AppCompatActivity {
         dataAdapter(spinMedicos, lista_medicos);
 
         carregaEspecialidadesEmLista();
-
 
 
         dataConsulta.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {

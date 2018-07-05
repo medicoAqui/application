@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.gabriela.medicoaqui.Activity.Entities.Cliente;
@@ -21,10 +22,10 @@ import org.json.JSONObject;
 
 public class VisualizarPerfil extends AppCompatActivity {
 
-    private JSONObject jsonTT = new JSONObject();
-    private static HttpConnections http = new HttpConnections();
-    private JSONReader jsonReader = new JSONReader();
-    private Cliente clientePerfil;
+    //private JSONObject jsonTT = new JSONObject();
+    //private static HttpConnections http = new HttpConnections();
+    //private JSONReader jsonReader = new JSONReader();
+    //private Cliente clientePerfil;
 
     public String nome, sobrenome, email, cpf, password, telefone, sexo;
 
@@ -42,6 +43,18 @@ public class VisualizarPerfil extends AppCompatActivity {
         //texto.setText(db.somarCategoria());
         //emailCliente.setText();
 
+
+        final TextView nomeCliente = findViewById(R.id.nomeUsuario);
+        final TextView emailCliente = findViewById(R.id.emailUsuario);
+        final TextView cpfCliente = findViewById(R.id.cpfUsuario);
+        final TextView sexoCliente = findViewById(R.id.sexoUsuario);
+        final TextView telefoneCliente = findViewById(R.id.telefoneUsuario);
+
+        nomeCliente.setText(TelaLogin.getClientePerfil().getNome());
+        emailCliente.setText(TelaLogin.getClientePerfil().getEmail());
+        cpfCliente.setText(TelaLogin.getClientePerfil().getCpf());
+        sexoCliente.setText(TelaLogin.getClientePerfil().getGenero());
+        telefoneCliente.setText(TelaLogin.getClientePerfil().getTelefone());
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_perfil);
         fab.setOnClickListener(new View.OnClickListener() {
