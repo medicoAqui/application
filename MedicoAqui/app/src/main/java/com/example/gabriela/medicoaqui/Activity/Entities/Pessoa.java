@@ -17,6 +17,7 @@ public class Pessoa {
         this.data_nascimento = data;
         this.genero = genero;
     }
+
     public Pessoa(){}
 
     public String getNome() {

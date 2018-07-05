@@ -88,6 +88,8 @@ public class TelaLogin extends AppCompatActivity implements LoaderCallbacks<Curs
     private static HttpConnections http = new HttpConnections();
     public Cliente cliente;
     public String clienteBD;
+    public static String emailCliente;
+    public Cliente clientePerfil;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -135,8 +137,9 @@ public class TelaLogin extends AppCompatActivity implements LoaderCallbacks<Curs
                 // 1. Instantiate an AlertDialog.Builder with its constructor
                 final AlertDialog.Builder builder = new AlertDialog.Builder(TelaLogin.this);
                 builder.setTitle("Falha de autenticação");
+                setEmailCliente(mEmailView.getText().toString());
 
-                if ( !("".equals(mEmailView.getText().toString()) || "".equals(mPasswordView.getText().toString()))) {
+                if (!("".equals(mEmailView.getText().toString()) || "".equals(mPasswordView.getText().toString()))) {
                     mAuth.signInWithEmailAndPassword(mEmailView.getText().toString(), mPasswordView.getText().toString()).addOnCompleteListener(TelaLogin.this, new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
@@ -148,12 +151,15 @@ public class TelaLogin extends AppCompatActivity implements LoaderCallbacks<Curs
                                 dialog.show();
                             } else {
                                 Log.d("AUTH", "Login Efetuado com sucesso!!!");
+                                //emailCliente = mEmailView.getText().toString();
                                 attemptLogin();
+                                carregaClienteEmail(mEmailView.getText().toString());
+
                             }
                         }
                     });
-                }
-                else{
+
+                } else {
                     builder.setMessage("Favor insira os dados de email e senha");
                     AlertDialog dialog = builder.create();
                     dialog.show();
@@ -438,5 +444,40 @@ public class TelaLogin extends AppCompatActivity implements LoaderCallbacks<Curs
             showProgress(false);
         }
     }
-}
 
+    public static String getEmailCliente() {
+        return emailCliente;
+    }
+    public void setEmailCliente(String email) {
+        emailCliente = email;
+    }
+
+    private void carregaClienteEmail(String email) {
+        final JSONObject jsonTT = new JSONObject();
+        //Cliente cliente;
+        try {
+            jsonTT.put("email", email);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    String clienteBD = http.sendPost("http://medicoishere.herokuapp.com/cliente/clientePorEmail", jsonTT.toString());
+                    Cliente cliente = jsonReader.getClienteByEmail(clienteBD);
+                    setClientePerfil(cliente);
+                } catch (HttpConnections.MinhaException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+    }
+
+    private void setClientePerfil(Cliente cliente) {
+        clientePerfil = cliente;
+    }
+
+}

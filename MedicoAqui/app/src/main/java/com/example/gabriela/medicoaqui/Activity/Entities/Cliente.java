@@ -15,7 +15,6 @@ public class Cliente extends Pessoa {
         super(nome, cpf, data, genero);
         this.email = email;
         this.telefone = telefone;
-        this.id = id;
     }
     public Cliente(){
         super();
@@ -44,4 +43,5 @@ public class Cliente extends Pessoa {
     public void setId(String id) {
         this.id = id;
     }
+
 }

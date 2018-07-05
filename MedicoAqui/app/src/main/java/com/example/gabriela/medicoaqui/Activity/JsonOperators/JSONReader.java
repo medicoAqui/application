@@ -12,8 +12,9 @@ import com.example.gabriela.medicoaqui.Activity.Entities.Medico;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.json.JSONStringer;
 
-    //Classes necessárias
+//Classes necessárias
 
     import java.io.FileWriter;
     import java.io.IOException;
@@ -121,23 +122,17 @@ public class JSONReader {
     }
 
     //Retorna uma lista de Medicos com as informações retornadas do JSON
-    public Medico getMedicoByCRM(String jsonString, String crm) {
+    public Medico getMedicoByCRM(String jsonString) {
         Medico medico = new Medico();
         try {
-            JSONArray medicosJson = new JSONArray(jsonString);
-            JSONObject jsonObjectMedico;
+            JSONObject jsonObjectMedico = new JSONObject(jsonString);
 
-            for (int i = 0; i < medicosJson.length(); i++) {
-                jsonObjectMedico = new JSONObject(medicosJson.getString(i));
-                Log.i("MEDICO ENCONTRADO: ","nome=" + jsonObjectMedico.getString("name"));
-                if (crm.equals(jsonObjectMedico.getString("crm"))){
+            Log.i("MEDICO ENCONTRADO: ","nome=" + jsonObjectMedico.getString("name"));
 
-                    medico.setNome(jsonObjectMedico.getString("name"));
-                    medico.setCpf(jsonObjectMedico.getString("cpf"));
-                    medico.setEspecialidade((jsonObjectMedico.getString("especialidade")));
-                    break;
-                }
-            }
+            medico.setNome(jsonObjectMedico.getString("name"));
+            medico.setCpf(jsonObjectMedico.getString("cpf"));
+            medico.setEspecialidade((jsonObjectMedico.getString("especialidade")));
+
 
         } catch (JSONException e) {
             Log.e("Erro", "Erro no parsing do JSON", e);
@@ -207,31 +202,23 @@ public class JSONReader {
         return especialidades;
     }
 
-    public Cliente getClienteByEmail(String jsonString, String email) {
+    public Cliente getClienteByEmail(String jsonString) { //}, String email) {
         Cliente cliente = new Cliente();
         try {
-            JSONArray clienteJson = new JSONArray(jsonString);
-            JSONObject jsonObjectCliente;
+            JSONObject jsonObjectCliente = new JSONObject(jsonString);
 
-            for (int i = 0; i < clienteJson.length(); i++) {
-                jsonObjectCliente = new JSONObject(clienteJson.getString(i));
-                Log.i("CLIENTE ENCONTRADO: ","nome=" + jsonObjectCliente.getString("name"));
-                if (email.equals(jsonObjectCliente.getString("email"))){
+            Log.i("CLIENTE ENCONTRADO: ","nome=" + jsonObjectCliente.getString("name"));
 
-                    SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+            SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
 
-                    cliente.setNome(jsonObjectCliente.getString("name"));
-                    cliente.setCpf(jsonObjectCliente.getString("cpf"));
-                    cliente.setGenero(jsonObjectCliente.getString("genero"));
-                    cliente.setEmail(jsonObjectCliente.getString("email"));
-                    cliente.setTelefone(jsonObjectCliente.getString("telefone"));
-                    //cliente.setData_nascimento(formato.parse(jsonObjectCliente.getString("")));
-                    //tipo sanguíneo
-                    //alergias
-
-                    break;
-                }
-            }
+            cliente.setNome(jsonObjectCliente.getString("name"));
+            cliente.setCpf(jsonObjectCliente.getString("cpf"));
+            cliente.setGenero(jsonObjectCliente.getString("sexo"));
+            cliente.setEmail(jsonObjectCliente.getString("email"));
+            cliente.setTelefone(jsonObjectCliente.getString("telefone"));
+            //cliente.setData_nascimento(formato.parse(jsonObjectCliente.getString("")));
+            //tipo sanguíneo
+            //alergias
 
         } catch (JSONException e) {
             Log.e("Erro", "Erro no parsing do JSON", e);
