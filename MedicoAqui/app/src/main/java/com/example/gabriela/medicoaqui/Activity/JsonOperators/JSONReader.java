@@ -7,6 +7,7 @@ package com.example.gabriela.medicoaqui.Activity.JsonOperators;
 import android.util.Log;
 
 import com.example.gabriela.medicoaqui.Activity.Entities.Cliente;
+import com.example.gabriela.medicoaqui.Activity.Entities.Consulta;
 import com.example.gabriela.medicoaqui.Activity.Entities.Medico;
 
 import org.json.JSONArray;
@@ -140,6 +141,28 @@ public class JSONReader {
         return medico;
     }
 
+    public HashSet<Medico> getMedicosByEspecialidadeEntity(String jsonString) {
+        HashSet<Medico> medicos = new HashSet<Medico>();
+
+        try {
+            JSONArray nomesJson = new JSONArray(jsonString);
+            JSONObject jsonObjectNome;
+
+            for (int i = 0; i < nomesJson.length(); i++) {
+                jsonObjectNome = new JSONObject(nomesJson.getString(i));
+                Log.i("Nome: ","nome=" + jsonObjectNome.getString("name"));
+                String nome = jsonObjectNome.getString("name");
+                String crm = jsonObjectNome.getString("crm");
+                Medico medico = new Medico(nome, null, null, null, null, null, null, crm);
+                medicos.add(medico);
+            }
+
+        } catch (JSONException e) {
+            Log.e("Erro", "Erro no parsing do JSON", e);
+        }
+        return medicos;
+    }
+
     public HashSet<String> getMedicosByEspecialidade(String jsonString) {
         HashSet<String> nomes = new HashSet<String>();
 
@@ -224,6 +247,40 @@ public class JSONReader {
             Log.e("Erro", "Erro no parsing do JSON", e);
         }
         return cliente;
+    }
+
+    public HashSet<Consulta> getConsultasByDateAndCrm(String jsonString) {
+
+        // Ao inves de um  HashSet<String> de string tem que criar uma lista de <Consulta>
+        HashSet<Consulta> consultas = new HashSet<Consulta>();
+
+        try {
+            JSONArray consultasJson = new JSONArray(jsonString);
+            JSONObject jsonObjectConsulta;
+
+            for (int i = 0; i < consultasJson.length(); i++) {
+                jsonObjectConsulta = new JSONObject(consultasJson.getString(i));
+                Log.i("Consulta: ","parametro=" + jsonObjectConsulta.getString("hora"));
+
+                String observacao = jsonObjectConsulta.getString("observacao");
+                String hora = jsonObjectConsulta.getString("hora");
+                String status = jsonObjectConsulta.getString("status");
+                String cliente = jsonObjectConsulta.getString("cliente");
+                String medico = jsonObjectConsulta.getString("medico");
+                String consultorio = jsonObjectConsulta.getString("consultorio");
+                String idConsulta = jsonObjectConsulta.getString("idConsulta");
+
+
+                // Monta AQUI um objeto consulta e adiciona na lista que deve ser retornada
+
+                Consulta consulta = new Consulta(observacao, hora, status, cliente, medico, consultorio, idConsulta);
+                consultas.add(consulta);
+            }
+
+        } catch (JSONException e) {
+            Log.e("Erro", "Erro no parsing do JSON", e);
+        }
+        return consultas;
     }
 
 
