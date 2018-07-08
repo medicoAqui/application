@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center">
+
+
+    <TableLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TableRow>
+        <TextView
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Estado"
+            android:layout_marginRight="8dp"/>
+
+        <Spinner
+            android:id="@+id/spinner_estado"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+        </TableRow>
+    <TableRow>
+        <TextView
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Cidade:"
+            android:layout_marginRight="8dp"/>
+
+        <Spinner
+            android:id="@+id/spinner_cidade"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </TableRow></TableLayout>
+
+
+</android.support.constraint.ConstraintLayout>

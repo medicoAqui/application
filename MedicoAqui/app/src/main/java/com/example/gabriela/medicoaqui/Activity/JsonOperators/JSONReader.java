@@ -6,8 +6,10 @@ package com.example.gabriela.medicoaqui.Activity.JsonOperators;
 
 import android.util.Log;
 
+import com.example.gabriela.medicoaqui.Activity.Entities.Cidade;
 import com.example.gabriela.medicoaqui.Activity.Entities.Cliente;
 import com.example.gabriela.medicoaqui.Activity.Entities.Consulta;
+import com.example.gabriela.medicoaqui.Activity.Entities.Estado;
 import com.example.gabriela.medicoaqui.Activity.Entities.Medico;
 
 import org.json.JSONArray;
@@ -284,5 +286,70 @@ public class JSONReader {
         return consultas;
     }
 
+
+    public HashSet<String> getEstados(String jsonString) {
+        HashSet<String> nomes = new HashSet<String>();
+
+        try {
+            JSONArray nomesJson = new JSONArray(jsonString);
+            JSONObject jsonObjectNome;
+
+            for (int i = 0; i < nomesJson.length(); i++) {
+                jsonObjectNome = new JSONObject(nomesJson.getString(i));
+                Log.i("Nome: ","nome=" + jsonObjectNome.getString("nome"));
+                String nome = jsonObjectNome.getString("nome");
+                nomes.add(nome.substring(0,1).toUpperCase().concat(nome.substring(1)));
+            }
+
+        } catch (JSONException e) {
+            Log.e("Erro", "Erro no parsing do JSON", e);
+        }
+        return nomes;
+    }
+
+    public HashSet<Estado> getEstadosEntity(String jsonString) {
+        HashSet<Estado> estados = new HashSet<Estado>();
+
+        try {
+            JSONArray estadosJson = new JSONArray(jsonString);
+            JSONObject jsonObjectEstado;
+
+            for (int i = 0; i < estadosJson.length(); i++) {
+                jsonObjectEstado = new JSONObject(estadosJson.getString(i));
+                Log.i("Nome: ","nome=" + jsonObjectEstado.getString("name"));
+                Integer id = jsonObjectEstado.getInt("id");
+                String nome = jsonObjectEstado.getString("nome");
+                String sigla = jsonObjectEstado.getString("sigla");
+                Estado estado = new Estado(id, nome, sigla);
+                estados.add(estado);
+            }
+
+        } catch (JSONException e) {
+            Log.e("Erro", "Erro no parsing do JSON", e);
+        }
+        return estados;
+    }
+
+    public HashSet<Cidade> getCidades(String jsonString) {
+        HashSet<Cidade> cidades = new HashSet<Cidade>();
+
+        try {
+            JSONArray cidadesJson = new JSONArray(jsonString);
+            JSONObject jsonObjectCidades;
+
+            for (int i = 0; i < cidadesJson.length(); i++) {
+                jsonObjectCidades = new JSONObject(cidadesJson.getString(i));
+                Log.i("Nome: ","nome=" + jsonObjectCidades.getString("name"));
+                Integer id = jsonObjectCidades.getInt("id");
+                String nome = jsonObjectCidades.getString("nome");
+                Cidade cidade = new Cidade(id, nome);
+                cidades.add(cidade);
+            }
+
+        } catch (JSONException e) {
+            Log.e("Erro", "Erro no parsing do JSON", e);
+        }
+        return cidades;
+    }
 
 }

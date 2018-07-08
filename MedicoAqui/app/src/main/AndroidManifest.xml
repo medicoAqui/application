@@ -39,6 +39,10 @@
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
+            android:name=".Activity.Activitys.Localizacao"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
             android:name=".Activity.Activitys.VisualizarPerfil"
             android:label="VisualizarPerfil"
             android:theme="@style/AppTheme.NoActionBar"></activity>
