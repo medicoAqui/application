@@ -5,33 +5,36 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Activity.Activitys.TelaPrincipal"
-    android:paddingLeft="32dp"
-    android:paddingRight="32dp"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@drawable/gradient_background"
+    android:gravity="center_horizontal"
+    >
 
-    <ImageView
+
+<ImageView
         android:layout_width="wrap_content"
-        android:layout_height="200dp"
-        android:src="@drawable/logo"/>
+        android:layout_height="350dp"
+        android:src="@drawable/logo_10"
+        android:gravity="center"/>
+
 
     <Button
         android:id="@+id/button_login"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:text="Entrar"
-        android:background="@drawable/rounded_button"
-        android:textColor="#fff"
-        android:backgroundTint="#1e90ff" />
+        style="?android:textAppearanceSmall"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:textStyle="bold" />
 
     <Button
         android:id="@+id/button_cadastro"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="Cadastro"
-        android:background="@drawable/rounded_button"
-        android:textColor="#fff"
-        android:backgroundTint="#1e90ff" />
+        style="?android:textAppearanceSmall"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:textStyle="bold" />
 
 
 </LinearLayout>

@@ -9,7 +9,9 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".Activity.Activitys.TelaLogin">
+    tools:context=".Activity.Activitys.TelaLogin"
+    android:background="@drawable/gradient_background"
+    android:layout_gravity="center">
 
     <!-- Login progress -->
     <ProgressBar
@@ -23,13 +25,15 @@
     <ScrollView
         android:id="@+id/login_form"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_gravity="center">
 
         <LinearLayout
             android:id="@+id/email_login_form"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_gravity="center">
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
@@ -42,7 +46,8 @@
                     android:hint="Email"
                     android:inputType="textEmailAddress"
                     android:maxLines="1"
-                    android:singleLine="true" />
+                    android:singleLine="true"
+                    android:textColorLink="@android:color/holo_blue_bright" />
 
             </android.support.design.widget.TextInputLayout>
 
@@ -60,7 +65,8 @@
                     android:imeOptions="actionUnspecified"
                     android:inputType="textPassword"
                     android:maxLines="1"
-                    android:singleLine="true" />
+                    android:singleLine="true"
+                    android:textColorLink="@android:color/holo_blue_bright" />
 
             </android.support.design.widget.TextInputLayout>
 

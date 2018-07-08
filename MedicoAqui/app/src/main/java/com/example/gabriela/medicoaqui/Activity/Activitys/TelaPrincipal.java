@@ -15,6 +15,7 @@ public class TelaPrincipal extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tela_principal);
+        //getSupportActionBar().hide();
 
         Button botaoCadastrar = (Button) findViewById(R.id.button_cadastro);
         Button botaoEntrar = (Button) findViewById(R.id.button_login);
