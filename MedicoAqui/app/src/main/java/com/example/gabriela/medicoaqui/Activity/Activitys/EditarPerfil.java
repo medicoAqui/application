@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,7 +27,7 @@ import org.json.JSONObject;
 
 public class EditarPerfil extends AppCompatActivity {
 
-    private JSONObject jsonTT = new JSONObject();
+    private JSONObject EditPerfilJsonTT = new JSONObject();
     private static HttpConnections http = new HttpConnections();
 
     public String nome, sobrenome, email, cpf, password, telefone, sexo;
@@ -39,6 +40,8 @@ public class EditarPerfil extends AppCompatActivity {
         setSupportActionBar(toolbar);
         Toast.makeText(this, "Bem vindo ao Editar Perfil", Toast.LENGTH_SHORT).show();
 
+        final android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(EditarPerfil.this);
+
         final EditText nomeEdit = findViewById(R.id.nomeEdit);
         final EditText emailEdit = findViewById(R.id.emailEdit);
         final EditText sexoEdit = findViewById(R.id.sexoEdit);
@@ -49,44 +52,101 @@ public class EditarPerfil extends AppCompatActivity {
         sexoEdit.setText(TelaLogin.getClientePerfil().getGenero());
         telefoneEdit.setText(TelaLogin.getClientePerfil().getTelefone());
 
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.edita_perfil);
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.button_edita_perfil);
         fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                nome = nomeEdit.getText().toString();
+                email = emailEdit.getText().toString();
+                sexo = sexoEdit.getText().toString();
+                telefone = telefoneEdit.getText().toString();
+
+                if (!(nome.isEmpty()) && !(telefone.isEmpty()) && !(email.isEmpty()) && !(sexo.isEmpty())) {
+
+                    if (email.contains("@") && ((email.contains(".com") || email.contains(".br") || email.contains(".org")))) {
+
+                        if (telefone.length() == 11 || telefone.length() == 10) {
+
+                            try {
+                                setValuesEditToJson();
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+                            updateClienteBD(TelaLogin.getClientePerfil().getId());
+                            updateClienteObj();
+
+                        } else {
+                            builder.setMessage("O número de telefone é inválido.");
+                            android.app.AlertDialog dialog = builder.create();
+                            dialog.show();
+                        }
+                    } else {
+                        builder.setMessage("O e-mail é inválido.");
+                        android.app.AlertDialog dialog = builder.create();
+                        dialog.show();
+                    }
+                } else {
+                    builder.setMessage("Não é permitido campos em branco.");
+                    android.app.AlertDialog dialog = builder.create();
+                    dialog.show();
+                }
+
+                Intent it = new Intent(EditarPerfil.this, VisualizarPerfil.class);
+                startActivity(it);
+
+            };
+
+        });
+
+/*
+                FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.button_edita_perfil);
+                fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
-        });
+        });*/
     }
 
 
-    public void updateCliente(String json, String id) {
+    public void updateClienteBD(String id) {
 
         final String url = "http://medicoishere.herokuapp.com/cliente/" + id;
         new Thread(new Runnable() {
-        @Override
-        public void run () {
-            try {
-                String clienteBD = http.sendPost(url, jsonTT.toString());
+            @Override
+            public void run () {
+                try {
+                    String clienteBD = http.sendPost(url, EditPerfilJsonTT.toString());
                 //Cliente cliente = jsonReader.getClienteByEmail(clienteBD);
                 //setClientePerfil(cliente);
-            } catch (HttpConnections.MinhaException e) {
-                e.printStackTrace();
+                } catch (HttpConnections.MinhaException e) {
+                    e.printStackTrace();
+                }
             }
-        }
-    }).
+        }).
 
-    start();
+        start();
 
-}
+    }
 
-    private void setValuesToJson() throws JSONException {
-        jsonTT.put("name", nome);
-        jsonTT.put("email", email);
-        jsonTT.put("sexo", sexo);
-        jsonTT.put("cpf", cpf);
-        jsonTT.put("password", password);
-        jsonTT.put("telefone", telefone);
+    private void updateClienteObj(){
+
+        TelaLogin.clientePerfil.setNome(nome);
+        TelaLogin.clientePerfil.setTelefone(telefone);
+        TelaLogin.clientePerfil.setEmail(email);
+        TelaLogin.clientePerfil.setGenero(sexo);
+
+    }
+
+    private void setValuesEditToJson() throws JSONException {
+
+        EditPerfilJsonTT.put("name", nome);
+        EditPerfilJsonTT.put("email", email);
+        EditPerfilJsonTT.put("sexo", sexo);
+        EditPerfilJsonTT.put("telefone", telefone);
+
     }
 }

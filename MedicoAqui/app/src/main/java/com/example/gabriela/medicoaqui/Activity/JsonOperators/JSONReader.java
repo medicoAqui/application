@@ -239,6 +239,7 @@ public class JSONReader {
             cliente.setGenero(jsonObjectCliente.getString("sexo"));
             cliente.setEmail(jsonObjectCliente.getString("email"));
             cliente.setTelefone(jsonObjectCliente.getString("telefone"));
+            cliente.setId(jsonObjectCliente.getString("_id"));
             //cliente.setData_nascimento(formato.parse(jsonObjectCliente.getString("")));
             //tipo sanguíneo
             //alergias
