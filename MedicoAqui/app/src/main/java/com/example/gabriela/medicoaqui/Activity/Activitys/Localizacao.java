@@ -105,7 +105,7 @@ public class Localizacao  extends AppCompatActivity {
                 cidade_uf.setNomeCidade(cidade);
                 cidade_uf.setNomeEstado(estado);
 
-                Intent it = new Intent(Localizacao.this, MarcarConsultaActivity.class);
+                Intent it = new Intent(Localizacao.this, Especialidade.class);
                 startActivity(it);
 
             }
