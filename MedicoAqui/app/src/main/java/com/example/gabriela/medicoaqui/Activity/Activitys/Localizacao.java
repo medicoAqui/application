@@ -70,11 +70,6 @@ public class Localizacao  extends AppCompatActivity {
                     spinner_cidade.setEnabled(true);
                     spinner_cidade.setSelection(0);
                     carregaCidades(buscaIDEstado(estado));
-                    /*limpaListaDeMedicos();
-                                                                limpaLista(lista_entity_medico);
-                                                                carregaMedicosEmLista(especializacao);
-                                                                carregaMedicosEmListaEntity(especializacao);*/
-
                 }
             }
 
@@ -92,20 +87,8 @@ public class Localizacao  extends AppCompatActivity {
                 cidade = spinner_cidade.getSelectedItem().toString();
                 if (cidade.equals("Selecione")) {
                     button_localizacao.setEnabled(false);
-                    //   spinner_cidade.setEnabled(false);
                 } else {
-                    //spinner_cidade.setEnabled(true);
                     button_localizacao.setEnabled(true);
-                    //spinner_cidade.setSelection(0);
-
-
-                    //carregaCidades()
-                    /*limpaListaDeMedicos();
-
-                                                                limpaLista(lista_entity_medico);
-                                                                carregaMedicosEmLista(especializacao);
-                                                                carregaMedicosEmListaEntity(especializacao);*/
-
                 }
             }
 
@@ -119,12 +102,10 @@ public class Localizacao  extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                //cidade_uf = new Cidade_UF(cidade, estado, null);
                 cidade_uf.setNomeCidade(cidade);
                 cidade_uf.setNomeEstado(estado);
-                //cidade_uf.setSiglaEstado();
 
-                Intent it = new Intent(Localizacao.this, MedicoAqui.class);
+                Intent it = new Intent(Localizacao.this, MarcarConsultaActivity.class);
                 startActivity(it);
 
             }

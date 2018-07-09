@@ -100,15 +100,6 @@ public class EditarPerfil extends AppCompatActivity {
 
         });
 
-/*
-                FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.button_edita_perfil);
-                fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });*/
     }
 
 
@@ -121,8 +112,6 @@ public class EditarPerfil extends AppCompatActivity {
                 try {
                     //ajustar para PUT - objeto http não encontra o método
                     String clienteBD = http.sendPost(url, EditPerfilJsonTT.toString());
-                //Cliente cliente = jsonReader.getClienteByEmail(clienteBD);
-                //setClientePerfil(cliente);
                 } catch (HttpConnections.MinhaException e) {
                     e.printStackTrace();
                 }

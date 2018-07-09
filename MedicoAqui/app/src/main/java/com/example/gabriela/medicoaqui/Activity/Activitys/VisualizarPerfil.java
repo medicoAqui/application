@@ -22,11 +22,6 @@ import org.json.JSONObject;
 
 public class VisualizarPerfil extends AppCompatActivity {
 
-    //private JSONObject jsonTT = new JSONObject();
-    //private static HttpConnections http = new HttpConnections();
-    //private JSONReader jsonReader = new JSONReader();
-    //private Cliente clientePerfil;
-
     public String nome, sobrenome, email, cpf, password, telefone, sexo;
 
     @Override
@@ -37,18 +32,11 @@ public class VisualizarPerfil extends AppCompatActivity {
         setSupportActionBar(toolbar);
         Toast.makeText(this, "Bem vindo ao Visualizar Perfil", Toast.LENGTH_SHORT).show();
 
-        //carregaClienteEmail(TelaLogin.getEmailCliente());
-        //Cliente cliente = retornaDadosCliente();
-        //texto = (TextView) findViewById(R.id.tx_aqui);
-        //texto.setText(db.somarCategoria());
-        //emailCliente.setText();
-
-
-        final TextView nomeCliente = findViewById(R.id.nomeUsuario);
-        final TextView emailCliente = findViewById(R.id.emailUsuario);
-        final TextView cpfCliente = findViewById(R.id.cpfUsuario);
-        final TextView sexoCliente = findViewById(R.id.sexoUsuario);
-        final TextView telefoneCliente = findViewById(R.id.telefoneUsuario);
+        final TextView nomeCliente = findViewById(R.id.nomeCliente);
+        final TextView emailCliente = findViewById(R.id.emailCliente);
+        final TextView cpfCliente = findViewById(R.id.cpfCliente);
+        final TextView sexoCliente = findViewById(R.id.sexoCliente);
+        final TextView telefoneCliente = findViewById(R.id.telefoneCliente);
 
         nomeCliente.setText(TelaLogin.getClientePerfil().getNome());
         emailCliente.setText(TelaLogin.getClientePerfil().getEmail());
@@ -69,53 +57,6 @@ public class VisualizarPerfil extends AppCompatActivity {
             }
         });
     }
-/*
-    private void carregaClienteEmail(String email) {
-        final JSONObject jsonTT = new JSONObject();
-        //Cliente cliente;
-        try {
-            jsonTT.put("email", email);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    String clienteBD = http.sendPost("http://medicoishere.herokuapp.com/cliente/clientePorEmail", jsonTT.toString());
-                    Cliente cliente = jsonReader.getClienteByEmail(clienteBD);
-                    setClientePerfil(cliente);
-                } catch (HttpConnections.MinhaException e) {
-                    e.printStackTrace();
-                }
-            }
-        }).start();
-    }
-
-
-    private void setClientePerfil(Cliente cliente) {
-        clientePerfil = cliente;
-        Log.w("AUTH", "Cliente carregado com sucesso");
-
-        carregarTexto();
-        //final TextView nomeCliente = findViewById(R.id.nomeUsuario);
-        //final TextView emailCliente = findViewById(R.id.emailUsuario);
-        //nomeCliente.setText(clientePerfil.getNome());
-
-    }
-
-    private void carregarTexto() {
-
-        Intent i = getIntent(); // intent da activity anterior
-        Bundle extras = getIntent().getExtras();
-        String novoTexto = (String) extras.get("algumaString"); // pega o valor digitado na activity anterior
-        TextView nomeCliente = (TextView) findViewById(R.id.nomeUsuario);
-        nomeCliente.setText(clientePerfil.getNome());
-
-    }*/
-
 }
 
 

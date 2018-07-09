@@ -151,7 +151,6 @@ public class TelaLogin extends AppCompatActivity implements LoaderCallbacks<Curs
                                 dialog.show();
                             } else {
                                 Log.d("AUTH", "Login Efetuado com sucesso!!!");
-                                //emailCliente = mEmailView.getText().toString();
                                 attemptLogin();
                                 carregaClienteEmail(mEmailView.getText().toString());
 
