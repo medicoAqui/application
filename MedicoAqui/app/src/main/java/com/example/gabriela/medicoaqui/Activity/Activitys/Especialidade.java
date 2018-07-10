@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -15,6 +16,7 @@ import com.example.gabriela.medicoaqui.Activity.Service.HttpConnections;
 import com.example.gabriela.medicoaqui.R;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 
 public class Especialidade  extends AppCompatActivity {
@@ -26,7 +28,9 @@ public class Especialidade  extends AppCompatActivity {
     JSONReader jsonReader = new JSONReader();
     HttpConnections http = new HttpConnections();
 
-    public String especialidade;
+    public static String especialidade;
+
+    private static final String TAG = "Especialidade";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -66,7 +70,7 @@ public class Especialidade  extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                Intent it = new Intent(Especialidade.this, MarcarConsultaActivity.class);
+                Intent it = new Intent(Especialidade.this, Medicos.class);
                 startActivity(it);
 
             }
@@ -77,14 +81,21 @@ public class Especialidade  extends AppCompatActivity {
 
     private void carregaEspecialidadesEmLista() {
 
+        Log.d(TAG, "carregaEspecialidadesEmLista() called");
+
         new Thread(new Runnable() {
             @Override
             public void run() {
             String especialidadesBD = http.get("https://medicoishere.herokuapp.com/especialidade/especialidades");
             HashSet<String> especialidades = jsonReader.getEspecialidadesMedicas(especialidadesBD);
             lista_especialidades.addAll(especialidades);
+            Collections.sort(lista_especialidades);
             }
         }).start();
     }
 
+
+    public static String getEspecialidade() {
+        return especialidade;
+    }
 }

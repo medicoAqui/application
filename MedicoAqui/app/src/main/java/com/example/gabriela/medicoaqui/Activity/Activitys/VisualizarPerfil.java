@@ -26,11 +26,11 @@ public class VisualizarPerfil extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_visualizar_perfil);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        Toast.makeText(this, "Bem vindo ao Visualizar Perfil", Toast.LENGTH_SHORT).show();
 
         final TextView nomeCliente = findViewById(R.id.nomeCliente);
         final TextView emailCliente = findViewById(R.id.emailCliente);

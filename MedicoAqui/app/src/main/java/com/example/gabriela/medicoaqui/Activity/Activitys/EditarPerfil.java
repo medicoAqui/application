@@ -32,6 +32,8 @@ public class EditarPerfil extends AppCompatActivity {
 
     public String nome, sobrenome, email, cpf, password, telefone, sexo;
 
+    private static final String TAG = "EditarPerfil";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -104,6 +106,8 @@ public class EditarPerfil extends AppCompatActivity {
 
 
     public void updateClienteBD(String id) {
+
+        Log.d(TAG, "updateClienteBD() called with: id = [" + id + "]");
 
         final String url = "http://medicoishere.herokuapp.com/cliente/" + id;
         new Thread(new Runnable() {

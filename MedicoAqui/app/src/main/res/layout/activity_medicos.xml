@@ -13,7 +13,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:gravity="center"
-        android:src="@drawable/especialidade"
+        android:src="@drawable/medico_perfil"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -25,13 +25,13 @@
         android:layout_marginBottom="8dp"
         android:layout_marginStart="70dp"
         android:layout_marginTop="40dp"
-        android:text="Especialidade:"
-        app:layout_constraintBottom_toTopOf="@+id/spinner_especialidade"
+        android:text="Médico:"
+        app:layout_constraintBottom_toTopOf="@+id/spinner_medicos"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 
     <Spinner
-        android:id="@+id/spinner_especialidade"
+        android:id="@+id/spinner_medicos"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
@@ -41,8 +41,52 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 
+
+    <LinearLayout
+        android:id="@+id/linearLayout_medicos"
+        android:layout_width="250dp"
+        android:layout_height="120dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/button_medicos"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinner_medicos">
+
+
+        <TextView
+            android:id="@+id/nomeMedico"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/crmMedico"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/especialidadeMedico"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/telefoneMedico"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/emailMedico"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+
+    </LinearLayout>
+
     <Button
-        android:id="@+id/button_especialidade"
+        android:id="@+id/button_medicos"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="32dp"
@@ -53,7 +97,10 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinner_especialidade"
+        app:layout_constraintTop_toBottomOf="@+id/spinner_medicos"
         app:layout_constraintVertical_bias="1.0" />
+
+
+
 
 </android.support.constraint.ConstraintLayout>

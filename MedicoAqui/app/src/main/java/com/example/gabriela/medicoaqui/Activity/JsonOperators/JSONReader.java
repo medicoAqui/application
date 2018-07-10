@@ -216,7 +216,7 @@ public class JSONReader {
 
                 for (int i = 0; i < especialidadesJson.length(); i++) {
                     jsonObjectEspecialidade = new JSONObject(especialidadesJson.getString(i));
-                    Log.i("Especialidade: ","especialidade=" + jsonObjectEspecialidade.getString("nomeEspecialidade"));
+                    //Log.i("Especialidade: ","especialidade=" + jsonObjectEspecialidade.getString("nomeEspecialidade"));
                     String especialidade = jsonObjectEspecialidade.getString("nomeEspecialidade");
                     especialidades.add(especialidade.substring(0,1).toUpperCase().concat(especialidade.substring(1)));
                 }
@@ -296,7 +296,7 @@ public class JSONReader {
 
             for (int i = 0; i < nomesJson.length(); i++) {
                 jsonObjectNome = new JSONObject(nomesJson.getString(i));
-                Log.i("Nome: ","nome=" + jsonObjectNome.getString("nome"));
+                //Log.i("Nome: ","nome=" + jsonObjectNome.getString("nome"));
                 String nome = jsonObjectNome.getString("nome");
                 nomesEstados.add(nome); //.substring(0,1).toUpperCase().concat(nome.substring(1)));
             }
@@ -316,7 +316,7 @@ public class JSONReader {
 
             for (int i = 0; i < estadosJson.length(); i++) {
                 jsonObjectEstado = new JSONObject(estadosJson.getString(i));
-                Log.i("Nome: ","nome=" + jsonObjectEstado.getString("nome"));
+                //Log.i("Nome: ","nome=" + jsonObjectEstado.getString("nome"));
                 Integer id = jsonObjectEstado.getInt("id");
                 String nome = jsonObjectEstado.getString("nome");
                 String sigla = jsonObjectEstado.getString("sigla");
@@ -339,7 +339,7 @@ public class JSONReader {
 
             for (int i = 0; i < cidadesJson.length(); i++) {
                 jsonObjectCidades = new JSONObject(cidadesJson.getString(i));
-                Log.i("Nome: ","nome=" + jsonObjectCidades.getString("nome"));
+                //Log.i("Nome: ","nome=" + jsonObjectCidades.getString("nome"));
                 //Integer id = jsonObjectCidades.getInt("id");
                 String nome = jsonObjectCidades.getString("nome");
                 nomesCidades.add(nome.substring(0,1).toUpperCase().concat(nome.substring(1)));

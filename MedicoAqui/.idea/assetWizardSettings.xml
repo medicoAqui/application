@@ -23,7 +23,7 @@
                                           <PersistentState>
                                             <option name="values">
                                               <map>
-                                                <entry key="scalingPercent" value="132" />
+                                                <entry key="scalingPercent" value="67" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -34,8 +34,8 @@
                                   <option name="values">
                                     <map>
                                       <entry key="backgroundAssetType" value="COLOR" />
-                                      <entry key="backgroundColor" value="eeeeee" />
-                                      <entry key="foregroundImage" value="C:\Users\anissa\Documents\GitHub\application\MedicoAqui\app\src\main\res\drawable\logo.png" />
+                                      <entry key="backgroundColor" value="2c373d" />
+                                      <entry key="foregroundImage" value="C:\Users\anissa\Documents\GitHub\application\MedicoAqui\app\src\main\res\drawable\logo_app.png" />
                                     </map>
                                   </option>
                                 </PersistentState>

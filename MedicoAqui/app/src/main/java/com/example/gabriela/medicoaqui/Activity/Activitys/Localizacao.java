@@ -1,5 +1,6 @@
 package com.example.gabriela.medicoaqui.Activity.Activitys;
 
+import android.util.Log;
 import android.widget.Spinner;
 
 import java.util.ArrayList;
@@ -12,7 +13,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-
 
 import com.example.gabriela.medicoaqui.Activity.Entities.Cidade_UF;
 import com.example.gabriela.medicoaqui.Activity.Entities.Estado;
@@ -28,6 +28,8 @@ import java.util.HashSet;
 import static android.widget.AdapterView.*;
 
 public class Localizacao  extends AppCompatActivity {
+
+    private static final String TAG = "Localizacao";
 
     JSONObject jsonTT = new JSONObject();
     JSONReader jsonReader = new JSONReader();
@@ -114,6 +116,9 @@ public class Localizacao  extends AppCompatActivity {
     }
 
     private void carregaEstados() {
+
+        Log.d(TAG, "carregaEstados() called");
+
         final JSONObject jsonTT = new JSONObject();
 
         new Thread(new Runnable() {
@@ -132,6 +137,8 @@ public class Localizacao  extends AppCompatActivity {
 
 
     private void carregaCidades(Integer idEstado) {
+        Log.d(TAG, "carregaCidades() called with: idEstado = [" + idEstado + "]");
+
         final JSONObject jsonTT = new JSONObject();
         final String urlCidade = "https://servicodados.ibge.gov.br/api/v1/localidades/estados/" + idEstado + "/municipios";
 
@@ -153,6 +160,7 @@ public class Localizacao  extends AppCompatActivity {
 
     private Integer buscaIDEstado(String estado) {
 
+        Log.d(TAG, "buscaIDEstado() called with: estado = [" + estado + "]");
         Integer id = null;
 
         for (int i = 0; i < lista_estados_entity.size(); i++) {
@@ -162,6 +170,7 @@ public class Localizacao  extends AppCompatActivity {
             }
         }
 
+        Log.d(TAG, "buscaIDEstado() returned: " + id);
         return id;
     }
 }
