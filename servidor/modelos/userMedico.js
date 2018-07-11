@@ -24,6 +24,7 @@ var medicoSchema = new Schema({
 		required:true,
 		unique:true
 	},
+	consultorio : { type: Schema.Types.ObjectId, ref: 'Consultorio'},
 	especialidades : [{ type: Schema.Types.ObjectId, ref: 'Especialidade' }]
 });
 

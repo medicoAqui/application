@@ -5,6 +5,8 @@ var Medico = require('../modelos/userMedico.js');
 var Consulta = require('../modelos/consulta');
 var Especialidade = require('../modelos/especialidade');
 var Med_Espe = require('../modelos/medico_especialidades');
+var Consultorio = require('../modelos/consultorio');
+var Endereco = require('../modelos/endereco');
 
 medicoRouter.use(function(req, res, next) {
 
@@ -46,6 +48,7 @@ medicoRouter.post('/add', function(req,res){
 
     var especialidade;
 
+
     Especialidade.findOne({nomeEspecialidade: req.body.nomeEspecialidade }, function(err,data){
         console.log("_______________ENCONTRATO REGISTRO ABAIXO_________________");
         console.log(data);
@@ -57,21 +60,26 @@ medicoRouter.post('/add', function(req,res){
         }
         else{
           especialidade = data;
-          console.log(especialidade);
-          console.log("_______________REGISTRANDO UM MEDICO (ESPECIALIDADE JA EXISTE) _________________");
+          var consultorio;
+          Consultorio.findOne({idConsultorio: req.body.idConsultorio }, function(err,data2){
+              if(data2 == undefined || err){
+                res.status(400).json("Consultorio nao encontrado");
+              }else{
+                consultorio = data2;
+                var novoMedico = new Medico(req.body);
 
-          var novoMedico = new Medico(req.body);
+                novoMedico.especialidades.push(especialidade);
+                novoMedico.consultorio = consultorio;
 
-          novoMedico.especialidades.push(especialidade);
+                novoMedico.save(function(err, data) {
+                    console.log(data);
 
-          novoMedico.save(function(err, data) {
-
-              console.log(data);
-
-              if (err) {
-                  res.status(400).json(err);
-              } else {
-                  res.status(201).json(data);
+                    if (err) {
+                        res.status(400).json(err);
+                    } else {
+                        res.status(201).json(data);
+                    }
+                });
               }
           });
           console.log("_______________MEDICO REGISTRADO (ESPECIALIDADE JA EXISTE)_________________");
@@ -131,6 +139,36 @@ medicoRouter.post('/medicosByEspecialidade',function(req,res){
         }
       });
     }
+  });
+});
+
+medicoRouter.post('/EspecialidadesByCidadeAndUF',function(req,res){
+
+  var endereco = Endereco.find({cidade: req.body.cidade, uf: req.body.uf });
+
+  endereco.exec(function(err,data){
+      console.log(data)
+      if(err){
+          res.sendStatus(400).json('Endereco nao encontrado no sistema');
+      }else{
+        var consultorio = Consultorio.find({endereco :data});
+        consultorio.exec(function(err,data2){
+          console.log(data2)
+          if(err) {
+                  res.sendStatus(400).json('Consultorio nao encontrado no sistema');
+          }else{
+            var medico = Medico.find({consultorio :data2});
+            medico.exec(function(err,data3){
+              console.log(data3)
+              if(err) {
+                      res.sendStatus(400).json('Medico nao encontrado no sistema');
+              }else{
+                res.send(data3.especialidades);
+              }
+            });
+          }
+        });
+      }
   });
 });
 
