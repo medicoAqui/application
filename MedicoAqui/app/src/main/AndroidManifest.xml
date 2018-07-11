@@ -39,16 +39,20 @@
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
+            android:name=".Activity.Activitys.MenuPrincipal"
+            android:label="Menu Principal"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
             android:name=".Activity.Activitys.Localizacao"
-            android:label="@string/app_name"
+            android:label="Localização"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Activity.Activitys.Especialidade"
-            android:label="@string/app_name"
+            android:label="Especialidade"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Activity.Activitys.Medicos"
-            android:label="@string/app_name"
+            android:label="Medicos"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Activity.Activitys.VisualizarPerfil"

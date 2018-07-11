@@ -96,4 +96,11 @@ public class MedicoAqui extends AppCompatActivity {
         Intent sendIntent = new Intent(this, Localizacao.class);
         startActivity(sendIntent);
     }
+
+
+    public void clickMenuPrincipal(View v) {
+        Intent sendIntent = new Intent(this, MenuPrincipal.class);
+        startActivity(sendIntent);
+    }
+
 }

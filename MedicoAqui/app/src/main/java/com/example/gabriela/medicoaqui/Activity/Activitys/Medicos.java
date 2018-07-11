@@ -1,6 +1,7 @@
 package com.example.gabriela.medicoaqui.Activity.Activitys;
 
 import android.util.Log;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 
@@ -112,6 +113,17 @@ public class Medicos extends AppCompatActivity {
 
 
                 Intent it = new Intent(Medicos.this, MarcarConsultaActivity.class);
+                startActivity(it);
+
+            }
+        });
+
+        final ImageButton button_voltar = (ImageButton) findViewById(R.id.button_voltar);
+        button_voltar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent it = new Intent(Medicos.this, Especialidade.class);
                 startActivity(it);
 
             }

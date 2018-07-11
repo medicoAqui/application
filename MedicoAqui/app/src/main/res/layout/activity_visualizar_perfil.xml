@@ -6,6 +6,34 @@
     android:layout_height="match_parent"
     tools:context=".Activity.Activitys.VisualizarPerfil">
 
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="#33414b"
+        app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+    <ImageButton
+        android:id="@+id/button_voltar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="#33414b"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/botao_voltar_02" />
+
+    <ImageButton
+        android:id="@+id/button_home"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="9dp"
+        android:background="#33414b"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/botao_home_02" />
 
     <ImageView
         android:id="@+id/imageView4"
@@ -13,11 +41,11 @@
         android:layout_height="229dp"
         android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="50dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/perfil_10" />
-
 
 
     <android.support.design.widget.FloatingActionButton
@@ -26,9 +54,9 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="4dp"
         android:layout_marginEnd="4dp"
-        app:backgroundTint="@android:color/holo_blue_bright"
+        app:backgroundTint="#33414b"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@android:drawable/ic_menu_edit" />
@@ -40,7 +68,7 @@
         android:layout_marginBottom="16dp"
         android:layout_marginEnd="12dp"
         android:layout_marginStart="50dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="40dp"
         android:text="Nome:"
         app:layout_constraintBottom_toTopOf="@+id/textView3"
         app:layout_constraintEnd_toStartOf="@+id/nomeCliente"
@@ -54,7 +82,7 @@
         android:layout_marginBottom="16dp"
         android:layout_marginEnd="40dp"
         android:layout_marginStart="12dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="40dp"
         app:layout_constraintBottom_toTopOf="@+id/telefoneCliente"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView2"

@@ -1,6 +1,8 @@
 package com.example.gabriela.medicoaqui.Activity.Activitys;
 
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 
 import java.util.ArrayList;
@@ -108,6 +110,29 @@ public class Localizacao  extends AppCompatActivity {
                 cidade_uf.setNomeEstado(estado);
 
                 Intent it = new Intent(Localizacao.this, Especialidade.class);
+                startActivity(it);
+
+            }
+        });
+
+
+        final ImageButton button_voltar = (ImageButton) findViewById(R.id.button_voltar);
+        button_voltar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent it = new Intent(Localizacao.this, MedicoAqui.class);
+                startActivity(it);
+
+            }
+        });
+
+        final ImageButton button_home = (ImageButton) findViewById(R.id.button_home);
+        button_home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent it = new Intent(Localizacao.this, MenuPrincipal.class);
                 startActivity(it);
 
             }

@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,10 +39,7 @@ public class EditarPerfil extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editar_perfil);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        Toast.makeText(this, "Bem vindo ao Editar Perfil", Toast.LENGTH_SHORT).show();
-
+        
         final android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(EditarPerfil.this);
 
         final EditText nomeEdit = findViewById(R.id.nomeEdit);
@@ -102,6 +100,27 @@ public class EditarPerfil extends AppCompatActivity {
 
         });
 
+        final ImageButton button_voltar = (ImageButton) findViewById(R.id.button_voltar);
+        button_voltar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent it = new Intent(EditarPerfil.this, VisualizarPerfil.class);
+                startActivity(it);
+
+            }
+        });
+
+        final ImageButton button_home = (ImageButton) findViewById(R.id.button_home);
+        button_home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent it = new Intent(EditarPerfil.this, MenuPrincipal.class);
+                startActivity(it);
+
+            }
+        });
     }
 
 

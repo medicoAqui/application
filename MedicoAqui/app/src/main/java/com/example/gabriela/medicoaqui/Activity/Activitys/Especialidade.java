@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 
 import com.example.gabriela.medicoaqui.Activity.JsonOperators.JSONReader;
@@ -76,6 +77,27 @@ public class Especialidade  extends AppCompatActivity {
             }
         });
 
+        final ImageButton button_voltar = (ImageButton) findViewById(R.id.button_voltar);
+        button_voltar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent it = new Intent(Especialidade.this, Localizacao.class);
+                startActivity(it);
+
+            }
+        });
+
+        final ImageButton button_home = (ImageButton) findViewById(R.id.button_home);
+        button_home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent it = new Intent(Especialidade.this, MenuPrincipal.class);
+                startActivity(it);
+
+            }
+        });
     }
 
 

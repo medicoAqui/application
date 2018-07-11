@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,9 +30,7 @@ public class VisualizarPerfil extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_visualizar_perfil);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
+        
         final TextView nomeCliente = findViewById(R.id.nomeCliente);
         final TextView emailCliente = findViewById(R.id.emailCliente);
         final TextView cpfCliente = findViewById(R.id.cpfCliente);
@@ -56,6 +55,30 @@ public class VisualizarPerfil extends AppCompatActivity {
 
             }
         });
+
+
+        final ImageButton button_voltar = (ImageButton) findViewById(R.id.button_voltar);
+        button_voltar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent it = new Intent(VisualizarPerfil.this, MedicoAqui.class);
+                startActivity(it);
+
+            }
+        });
+
+        final ImageButton button_home = (ImageButton) findViewById(R.id.button_home);
+        button_home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent it = new Intent(VisualizarPerfil.this, MenuPrincipal.class);
+                startActivity(it);
+
+            }
+        });
+
     }
 }
 
