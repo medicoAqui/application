@@ -1,14 +1,19 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
+const AutoIncrement = require('mongoose-sequence')(mongoose);
 
 var consultaSchema = new Schema({
-	
-	cpfMedico:{type: String,required:true},
-	cpfPaciente:{type:String},
-	data:{type:Date, required:true},
+
+	observacao:{type:String},
+	dataConsulta:{type:String, required:true},
 	hora:{type:String,required:true},
-	disponibilidade:{type:Boolean }
+	status:{type:String, required:true },
+  medico : { type: Schema.Types.ObjectId, ref: 'Medico' },
+  cliente : { type: Schema.Types.ObjectId, ref: 'Usuario' }
+
 })
+
+consultaSchema.plugin(AutoIncrement, {inc_field: 'idConsulta'});
 
 var consulta = mongoose.model('Consulta',consultaSchema);
 

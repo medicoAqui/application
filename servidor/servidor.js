@@ -17,11 +17,13 @@ var app = express();
 var rotaCliente = require('./rotas/cliente');
 var rotaMedico = require('./rotas/medico');
 var rotaAcesso = require('./rotas/acesso');
-var rotaConsulta =  require('./rotas/consultaR');
 var rotaEspecialidade = require('./rotas/especialidadeR');
 
-//var rotaMedicoTeste = require('./rotas/medicoTesteRoute');
-//var rotaEspecialidadeTeste = require('./rotas/especialidadeTesteRoute');
+var rotaEndereco = require('./rotas/enderecoRoute');
+var rotaConsultorio = require('./rotas/consultorioRoute');
+var rotaConsulta = require('./rotas/consultaRoute');
+
+
 
 app.use(cors());
 app.use(morgan('dev'));
@@ -42,13 +44,12 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use('/cliente',rotaCliente)
 app.use('/medico',rotaMedico);
 app.use('/auth', rotaAcesso);
-app.use('/consulta',rotaConsulta);
 app.use('/especialidade',rotaEspecialidade);
 
-//app.use('/medicoTeste',rotaMedicoTeste);
-//app.use('/especialidadeTeste',rotaEspecialidadeTeste);
+app.use('/endereco',rotaEndereco);
+app.use('/consultorio',rotaConsultorio);
+app.use('/consulta',rotaConsulta);
 
-//app.set('superSecret', config.secret);
 
 
 app.listen(process.env.PORT || 8080, function(){
