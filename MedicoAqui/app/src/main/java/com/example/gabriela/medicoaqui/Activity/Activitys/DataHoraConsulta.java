@@ -20,10 +20,13 @@ import com.example.gabriela.medicoaqui.R;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.TimeZone;
 
 public class DataHoraConsulta   extends AppCompatActivity {
 
@@ -36,6 +39,7 @@ public class DataHoraConsulta   extends AppCompatActivity {
     String dataStr;
     String hora;
     String id_consulta;
+    DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 
     ArrayList<String> lista_hora = new ArrayList<String>() {{
         add("Selecione");
@@ -81,8 +85,9 @@ public class DataHoraConsulta   extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View view, int pos, long id) {
 
-                data = new Date (calendario.getDate() * 1000);
-                dataStr = data.toString();
+                data = new Date (calendario.getDate());
+                df.setTimeZone (TimeZone.getTimeZone ("GMT"));
+                dataStr = df.format (data);
 
 
                 /*Date dt = new Date (20296000);
@@ -93,7 +98,7 @@ public class DataHoraConsulta   extends AppCompatActivity {
 
                 Date d = new Date(1220227200L * 1000);
                 */
-                carregaHoraDisponivel(data);
+                carregaHoraDisponivel(dataStr);
 
                 hora = spinner_hora.getSelectedItem().toString();
                 if (hora.equals("Selecione")) {
@@ -139,7 +144,7 @@ public class DataHoraConsulta   extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-            Intent it = new Intent(DataHoraConsulta.this, MenuPrincipal.class);
+            Intent it = new Intent(DataHoraConsulta.this, VisualizarHistorico.class);
             startActivity(it);
 
             }
@@ -148,7 +153,7 @@ public class DataHoraConsulta   extends AppCompatActivity {
 
     }
 
-    public void carregaHoraDisponivel(Date data) {
+    public void carregaHoraDisponivel(Date dataStr) {
 
         Log.d(TAG, "carregaHoraDisponivel() called with: data = [" + data + "]");
 
