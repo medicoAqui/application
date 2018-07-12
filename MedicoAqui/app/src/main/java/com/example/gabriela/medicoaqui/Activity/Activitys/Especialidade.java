@@ -112,6 +112,8 @@ public class Especialidade  extends AppCompatActivity {
             HashSet<String> especialidades = jsonReader.getEspecialidadesMedicas(especialidadesBD);
             lista_especialidades.addAll(especialidades);
             Collections.sort(lista_especialidades);
+            lista_especialidades.remove("Selecione");
+            lista_especialidades.add(0,"Selecione");
             }
         }).start();
     }

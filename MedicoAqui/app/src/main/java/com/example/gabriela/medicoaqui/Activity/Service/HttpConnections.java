@@ -3,11 +3,15 @@ package com.example.gabriela.medicoaqui.Activity.Service;
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
 import java.net.URL;
 import org.json.*;
 
@@ -89,6 +93,43 @@ public String sendPost(String url, String json) throws MinhaException {
     }
 }
 
+    public void put(String url, String json) throws MinhaException {
+
+        try{
+            HttpURLConnection httpCon = (HttpURLConnection) new URL(url).openConnection();
+            DataOutputStream outputStream = null;
+            try {
+                httpCon.setRequestProperty("Content-Type", "application/json");
+                httpCon.setRequestProperty("Accept", "application/json");
+                httpCon.setRequestMethod("PUT");
+                httpCon.setDoOutput(true);
+                httpCon.setDoInput(true);
+                httpCon.connect();
+                outputStream = new DataOutputStream(httpCon.getOutputStream());
+                outputStream.write(json.getBytes("UTF-8"));
+                httpCon.getInputStream();
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (ProtocolException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            finally {
+                if (outputStream != null) {
+                    try {
+                        outputStream.flush();
+                        outputStream.close();
+                    } catch (IOException exception) {
+                        exception.printStackTrace();
+                    }
+                }
+                httpCon.disconnect();
+            }
+        } catch (IOException ex) {
+        throw new MinhaException(ex);
+        }
+    }
 private String readResponse(HttpURLConnection request) throws IOException {
     ByteArrayOutputStream os;
     try (InputStream is = request.getInputStream()) {

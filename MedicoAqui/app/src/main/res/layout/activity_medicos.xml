@@ -76,42 +76,49 @@
     <LinearLayout
         android:id="@+id/linearLayout_medicos"
         android:layout_width="250dp"
-        android:layout_height="120dp"
+        android:layout_height="100dp"
         android:layout_marginBottom="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="32dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@+id/button_medicos"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinner_medicos">
+        app:layout_constraintTop_toBottomOf="@+id/spinner_medicos"
+        android:background="@drawable/linearlayout_fundo">
 
 
         <TextView
             android:id="@+id/nomeMedico"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:gravity="center"/>
 
         <TextView
             android:id="@+id/crmMedico"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:gravity="center"/>
 
         <TextView
             android:id="@+id/especialidadeMedico"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:gravity="center"/>
 
         <TextView
             android:id="@+id/telefoneMedico"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:gravity="center"/>
 
         <TextView
             android:id="@+id/emailMedico"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:gravity="center"/>
 
 
     </LinearLayout>

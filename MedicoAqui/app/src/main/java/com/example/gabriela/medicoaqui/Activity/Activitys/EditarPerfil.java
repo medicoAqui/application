@@ -133,8 +133,7 @@ public class EditarPerfil extends AppCompatActivity {
             @Override
             public void run () {
                 try {
-                    //ajustar para PUT - objeto http não encontra o método
-                    String clienteBD = http.sendPost(url, EditPerfilJsonTT.toString());
+                    http.put(url, EditPerfilJsonTT.toString());
                 } catch (HttpConnections.MinhaException e) {
                     e.printStackTrace();
                 }

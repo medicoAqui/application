@@ -80,6 +80,16 @@ public class VisualizarPerfil extends AppCompatActivity {
         });
 
     }
+
+    @Override
+    public void onBackPressed()
+    {
+
+        Intent it = new Intent(VisualizarPerfil.this, MenuPrincipal.class);
+        startActivity(it);
+
+    }
+
 }
 
 

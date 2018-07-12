@@ -1,5 +1,6 @@
 package com.example.gabriela.medicoaqui.Activity.Activitys;
 
+import android.provider.ContactsContract;
 import android.util.Log;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -87,7 +88,7 @@ public class Medicos extends AppCompatActivity {
                     Medico medicoInfo = getMedicoConsulta();
 
                     nomeMedico.setText(medicoInfo.getNome());
-                    crmMedico.setText(medicoInfo.getCrm());
+                    crmMedico.setText("CRM: " + medicoInfo.getCrm());
                     especialidadeMedico.setText(medicoInfo.getEspecialidade());
                     telefoneMedico.setText(medicoInfo.getTelefone());
                     emailMedico.setText(medicoInfo.getEmail());
@@ -112,7 +113,7 @@ public class Medicos extends AppCompatActivity {
                 //cidade_uf.setNomeEstado(estado);
 
 
-                Intent it = new Intent(Medicos.this, MarcarConsultaActivity.class);
+                Intent it = new Intent(Medicos.this, DataHoraConsulta.class);
                 startActivity(it);
 
             }
@@ -124,6 +125,17 @@ public class Medicos extends AppCompatActivity {
             public void onClick(View view) {
 
                 Intent it = new Intent(Medicos.this, Especialidade.class);
+                startActivity(it);
+
+            }
+        });
+
+        final ImageButton button_home = (ImageButton) findViewById(R.id.button_home);
+        button_home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent it = new Intent(Medicos.this, MenuPrincipal.class);
                 startActivity(it);
 
             }
@@ -154,6 +166,8 @@ public class Medicos extends AppCompatActivity {
                     lista_medicos.addAll(medicos);
                     //Collections.sort(lista_medicos);
                     lista_medicos_entity.addAll(medicosEntity);
+                    lista_medicos.remove("Selecione");
+                    lista_medicos.add(0,"Selecione");
                 } catch (HttpConnections.MinhaException e) {
                     e.printStackTrace();
                 }

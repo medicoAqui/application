@@ -55,6 +55,10 @@
             android:label="Medicos"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
+            android:name=".Activity.Activitys.DataHoraConsulta"
+            android:label="Data e Hora da consulta"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
             android:name=".Activity.Activitys.VisualizarPerfil"
             android:label="VisualizarPerfil"
             android:theme="@style/AppTheme.NoActionBar"></activity>

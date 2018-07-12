@@ -2,6 +2,8 @@ package com.example.gabriela.medicoaqui.Activity.Activitys;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -21,6 +23,7 @@ public class MenuPrincipal extends AppCompatActivity {
     String resposta = "Init";
     private static HttpConnections http = new HttpConnections();
     private FirebaseAuth mAuth;
+    private static final String TAG = "MenuPrincipal";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +61,22 @@ public class MenuPrincipal extends AppCompatActivity {
 
                 Intent it = new Intent(MenuPrincipal.this, VisualizarPerfil.class);
                 startActivity(it);
+
+            }
+        });
+
+        final ImageButton button_logout = (ImageButton) findViewById(R.id.button_logout);
+        button_logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                mAuth = FirebaseAuth.getInstance();
+                finish();
+                mAuth.signOut();
+                Intent it = new Intent(MenuPrincipal.this, TelaPrincipal.class);
+                startActivity(it);
+                Log.d(TAG, "Logout");
+
 
             }
         });

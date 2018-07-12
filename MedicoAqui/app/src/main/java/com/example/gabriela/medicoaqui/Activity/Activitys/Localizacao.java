@@ -42,6 +42,7 @@ public class Localizacao  extends AppCompatActivity {
     public Cidade_UF cidade_uf = new Cidade_UF(null, null, null);
     public String cidade;
     public String estado;
+    public String sigla;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -108,6 +109,7 @@ public class Localizacao  extends AppCompatActivity {
 
                 cidade_uf.setNomeCidade(cidade);
                 cidade_uf.setNomeEstado(estado);
+                cidade_uf.setSiglaEstado(buscaSiglaEstado(estado));
 
                 Intent it = new Intent(Localizacao.this, Especialidade.class);
                 startActivity(it);
@@ -155,6 +157,8 @@ public class Localizacao  extends AppCompatActivity {
                 lista_estados.addAll(estados);
                 Collections.sort(lista_estados);
                 lista_estados_entity.addAll(estadosEntity);
+                lista_estados.remove("Selecione");
+                lista_estados.add(0,"Selecione");
             }
         }).start();
 
@@ -176,6 +180,8 @@ public class Localizacao  extends AppCompatActivity {
                     HashSet<String> cidades = jsonReader.getCidades(cidadesBD);
                     lista_cidades.addAll(cidades);
                     Collections.sort(lista_cidades);
+                    lista_cidades.remove("Selecione");
+                    lista_cidades.add(0,"Selecione");
                // } catch (HttpConnections.MinhaException e) {
                 //    e.printStackTrace();
                 //}
@@ -198,6 +204,22 @@ public class Localizacao  extends AppCompatActivity {
         Log.d(TAG, "buscaIDEstado() returned: " + id);
         return id;
     }
+
+    private String buscaSiglaEstado(String estado) {
+
+        String sigla = null;
+
+        for (int i = 0; i < lista_estados_entity.size(); i++) {
+
+            if (lista_estados_entity.get(i).getNome().equals(estado)) {
+                sigla = lista_estados_entity.get(i).getSigla();
+            }
+        }
+
+        Log.d(TAG, "buscaIDEstado() called with: estado = [" + estado + "]. Returned: " + sigla);
+        return sigla;
+    }
+
 }
 
 
