@@ -153,7 +153,7 @@ public class DataHoraConsulta   extends AppCompatActivity {
 
     }
 
-    public void carregaHoraDisponivel(Date dataStr) {
+    public void carregaHoraDisponivel(String dataStr) {
 
         Log.d(TAG, "carregaHoraDisponivel() called with: data = [" + data + "]");
 
