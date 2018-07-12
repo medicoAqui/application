@@ -294,25 +294,5 @@ medicoRouter.delete('/:crm', function(req,res){
 
 });
 
-medicoRouter.post('/consulta',function(req,res){
-
-	var consulta = new Consulta(req.body);
-
-	consulta.save(function(err, data) {
-		console.log(consulta);
-
-		console.log(data);
-
-		if (err) {
-			res.status(400).json(err);
-		} else {
-				res.status(201).json(data);
-			}
-
-	});
-
-
-});
-
 
 module.exports = medicoRouter;
