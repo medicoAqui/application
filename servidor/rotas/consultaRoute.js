@@ -151,6 +151,9 @@ consultaRouter.get('/:id',function(res,req){
 });
 
 
+/*
+
+esse era o teu , ele estava quebrando 
 consultaRouter.post('/add', function(req,res){
 
     Cliente.findOne({cpf: req.body.cpf }, function(err,data0){
@@ -189,6 +192,39 @@ consultaRouter.post('/add', function(req,res){
           });
         }
     });
+});
+
+*/
+
+consultaRouter.post('/add',function(req,res){
+
+  Medico.findOne({crm: req.body.crm }, function(err,medico){
+    console.log(medico +" aqui é o medico");
+    if(err){
+      res.sendStatus(400).send('medico nao cadastrado no sistema');
+    }else{
+      var novaConsulta = new Consulta(req.body);
+      novaConsulta.medico = medico;
+      Cliente.findOne({cpf: req.body.cpf }, function(err,cliente){
+        console.log(cliente +" aqui é cliente");
+        if(cliente == null){
+          novaConsulta.cliente = null;
+        }else{
+          novaConsulta.cliente = cliente;
+        }
+
+      });
+
+      novaConsulta.save(function(err, data3) {
+        if (err) {
+          res.status(400).json(err);
+          } else {
+            res.status(201).json(data3);
+          }
+        });
+    }
+
+  });
 });
 
 consultaRouter.put('/:idConsulta',function(req,res){

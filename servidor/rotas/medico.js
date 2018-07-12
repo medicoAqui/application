@@ -219,7 +219,7 @@ medicoRouter.post('/testeE', function(req,res){
 
                             //console.log('The author is %s',medico.especialidades.nomeEspecialidade);
                            console.log(m+ " mmmmmmmm");
-                                                      console.log((Medico) m.cpf+ " cccccccccccc");
+                                                      //console.log((Medico) m.cpf+ " cccccccccccc");
 
                             console.log(toString(outro));
 
