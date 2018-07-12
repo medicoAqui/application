@@ -9,7 +9,7 @@ usuarioRouter.use(function(req, res, next) {
     console.log(req.method, req.url);
 
     // continue doing what we were doing and go to the route
-    next(); 
+    next();
 });
 
 // define the home page route
@@ -25,7 +25,7 @@ usuarioRouter.get('/clientes', function(req, res) {
 });
 
 usuarioRouter.post('/me',function(req,res){
-  
+
     Usuario.findOne({cpf: req.body.cpf}, function(err,data){
         console.log(data)
         if(err){
@@ -100,7 +100,7 @@ usuarioRouter.delete('/:cpf', function(req,res){
 });
 
 usuarioRouter.post('/clientePorEmail', function(req,res){
-    
+
     Usuario.findOne({email: req.body.email}, function(err,data){
         console.log(data)
         if(data == null){
