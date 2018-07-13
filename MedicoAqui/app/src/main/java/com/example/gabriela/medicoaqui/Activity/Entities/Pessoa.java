@@ -10,12 +10,14 @@ public class Pessoa {
     public String cpf;
     public Date data_nascimento;
     public String genero;
+    public String id;
 
-    public Pessoa(String nome, String cpf, Date data, String genero) {
+    public Pessoa(String nome, String cpf, Date data, String genero, String id) {
         this.nome = nome;
         this.cpf = cpf;
         this.data_nascimento = data;
         this.genero = genero;
+        this.id= id;
     }
 
     public Pessoa(){}
@@ -51,4 +53,13 @@ public class Pessoa {
     public void setGenero(String genero) {
         this.genero = genero;
     }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
 }

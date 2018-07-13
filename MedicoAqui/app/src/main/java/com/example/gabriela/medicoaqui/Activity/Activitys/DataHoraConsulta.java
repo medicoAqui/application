@@ -13,9 +13,11 @@ import android.widget.CalendarView;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 
+import com.example.gabriela.medicoaqui.Activity.Entities.Consulta;
 import com.example.gabriela.medicoaqui.Activity.JsonOperators.JSONReader;
 import com.example.gabriela.medicoaqui.Activity.Service.HttpConnections;
 import com.example.gabriela.medicoaqui.R;
+import com.example.gabriela.medicoaqui.Activity.Activitys.Medicos;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -39,11 +41,15 @@ public class DataHoraConsulta   extends AppCompatActivity {
     String dataStr;
     String hora;
     String id_consulta;
+    String statusDisponivel = "D";
+    String statusAgendado = "A";
+    String crm;
     DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 
     ArrayList<String> lista_hora = new ArrayList<String>() {{
         add("Selecione");
     }};
+    ArrayList<Consulta> lista_consultas_disponiveis = new ArrayList<Consulta>();
 
 
     @Override
@@ -54,20 +60,23 @@ public class DataHoraConsulta   extends AppCompatActivity {
         final Spinner spinner_hora = findViewById(R.id.spinner_hora);
         final Button button_marcar_consulta = (Button) findViewById(R.id.button_marcar_consulta);
         final CalendarView calendario = (CalendarView) findViewById(R.id.calendario);
+        spinner_hora.setEnabled(false);
 
         ArrayAdapter<String> dataAdapterHora = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, lista_hora);
         dataAdapterHora.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner_hora.setAdapter(dataAdapterHora);
 
-//        calendario.setOnDateChangeListener(new View(.OnD));
-        calendario.setOnClickListener(new View.OnClickListener() {
+        calendario.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
 
             @Override
-            public void onClick(View v) {
+            public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
 
-                //data = calendario.getDate();
+                data = new Date(calendario.getDate());
+                df.setTimeZone(TimeZone.getTimeZone("GMT"));
+                dataStr = df.format(data);
+                //dataStr = "18/07/2018";
 
-                //carregaHoraDisponivel(data);
+                carregaHoraDisponivel(dataStr);
 
                 if (lista_hora.size() == 0) {
                     spinner_hora.setEnabled(false);
@@ -85,21 +94,6 @@ public class DataHoraConsulta   extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View view, int pos, long id) {
 
-                data = new Date (calendario.getDate());
-                df.setTimeZone (TimeZone.getTimeZone ("GMT"));
-                dataStr = df.format (data);
-
-
-                /*Date dt = new Date (20296000);
-                System.out.println (dt);
-                DateFormat df = new SimpleDateFormat ("dd/MM/yyyy HH:mm:ss.SSS");
-                df.setTimeZone (TimeZone.getTimeZone ("GMT"));
-                System.out.println (df.format (dt));
-
-                Date d = new Date(1220227200L * 1000);
-                */
-                carregaHoraDisponivel(dataStr);
-
                 hora = spinner_hora.getSelectedItem().toString();
                 if (hora.equals("Selecione")) {
                     button_marcar_consulta.setEnabled(false);
@@ -109,9 +103,9 @@ public class DataHoraConsulta   extends AppCompatActivity {
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {
+                public void onNothingSelected(AdapterView<?> parent) {
 
-            }
+                }
         });
 
 
@@ -119,10 +113,10 @@ public class DataHoraConsulta   extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-            marcarConsulta(id_consulta);
+                marcarConsulta(getIdConsulta(hora));
 
-            Intent it = new Intent(DataHoraConsulta.this, VisualizarHistorico.class);
-            startActivity(it);
+                Intent it = new Intent(DataHoraConsulta.this, VisualizarHistorico.class);
+                startActivity(it);
 
             }
         });
@@ -133,50 +127,60 @@ public class DataHoraConsulta   extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-            Intent it = new Intent(DataHoraConsulta.this, MenuPrincipal.class);
-            startActivity(it);
+                Intent it = new Intent(DataHoraConsulta.this, Medicos.class);
+                startActivity(it);
 
             }
         });
+
 
         final ImageButton button_home = (ImageButton) findViewById(R.id.button_home);
         button_home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-            Intent it = new Intent(DataHoraConsulta.this, VisualizarHistorico.class);
-            startActivity(it);
+                Intent it = new Intent(DataHoraConsulta.this, MenuPrincipal.class);
+                startActivity(it);
 
             }
         });
-
-
     }
 
     public void carregaHoraDisponivel(String dataStr) {
 
-        Log.d(TAG, "carregaHoraDisponivel() called with: data = [" + data + "]");
+        Log.d(TAG, "carregaHoraDisponivel() called with: data = [" + dataStr + "]");
 
         final JSONObject jsonTT = new JSONObject();
 
         try {
-            jsonTT.put("data", data);
+
+            jsonTT.put("date", dataStr);
+            jsonTT.put("status", statusDisponivel);
+            jsonTT.put("medico", Medicos.getMedicoSelecionado().getCrm());
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
+
         new Thread(new Runnable() {
-            @Override
-            public void run() {
-            String horasBD = http.get("https://servicodados.ibge.gov.br/api/v1/localidades/estados");
-            HashSet<String> horas = jsonReader.getEstados(horasBD);
-            lista_hora.addAll(horas);
-            Collections.sort(lista_hora);
-            lista_hora.remove("Selecione");
-            lista_hora.add(0,"Selecione");
+                    @Override
+                    public void run() {
+            try {
+                String horasBD = http.sendPost("http://medicoishere.herokuapp.com/consulta/consultasByDateCrmStatus", jsonTT.toString());
+                HashSet<String> horas = jsonReader.getHorasDisponiveis(horasBD);
+                HashSet<Consulta> consultasDisp = jsonReader.getConsultasDisponíveis(horasBD);
+                lista_hora.addAll(horas);
+                lista_consultas_disponiveis.addAll(consultasDisp);
+                Collections.sort(lista_hora);
+                lista_hora.remove("Selecione");
+                lista_hora.add(0, "Selecione");
+            } catch (HttpConnections.MinhaException e) {
+                e.printStackTrace();
+            }
+
             }
         }).start();
-
     }
 
 
@@ -185,9 +189,11 @@ public class DataHoraConsulta   extends AppCompatActivity {
         Log.d(TAG, "marcarConsulta() called with: data = [" + data + "], hora = [" + hora + "]");
 
         final JSONObject jsonTT = new JSONObject();
+        final String url = "http://medicoishere.herokuapp.com/consulta/"+ id_consulta;
 
         try {
-            jsonTT.put("id_consulta", id_consulta);
+            jsonTT.put("status", statusAgendado);
+            jsonTT.put("cliente", TelaLogin.getClientePerfil().getId());
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -195,10 +201,26 @@ public class DataHoraConsulta   extends AppCompatActivity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-            http.get("https://servicodados.ibge.gov.br/api/v1/localidades/estados");
+                try {
+                    http.put(url, jsonTT.toString());
+                } catch (HttpConnections.MinhaException e) {
+                    e.printStackTrace();
+                }
             }
         }).start();
+    }
 
+    public String getIdConsulta(String hora) {
+
+        String id = null;
+        for (int i = 0; i < lista_consultas_disponiveis.size(); i++) {
+
+            if (lista_consultas_disponiveis.get(i).getHora().equals(hora)) {
+                id = lista_consultas_disponiveis.get(i).getIdConsulta();
+            }
+
+        }
+        return id;
     }
 
 }

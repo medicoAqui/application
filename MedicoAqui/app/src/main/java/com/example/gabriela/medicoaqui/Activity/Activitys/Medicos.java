@@ -37,9 +37,10 @@ public class Medicos extends AppCompatActivity {
     JSONObject jsonTT = new JSONObject();
     JSONReader jsonReader = new JSONReader();
     HttpConnections http = new HttpConnections();
-    ArrayList<String> lista_medicos = new ArrayList<String>(){{add("Selecione");}};
-    ArrayList<Medico> lista_medicos_entity = new ArrayList();
+    static ArrayList<String> lista_medicos = new ArrayList<String>(){{add("Selecione");}};
+    static ArrayList<Medico> lista_medicos_entity = new ArrayList();
     public static String medico;
+    public static Medico medicoInfo;
 
 
     @Override
@@ -85,7 +86,7 @@ public class Medicos extends AppCompatActivity {
                     telefoneMedico.setEnabled(true);
                     emailMedico.setEnabled(true);
 
-                    Medico medicoInfo = getMedicoConsulta();
+                    medicoInfo = getMedicoConsulta();
 
                     nomeMedico.setText(medicoInfo.getNome());
                     crmMedico.setText("CRM: " + medicoInfo.getCrm());
@@ -191,9 +192,9 @@ public class Medicos extends AppCompatActivity {
         return crm;
     }
 
-    public Medico getMedicoConsulta() {
+    public static Medico getMedicoConsulta() {
 
-        Medico medicoConsulta = new Medico(null, null, null, null, null, null,null,null);
+        Medico medicoConsulta = new Medico(null, null, null, null, null, null, null,null,null);
 
         for (int i = 0; i < lista_medicos_entity.size(); i++) {
             if (lista_medicos_entity.get(i).getNome().equals(medico)) {
@@ -204,6 +205,9 @@ public class Medicos extends AppCompatActivity {
         return medicoConsulta;
     }
 
+    public static Medico getMedicoSelecionado() {
+        return medicoInfo;
+    }
 
 }
 

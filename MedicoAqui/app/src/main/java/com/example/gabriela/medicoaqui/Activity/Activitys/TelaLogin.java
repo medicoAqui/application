@@ -281,7 +281,8 @@ public class TelaLogin extends AppCompatActivity implements LoaderCallbacks<Curs
             showProgress(true);
             mAuthTask = new UserLoginTask(email, password);
             mAuthTask.execute((Void) null);
-            Intent sendIntent = new Intent(this, MedicoAqui.class);
+            //Intent sendIntent = new Intent(this, MedicoAqui.class);
+            Intent sendIntent = new Intent(this, MenuPrincipal.class);
             sendIntent.putExtra(Intent.EXTRA_TEXT, "test");
             startActivity(sendIntent);
         }

@@ -65,6 +65,18 @@ public class MenuPrincipal extends AppCompatActivity {
             }
         });
 
+        final Button button_perguntas_menu = (Button) findViewById(R.id.button_perguntas_menu);
+        button_perguntas_menu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent it = new Intent(MenuPrincipal.this, PerguntasFrequentesActivity.class);
+                startActivity(it);
+
+            }
+        });
+
+
         final ImageButton button_logout = (ImageButton) findViewById(R.id.button_logout);
         button_logout.setOnClickListener(new View.OnClickListener() {
             @Override

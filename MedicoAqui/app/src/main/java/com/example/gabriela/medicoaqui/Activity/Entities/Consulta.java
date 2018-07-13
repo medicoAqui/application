@@ -3,18 +3,20 @@ package com.example.gabriela.medicoaqui.Activity.Entities;
 public class Consulta {
 
 
-    public String observacao, hora, status, cliente, medico, consultorio, idConsulta, id;
+    public String observacao, hora, dataConsulta, status, cliente, medico, consultorio, idConsulta, id;
 
 
     public Consulta(String observacao, String hora, String status, String cliente, String medico, String consultorio, String idConsulta) {
             this.observacao = observacao;
             this.hora = hora;
+            this.dataConsulta = dataConsulta;
             this.status = status;
             this.cliente = cliente;
             this.medico = medico;
             this.consultorio = consultorio;
             this.idConsulta = idConsulta;
             this.id = id;
+
     }
 
     public String getObservacao() {
@@ -31,6 +33,14 @@ public class Consulta {
 
     public void setHora(String hora) {
         this.hora = hora;
+    }
+
+    public String getDataConsulta() {
+        return dataConsulta;
+    }
+
+    public void setDataConsulta(String dataConsulta) {
+        this.dataConsulta = dataConsulta;
     }
 
     public String getStatus() {
@@ -80,7 +90,5 @@ public class Consulta {
     public void setId(String id) {
         this.id = id;
     }
-
-
 
 }

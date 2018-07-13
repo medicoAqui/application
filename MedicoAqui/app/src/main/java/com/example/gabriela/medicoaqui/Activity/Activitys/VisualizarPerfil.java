@@ -62,7 +62,7 @@ public class VisualizarPerfil extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                Intent it = new Intent(VisualizarPerfil.this, MedicoAqui.class);
+                Intent it = new Intent(VisualizarPerfil.this, MenuPrincipal.class);
                 startActivity(it);
 
             }

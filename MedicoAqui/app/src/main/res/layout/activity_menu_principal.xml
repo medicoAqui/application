@@ -19,7 +19,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="60dp"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="70dp"
         android:background="@drawable/gradient_button"
         android:drawableTop="@drawable/consulta_menu"
         android:text="Consulta"
@@ -32,7 +32,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="60dp"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="70dp"
         android:background="#33414b"
         android:drawableTop="@drawable/agenda_menu"
         android:text="Agenda"
@@ -53,31 +53,28 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button_consulta_menu" />
 
+    <!--
     <Button
         android:id="@+id/button_medicacao_menu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="60dp"
-        android:layout_marginTop="30dp"
         android:background="#33414b"
         android:drawableTop="@drawable/medicacao_menu"
         android:text="Medicação"
         android:textColor="#ffffff"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_agenda_menu" />
-
+        tools:layout_editor_absoluteX="224dp"
+        tools:layout_editor_absoluteY="230dp" />-->
+<!--
     <Button
         android:id="@+id/button_favoritos_menu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="60dp"
-        android:layout_marginTop="30dp"
         android:background="#33414b"
         android:drawableTop="@drawable/favoritos"
         android:text="Favoritos"
         android:textColor="#ffffff"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_perfil_menu" />
+        tools:layout_editor_absoluteX="60dp"
+        tools:layout_editor_absoluteY="378dp" />-->
 
     <Button
         android:id="@+id/button_perguntas_menu"
@@ -90,7 +87,7 @@
         android:text="Dúvidas"
         android:textColor="#ffffff"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_medicacao_menu" />
+        app:layout_constraintTop_toBottomOf="@+id/button_agenda_menu" />
 
     <ImageView
         android:id="@+id/imageView"

@@ -13,8 +13,8 @@ public class Medico extends Pessoa {
     public String especialidade;
     public String crm;
 
-    public Medico(String nome, String cpf, Date data, String genero, String email, String telefone, String especialidade, String crm) {
-        super(nome, cpf, data, genero);
+    public Medico(String nome, String cpf, Date data, String genero, String id, String email, String telefone, String especialidade, String crm) {
+        super(nome, cpf, data, genero, id);
         this.email = email;
         this.telefone = telefone;
         this.especialidade = especialidade;

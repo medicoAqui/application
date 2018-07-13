@@ -123,7 +123,7 @@ public class Localizacao  extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                Intent it = new Intent(Localizacao.this, MedicoAqui.class);
+                Intent it = new Intent(Localizacao.this, MenuPrincipal.class);
                 startActivity(it);
 
             }
