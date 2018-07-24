@@ -48,7 +48,8 @@ public class MenuPrincipal extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                Intent it = new Intent(MenuPrincipal.this, VisualizarHistorico.class);
+                //Intent it = new Intent(MenuPrincipal.this, VisualizarHistorico.class);
+                Intent it = new Intent(MenuPrincipal.this, AgendaPaciente.class);
                 startActivity(it);
 
             }

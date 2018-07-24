@@ -6,7 +6,7 @@ public class Consulta {
     public String observacao, hora, dataConsulta, status, cliente, medico, consultorio, idConsulta, id;
 
 
-    public Consulta(String observacao, String hora, String status, String cliente, String medico, String consultorio, String idConsulta) {
+    public Consulta(String observacao, String hora, String dataConsulta, String status, String cliente, String medico, String consultorio, String idConsulta) {
             this.observacao = observacao;
             this.hora = hora;
             this.dataConsulta = dataConsulta;

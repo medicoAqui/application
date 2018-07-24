@@ -43,6 +43,10 @@
             android:label="Menu Principal"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
+            android:name=".Activity.Activitys.AgendaPaciente"
+            android:label="Localização"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
             android:name=".Activity.Activitys.Localizacao"
             android:label="Localização"
             android:theme="@style/AppTheme.NoActionBar" />

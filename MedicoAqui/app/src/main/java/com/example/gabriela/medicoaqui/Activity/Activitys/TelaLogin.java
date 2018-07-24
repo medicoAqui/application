@@ -30,6 +30,8 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.example.gabriela.medicoaqui.Activity.Entities.Cliente;
@@ -91,6 +93,8 @@ public class TelaLogin extends AppCompatActivity implements LoaderCallbacks<Curs
     public static String emailCliente;
     public static Cliente clientePerfil;
 
+    public static String perfil = "paciente"; //Opção default
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -128,6 +132,19 @@ public class TelaLogin extends AppCompatActivity implements LoaderCallbacks<Curs
             }
         });
 
+        final RadioGroup radioGroup = (RadioGroup) findViewById(R.id.group_perfil);
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+
+                if(checkedId == R.id.perfil_paciente) {
+                    perfil = "paciente";
+                } else if(checkedId == R.id.perfil_medico) {
+                    perfil = "medico";
+                }
+
+            }
+        });
 
         Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
@@ -138,6 +155,8 @@ public class TelaLogin extends AppCompatActivity implements LoaderCallbacks<Curs
                 final AlertDialog.Builder builder = new AlertDialog.Builder(TelaLogin.this);
                 builder.setTitle("Falha de autenticação");
                 setEmailCliente(mEmailView.getText().toString());
+
+                if (perfil.equals("paciente")) {
 
                 if (!("".equals(mEmailView.getText().toString()) || "".equals(mPasswordView.getText().toString()))) {
                     mAuth.signInWithEmailAndPassword(mEmailView.getText().toString(), mPasswordView.getText().toString()).addOnCompleteListener(TelaLogin.this, new OnCompleteListener<AuthResult>() {
@@ -163,6 +182,12 @@ public class TelaLogin extends AppCompatActivity implements LoaderCallbacks<Curs
                     AlertDialog dialog = builder.create();
                     dialog.show();
                 }
+
+                } else if (perfil.equals("medico")) {
+                    //Validar loggin médico
+                    //Encaminhar para tela do médico
+                }
+
                 // Henrique Autenticacao - 24/05 - FIM
             }
         });

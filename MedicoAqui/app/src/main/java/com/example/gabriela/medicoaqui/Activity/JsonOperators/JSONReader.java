@@ -272,11 +272,12 @@ public class JSONReader {
                 String medico = jsonObjectConsulta.getString("medico");
                 String consultorio = jsonObjectConsulta.getString("consultorio");
                 String idConsulta = jsonObjectConsulta.getString("idConsulta");
+                String dataConsulta = jsonObjectConsulta.getString("dataConsulta");
 
 
                 // Monta AQUI um objeto consulta e adiciona na lista que deve ser retornada
 
-                Consulta consulta = new Consulta(observacao, hora, status, cliente, medico, consultorio, idConsulta);
+                Consulta consulta = new Consulta(observacao, hora, dataConsulta, status, cliente, medico, consultorio, idConsulta);
                 consultas.add(consulta);
             }
 
@@ -369,7 +370,7 @@ public class JSONReader {
                 String idConsulta = jsonObjectMinhaAgenda.getString("idConsulta");
                 String dataConsulta = jsonObjectMinhaAgenda.getString("dataConsulta");
                 String status = jsonObjectMinhaAgenda.getString("status");
-                Consulta minhaConsulta =  new Consulta(observacao, hora, status, cliente, medico, dataConsulta, idConsulta);
+                Consulta minhaConsulta =  new Consulta(observacao, hora, dataConsulta, status, cliente, medico, dataConsulta, idConsulta);
                 minhaAgenda.add(minhaConsulta);
             }
 
@@ -396,7 +397,7 @@ public class JSONReader {
                 String idConsulta = jsonObjectConsulytasDisp.getString("idConsulta");
                 String dataConsulta = jsonObjectConsulytasDisp.getString("dataConsulta");
                 String status = jsonObjectConsulytasDisp.getString("status");
-                Consulta consultaDisp =  new Consulta(observacao, hora, status, cliente, medico, dataConsulta, idConsulta);
+                Consulta consultaDisp =  new Consulta(observacao, hora, dataConsulta, status, cliente, medico, dataConsulta, idConsulta);
                 consultasDisponiveis.add(consultaDisp);
             }
 
@@ -425,5 +426,80 @@ public class JSONReader {
         return horasDisp;
     }
 
+    public HashSet<Consulta> getMinhasConsultas(String jsonString) {
 
+        HashSet<Consulta> consultas = new HashSet<Consulta>();
+
+        try {
+            JSONArray nomesJson = new JSONArray(jsonString);
+            JSONObject jsonObjectNome;
+
+            for (int i = 0; i < nomesJson.length(); i++) {
+                jsonObjectNome = new JSONObject(nomesJson.getString(i));
+                String observacao = jsonObjectNome.getString("observação");
+                String hora = jsonObjectNome.getString("hora");
+                String status = jsonObjectNome.getString("status");
+                String cliente = jsonObjectNome.getString("cliente");
+                String medico = jsonObjectNome.getString("medico");
+                String consultorio = jsonObjectNome.getString("consultorio");
+                String idConsulta = jsonObjectNome.getString("idConsulta");
+                String dataConsulta = jsonObjectNome.getString("dataconsulta");
+                Consulta consulta = new Consulta(observacao, hora, dataConsulta, status, cliente, medico, consultorio, idConsulta);
+                consultas.add(consulta);
+            }
+
+        } catch (JSONException e) {
+            Log.e("Erro", "Erro no parsing do JSON", e);
+        }
+        return consultas;
+    }
+
+    public HashSet<Consulta> getConsultasEntity(String jsonString) {
+        HashSet<Consulta> consultas = new HashSet<Consulta>();
+
+        try {
+            JSONArray consultasJson = new JSONArray(jsonString);
+            JSONObject jsonObjectConsulta;
+
+            for (int i = 0; i < consultasJson.length(); i++) {
+                jsonObjectConsulta = new JSONObject(consultasJson.getString(i));
+                //Log.i("Nome: ","nome=" + jsonObjectEstado.getString("nome"));
+                String observacao = jsonObjectConsulta.getString("observacao");
+                String hora = jsonObjectConsulta.getString("hora");
+                String dataConsulta = jsonObjectConsulta.getString("dataConsulta");
+                String status = jsonObjectConsulta.getString("status");
+                String cliente = jsonObjectConsulta.getString("cliente");
+                String medico = jsonObjectConsulta.getString("medico");
+                String consultorio = jsonObjectConsulta.getString("consultorio");
+                String idConsulta = jsonObjectConsulta.getString("idConsulta");
+                Consulta consulta = new Consulta(observacao, hora, dataConsulta, status, cliente, medico, consultorio, idConsulta);
+                consultas.add(consulta);
+            }
+
+        } catch (JSONException e) {
+            Log.e("Erro", "Erro no parsing do JSON", e);
+        }
+        return consultas;
+    }
+
+
+    public HashSet<String> getConsultas(String jsonString) {
+        HashSet<String> consultas = new HashSet<String>();
+
+        try {
+            JSONArray consultasJson = new JSONArray(jsonString);
+            JSONObject jsonObjectConsulta;
+
+            for (int i = 0; i < consultasJson.length(); i++) {
+                jsonObjectConsulta = new JSONObject(consultasJson.getString(i));
+                //Log.i("Nome: ","nome=" + jsonObjectNome.getString("nome"));
+                String consulta = jsonObjectConsulta.getString("medico") + " - " + jsonObjectConsulta.getString("dataConsulta") + " - " + jsonObjectConsulta.getString("hora");
+                consultas.add(consulta); //.substring(0,1).toUpperCase().concat(nome.substring(1)));
+            }
+
+        } catch (JSONException e) {
+            Log.e("Erro", "Erro no parsing do JSON", e);
+        }
+        return consultas;
+    }
 }

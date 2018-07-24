@@ -5,48 +5,43 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Activity.Activitys.MenuPrincipal"
-    android:background="#33414b">
+    android:background="@drawable/gradient_background">
+    <!--android:background="#33414b">-->
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="#33414b"
-        app:popupTheme="@style/AppTheme.PopupOverlay" />
 
     <Button
         android:id="@+id/button_consulta_menu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="60dp"
-        android:layout_marginTop="70dp"
-        android:background="@drawable/gradient_button"
+        android:layout_marginStart="65dp"
+        android:layout_marginTop="100dp"
+        android:background="@android:color/transparent"
         android:drawableTop="@drawable/consulta_menu"
         android:text="Consulta"
         android:textColor="#ffffff"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/button_agenda_menu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="60dp"
-        android:layout_marginTop="70dp"
-        android:background="#33414b"
+        android:layout_marginEnd="65dp"
+        android:layout_marginTop="100dp"
+        android:background="@android:color/transparent"
         android:drawableTop="@drawable/agenda_menu"
         android:text="Agenda"
         android:textColor="#ffffff"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/button_perfil_menu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="60dp"
+        android:layout_marginStart="65dp"
         android:layout_marginTop="30dp"
-        android:background="#33414b"
+        android:background="@android:color/transparent"
         android:drawableTop="@drawable/perfil_menu"
         android:text="Perfil"
         android:textColor="#ffffff"
@@ -80,9 +75,9 @@
         android:id="@+id/button_perguntas_menu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="60dp"
+        android:layout_marginEnd="65dp"
         android:layout_marginTop="30dp"
-        android:background="#33414b"
+        android:background="@android:color/transparent"
         android:drawableTop="@drawable/perguntas"
         android:text="Dúvidas"
         android:textColor="#ffffff"
@@ -93,24 +88,24 @@
         android:id="@+id/imageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="@+id/toolbar"
-        app:layout_constraintStart_toStartOf="@+id/toolbar"
-        app:layout_constraintTop_toTopOf="@+id/toolbar"
-        app:srcCompat="@drawable/logo_tollbar" />
+        android:layout_marginEnd="100dp"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/logo_tollbar_02" />
 
     <ImageButton
         android:id="@+id/button_logout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:background="#33414b"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="@android:color/transparent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/logout" />
+        app:srcCompat="@drawable/logout_02" />
 
 
 </android.support.constraint.ConstraintLayout>
