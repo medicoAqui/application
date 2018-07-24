@@ -145,6 +145,7 @@ medicoRouter.post('/medicosByEspecialidade',function(req,res){
 medicoRouter.post('/EspecialidadesByCidadeAndUF',function(req,res){
 
   var endereco = Endereco.find({cidade: req.body.cidade, uf: req.body.uf });
+  console.log(endereco.rua);
 
   endereco.exec(function(err,data){
       console.log(data)
@@ -157,19 +158,87 @@ medicoRouter.post('/EspecialidadesByCidadeAndUF',function(req,res){
           if(err) {
                   res.sendStatus(400).json('Consultorio nao encontrado no sistema');
           }else{
-            var medico = Medico.find({consultorio :data2});
+            var medico = Medico.find({consultorio :data2},{$all:{especialidades:1}});
             medico.exec(function(err,data3){
-              console.log(data3)
+                var medic = data3;
+              console.log(data3 + " aqui é o data 3");
               if(err) {
                       res.sendStatus(400).json('Medico nao encontrado no sistema');
               }else{
-                res.send(data3.especialidades);
+                var especialidades = Especialidade.find({_id:{$all:data3.especialidades}});
+                especialidades.exec(function(err,data4){
+                    console.log(data4);
+                    if(err){
+                        res.sendStatus(400).json('sem especialidade');
+                    }else{
+                        res.send(data4);
+                    }
+
+                });
+
+
+
+                //console.log(medic.name+ " aqui é o medic");
+                //res.send(data3.especialidades);
               }
             });
           }
         });
       }
   });
+});
+
+medicoRouter.post('/testeE', function(req,res){
+    var eu;
+
+    Endereco.find({cidade: req.body.cidade, uf: req.body.uf }).exec(function(err,endereco){
+        console.log(endereco+ " parte1");
+        if(err){
+            res.senStatus(400).send("erro no endereço");
+        }else{
+            Consultorio.find({endereco :endereco}).exec(function(err,consultorio){
+                console.log(consultorio+" parte 2");
+                if(err){
+                    res.sendStatus(400).send("consultorio nao encontrado");
+
+                }else{
+                    Medico.find({consultorio :consultorio}).populate('especialidades').exec(function(err,medico){
+                        console.log(medico+ "parte3");
+                        console.log(toString(medico.name));
+                       // console.log(medico.name + " parte3.1");
+
+                        if(err){
+                            res.sandStatus(400).send("medico nao encontrado");
+
+                        }else{
+                            var outro = medico.especialidades;
+                            var es = new Especialidade();
+                            es = medico.especialidades;
+                            var m = new Medico();
+                            m = medico;
+
+                            //console.log('The author is %s',medico.especialidades.nomeEspecialidade);
+                           console.log(m+ " mmmmmmmm");
+                                                      //console.log((Medico) m.cpf+ " cccccccccccc");
+
+                            console.log(toString(outro));
+
+                                                        
+                            res.send(medico);
+                        }
+                                                    console.log(medico.especialidades);
+                                                    console.log(Medico.especialidades);
+
+
+
+                    });
+                }
+
+            });
+        }
+    });
+    console.log(eu);
+
 });
 
 medicoRouter.post('/me',function(req,res){
