@@ -112,7 +112,7 @@ public class AgendaPaciente  extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                Intent it = new Intent(AgendaPaciente.this, Especialidade.class);
+                Intent it = new Intent(AgendaPaciente.this, MenuPrincipal.class);
                 startActivity(it);
 
             }
