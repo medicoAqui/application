@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.ImageButton;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.example.gabriela.medicoaqui.Activity.Entities.Consulta;
 import com.example.gabriela.medicoaqui.Activity.JsonOperators.JSONReader;
@@ -62,7 +63,7 @@ public class DataHoraConsulta   extends AppCompatActivity {
         final CalendarView calendario = (CalendarView) findViewById(R.id.calendario);
         spinner_hora.setEnabled(false);
 
-        ArrayAdapter<String> dataAdapterHora = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, lista_hora);
+        final ArrayAdapter<String> dataAdapterHora = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, lista_hora);
         dataAdapterHora.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner_hora.setAdapter(dataAdapterHora);
 
@@ -71,13 +72,11 @@ public class DataHoraConsulta   extends AppCompatActivity {
             @Override
             public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
 
-                data = new Date(calendario.getDate());
-                df.setTimeZone(TimeZone.getTimeZone("GMT"));
-                dataStr = df.format(data);
-                //dataStr = "18/07/2018";
+                dataStr = formataDoisDigitos(dayOfMonth) + "-" + formataDoisDigitos((month +1)) + "-" + year;
 
                 carregaHoraDisponivel(dataStr);
 
+                spinner_hora.setSelection(dataAdapterHora.getPosition("Selecione"));
                 if (lista_hora.size() == 0) {
                     spinner_hora.setEnabled(false);
                     //exibir mensagem
@@ -95,6 +94,7 @@ public class DataHoraConsulta   extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parentView, View view, int pos, long id) {
 
                 hora = spinner_hora.getSelectedItem().toString();
+
                 if (hora.equals("Selecione")) {
                     button_marcar_consulta.setEnabled(false);
                 } else {
@@ -114,8 +114,8 @@ public class DataHoraConsulta   extends AppCompatActivity {
             public void onClick(View view) {
 
                 marcarConsulta(getIdConsulta(hora));
-
-                Intent it = new Intent(DataHoraConsulta.this, VisualizarHistorico.class);
+                Toast.makeText(DataHoraConsulta.this, "Solicitação de consulta enviada", Toast.LENGTH_SHORT).show();
+                Intent it = new Intent(DataHoraConsulta.this, TelaPrincipal.class);
                 startActivity(it);
 
             }
@@ -154,9 +154,9 @@ public class DataHoraConsulta   extends AppCompatActivity {
 
         try {
 
-            jsonTT.put("date", dataStr);
+            jsonTT.put("dataConsulta", dataStr);
             jsonTT.put("status", statusDisponivel);
-            jsonTT.put("medico", Medicos.getMedicoSelecionado().getCrm());
+            jsonTT.put("crm", Medicos.getMedicoSelecionado().getCrm());
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -170,6 +170,7 @@ public class DataHoraConsulta   extends AppCompatActivity {
                 String horasBD = http.sendPost("http://medicoishere.herokuapp.com/consulta/consultasByDateCrmStatus", jsonTT.toString());
                 HashSet<String> horas = jsonReader.getHorasDisponiveis(horasBD);
                 HashSet<Consulta> consultasDisp = jsonReader.getConsultasDisponíveis(horasBD);
+                lista_hora.clear();
                 lista_hora.addAll(horas);
                 lista_consultas_disponiveis.addAll(consultasDisp);
                 Collections.sort(lista_hora);
@@ -186,9 +187,10 @@ public class DataHoraConsulta   extends AppCompatActivity {
 
     public void marcarConsulta(String id_consulta) {
 
-        Log.d(TAG, "marcarConsulta() called with: data = [" + data + "], hora = [" + hora + "]");
+        Log.d(TAG, "marcarConsulta() called with: data = [" + dataStr + "], hora = [" + hora + "]");
 
         final JSONObject jsonTT = new JSONObject();
+        // id_consulta é o _id
         final String url = "http://medicoishere.herokuapp.com/consulta/"+ id_consulta;
 
         try {
@@ -216,11 +218,19 @@ public class DataHoraConsulta   extends AppCompatActivity {
         for (int i = 0; i < lista_consultas_disponiveis.size(); i++) {
 
             if (lista_consultas_disponiveis.get(i).getHora().equals(hora)) {
-                id = lista_consultas_disponiveis.get(i).getIdConsulta();
+                id = lista_consultas_disponiveis.get(i).getId();
             }
 
         }
         return id;
+    }
+
+    public String formataDoisDigitos(int numero){
+        String valorFormatado = ""+numero;
+        if (numero < 10){
+            valorFormatado = "0"+numero;
+        }
+        return valorFormatado;
     }
 
 }

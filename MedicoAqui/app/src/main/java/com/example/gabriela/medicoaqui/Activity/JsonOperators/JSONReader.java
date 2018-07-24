@@ -393,12 +393,17 @@ public class JSONReader {
                 String cliente = jsonObjectConsulytasDisp.getString("cliente");
                 String medico = jsonObjectConsulytasDisp.getString("medico");
                 String hora = jsonObjectConsulytasDisp.getString("hora");
-                String observacao = jsonObjectConsulytasDisp.getString("observacao");
+                String observacao = null;
+                if (jsonObjectConsulytasDisp.has("observacao")) {
+                    observacao = jsonObjectConsulytasDisp.getString("observacao");
+                }
                 String idConsulta = jsonObjectConsulytasDisp.getString("idConsulta");
                 String dataConsulta = jsonObjectConsulytasDisp.getString("dataConsulta");
                 String status = jsonObjectConsulytasDisp.getString("status");
                 Consulta consultaDisp =  new Consulta(observacao, hora, dataConsulta, status, cliente, medico, dataConsulta, idConsulta);
-                consultasDisponiveis.add(consultaDisp);
+                String id = jsonObjectConsulytasDisp.getString("_id");
+                consultaDisp.setId(id);
+consultasDisponiveis.add(consultaDisp);
             }
 
         } catch (JSONException e) {
