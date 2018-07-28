@@ -42,6 +42,31 @@ medicoRouter.get('/:id',function(res,req){
 	});
 });
 
+medicoRouter.post('/medicoByCrm',function(req,res){
+
+  var medico = Medico.findOne({crm: req.body.crm });
+  medico.exec(function(err,data){
+      console.log(data)
+      if(err){
+          res.status(500).send(err);
+      }else{
+          res.send(data);
+      }
+  });
+});
+
+medicoRouter.post('/medicoBy_id',function(req,res){
+
+  var medico = Medico.findOne({_id: req.body._id });
+  medico.exec(function(err,data){
+      console.log(data)
+      if(err){
+          res.status(500).send(err);
+      }else{
+          res.send(data);
+      }
+  });
+});
 // aqui adiciona medico , cria a especialidade e a tebela medico especialidade
 
 medicoRouter.post('/add', function(req,res){
@@ -223,7 +248,7 @@ medicoRouter.post('/testeE', function(req,res){
 
                             console.log(toString(outro));
 
-                                                        
+
                             res.send(medico);
                         }
                                                     console.log(medico.especialidades);
