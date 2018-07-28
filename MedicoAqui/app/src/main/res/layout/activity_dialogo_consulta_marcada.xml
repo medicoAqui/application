@@ -1,0 +1,62 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:gravity="center">
+
+    <LinearLayout
+        android:id="@+id/linearLayout_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/relogio_100px" />
+
+        <LinearLayout
+            android:id="@+id/linearLayout_2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+
+            <TextView
+                android:id="@+id/text_medico"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Medico" />
+
+            <TextView
+                android:id="@+id/text_medico_crm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="CRM xxxxxx" />
+
+            <TextView
+                android:id="@+id/text_data_hora"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ddmm-aaaa hh:mm" />
+
+            <TextView
+                android:id="@+id/text_consultorio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="consultorio" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/bt"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="OK"
+        />
+
+</LinearLayout>

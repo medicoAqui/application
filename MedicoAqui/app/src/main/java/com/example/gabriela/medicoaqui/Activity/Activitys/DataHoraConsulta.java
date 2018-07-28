@@ -3,8 +3,10 @@ package com.example.gabriela.medicoaqui.Activity.Activitys;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -114,9 +116,10 @@ public class DataHoraConsulta   extends AppCompatActivity {
             public void onClick(View view) {
 
                 marcarConsulta(getIdConsulta(hora));
-                Toast.makeText(DataHoraConsulta.this, "Solicitação de consulta enviada", Toast.LENGTH_SHORT).show();
-                Intent it = new Intent(DataHoraConsulta.this, TelaPrincipal.class);
-                startActivity(it);
+                dialogo_marcar_consulta();
+                //Toast.makeText(DataHoraConsulta.this, "Solicitação de consulta enviada", Toast.LENGTH_SHORT).show();
+                //Intent it = new Intent(DataHoraConsulta.this, AgendaPaciente.class);
+                //startActivity(it);
 
             }
         });
@@ -144,6 +147,7 @@ public class DataHoraConsulta   extends AppCompatActivity {
 
             }
         });
+
     }
 
     public void carregaHoraDisponivel(String dataStr) {
@@ -182,6 +186,7 @@ public class DataHoraConsulta   extends AppCompatActivity {
 
             }
         }).start();
+
     }
 
 
@@ -210,6 +215,7 @@ public class DataHoraConsulta   extends AppCompatActivity {
                 }
             }
         }).start();
+
     }
 
     public String getIdConsulta(String hora) {
@@ -231,6 +237,30 @@ public class DataHoraConsulta   extends AppCompatActivity {
             valorFormatado = "0"+numero;
         }
         return valorFormatado;
+    }
+
+    private AlertDialog alerta;
+
+    private void dialogo_marcar_consulta() {
+
+        LayoutInflater li = getLayoutInflater();
+
+        View view = li.inflate(R.layout.activity_dialogo_consulta_marcada, null);
+        view.findViewById(R.id.bt).setOnClickListener(new View.OnClickListener() {
+            public void onClick(View arg0) {
+                alerta.dismiss();
+                Intent it = new Intent(DataHoraConsulta.this, AgendaPaciente.class);
+                startActivity(it);
+
+            }
+        });
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Consulta marcada!");
+        builder.setView(view);
+        alerta = builder.create();
+        alerta.show();
+
     }
 
 }

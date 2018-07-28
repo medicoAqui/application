@@ -483,10 +483,11 @@ consultasDisponiveis.add(consultaDisp);
                 String hora = jsonObjectConsulta.getString("hora");
                 String dataConsulta = jsonObjectConsulta.getString("dataConsulta");
                 String status = jsonObjectConsulta.getString("status");
-                String cliente = jsonObjectConsulta.getString("cliente");
+                //String cliente = jsonObjectConsulta.getString("cliente");
                 String medico = jsonObjectConsulta.getString("medico");
-                String idConsulta = jsonObjectConsulta.getString("idConsulta");
-                Consulta consulta = new Consulta(observacao, hora, dataConsulta, status, cliente, medico, "", idConsulta);
+                String idConsulta = jsonObjectConsulta.getString("_id");
+                //Consulta consulta = new Consulta(observacao, hora, dataConsulta, status, cliente, medico, "", idConsulta);
+                Consulta consulta = new Consulta(observacao, hora, dataConsulta, status, null, medico, "", idConsulta);
                 consultas.add(consulta);
             }
 
@@ -515,5 +516,24 @@ consultasDisponiveis.add(consultaDisp);
             Log.e("Erro", "Erro no parsing do JSON", e);
         }
         return consultas;
+    }
+
+    public Medico getMedicoByID(String jsonString) {
+
+        Medico medico = new Medico();
+
+        try {
+
+            JSONObject jsonObjectMedico;
+            jsonObjectMedico = new JSONObject(jsonString);
+
+            String nome = jsonObjectMedico.getString("name");
+            String crm = jsonObjectMedico.getString("crm");
+            String especialidade = jsonObjectMedico.getString("especialidade");
+
+        } catch (JSONException e) {
+            Log.e("Erro", "Erro no parsing do JSON", e);
+        }
+        return medico;
     }
 }

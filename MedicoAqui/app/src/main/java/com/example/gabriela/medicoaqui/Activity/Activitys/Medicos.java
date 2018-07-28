@@ -161,6 +161,8 @@ public class Medicos extends AppCompatActivity {
             @Override
             public void run() {
                 try {
+                    lista_medicos.clear();
+                    lista_medicos_entity.clear();
                     String medicosBD = http.sendPost("http://medicoishere.herokuapp.com/medico/medicosByEspecialidade", jsonTT.toString());
                     HashSet<String> medicos = jsonReader.getMedicosByEspecialidade(medicosBD);
                     HashSet<Medico> medicosEntity = jsonReader.getMedicosByEspecialidadeEntity(medicosBD);

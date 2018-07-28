@@ -107,5 +107,28 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/logout_02" />
 
+    <!--
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_logout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        app:backgroundTint="#33414b"
+        app:srcCompat="@android:drawable/ic_menu_close_clear_cancel"
+        tools:layout_editor_absoluteX="179dp"
+        tools:layout_editor_absoluteY="485dp" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_logout_02"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        app:backgroundTint="#33414b"
+        app:srcCompat="@android:drawable/ic_delete"
+        tools:layout_editor_absoluteX="108dp"
+        tools:layout_editor_absoluteY="445dp" />
+        -->
 
 </android.support.constraint.ConstraintLayout>
