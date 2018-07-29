@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 
+import com.example.gabriela.medicoaqui.Activity.Entities.Cliente;
 import com.example.gabriela.medicoaqui.Activity.Entities.Consulta;
 import com.example.gabriela.medicoaqui.Activity.Entities.Medico;
 import com.example.gabriela.medicoaqui.Activity.JsonOperators.JSONReader;
@@ -43,7 +44,13 @@ public class AgendaPaciente  extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_agenda_paciente);
 
-        carregaConsultas();
+        //carregaConsultas();
+        try {
+            carregaConsultasAgendasPorCliente(TelaLogin.getClientePerfil());
+        } catch (JSONException e) {
+            e.printStackTrace();
+            Log.d(TAG, "Falha ao recuperar o cliente da sessão.");
+        }
 
         try {
             while (lista_consultas_entity.size() == 0) {
@@ -86,12 +93,43 @@ public class AgendaPaciente  extends AppCompatActivity {
 
         Log.d(TAG, "carregaConsultas() called");
 
+        lista_consultas_entity.clear();
         final JSONObject jsonTT = new JSONObject();
 
         new Thread(new Runnable() {
             @Override
             public void run() {
                 String consultasBD = http.get("https://medicoishere.herokuapp.com/consulta/consultas");
+                HashSet<Consulta> consultasEntity = jsonReader.getConsultasEntity(consultasBD);
+                //HashSet<String> consultasStr = jsonReader.getConsultas(consultasBD);
+                lista_consultas_entity.addAll(consultasEntity);
+                //lista_consultas.addAll(consultasStr);
+
+                //criaReciclerView();
+
+            }
+        }).start();
+
+    }
+
+    private void carregaConsultasAgendasPorCliente(Cliente cliente) throws JSONException {
+
+        Log.d(TAG, "carregaConsultasAgendasPorCliente() called");
+
+        lista_consultas_entity.clear();
+        final JSONObject jsonTT = new JSONObject();
+        jsonTT.put("cpf", cliente.getCpf()); //Status Cancelado - Cliente
+        jsonTT.put("status", "A");
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                String consultasBD = null;
+                try {
+                    consultasBD = http.sendPost("https://medicoishere.herokuapp.com/consulta/consultasByCpfClienteAndStatus",jsonTT.toString());
+                } catch (HttpConnections.MinhaException e) {
+                    e.printStackTrace();
+                }
                 HashSet<Consulta> consultasEntity = jsonReader.getConsultasEntity(consultasBD);
                 //HashSet<String> consultasStr = jsonReader.getConsultas(consultasBD);
                 lista_consultas_entity.addAll(consultasEntity);
@@ -116,7 +154,7 @@ public class AgendaPaciente  extends AppCompatActivity {
 
     public static Consulta getConsultaEntity() {
 
-        Consulta consultaEntity = new Consulta(null, null, null, null, null, null, null,null);
+        Consulta consultaEntity = new Consulta(null, null, null, null, null, null, null,null, null);
 
         for (int i = 0; i < lista_consultas_entity.size(); i++) {
             String consultaConfere = lista_consultas_entity.get(i).getMedico() + " - " + lista_consultas_entity.get(i).getDataConsulta() + " - " + lista_consultas_entity.get(i).getHora();

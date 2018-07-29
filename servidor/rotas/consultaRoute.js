@@ -116,6 +116,50 @@ consultaRouter.post('/consultasByDateAndCpfCliente',function(req,res){
 
 });
 
+consultaRouter.post('/consultasByCpfClienteAndStatus',function(req,res){
+
+  var cliente = Cliente.find({cpf: req.body.cpf});
+  cliente.exec(function(err,data){
+      console.log(data)
+      if(err){
+          res.status(500).send(err);
+      }else{
+        var consulta = Consulta.find({status: req.body.status, cliente: data});
+        consulta.exec(function(err,data2){
+            console.log(data2)
+            if(err){
+                res.status(500).send(err);
+            }else{
+               res.send(data2);
+            }
+        });
+      }
+  });
+
+});
+
+consultaRouter.post('/consultasByCpfCliente',function(req,res){
+
+  var cliente = Cliente.find({cpf: req.body.cpf});
+  cliente.exec(function(err,data){
+      console.log(data)
+      if(err){
+          res.status(500).send(err);
+      }else{
+        var consulta = Consulta.find({cliente: data});
+        consulta.exec(function(err,data2){
+            console.log(data2)
+            if(err){
+                res.status(500).send(err);
+            }else{
+               res.send(data2);
+            }
+        });
+      }
+  });
+
+});
+
 consultaRouter.post('/consultasByDateCrmStatus',function(req,res){
 
   var medico = Medico.find({crm: req.body.crm});
@@ -153,7 +197,7 @@ consultaRouter.get('/:id',function(res,req){
 
 /*
 
-esse era o teu , ele estava quebrando 
+esse era o teu , ele estava quebrando
 consultaRouter.post('/add', function(req,res){
 
     Cliente.findOne({cpf: req.body.cpf }, function(err,data0){

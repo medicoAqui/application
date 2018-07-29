@@ -271,15 +271,19 @@ public class JSONReader {
                 }
                 String hora = jsonObjectConsulta.getString("hora");
                 String status = jsonObjectConsulta.getString("status");
-                String cliente = jsonObjectConsulta.getString("cliente");
+                String cliente = null;
+                if (jsonObjectConsulta.has("cliente")) {
+                    cliente = jsonObjectConsulta.getString("cliente");
+                }
                 String medico = jsonObjectConsulta.getString("medico");
                 String idConsulta = jsonObjectConsulta.getString("idConsulta");
                 String dataConsulta = jsonObjectConsulta.getString("dataConsulta");
+                String id = jsonObjectConsulta.getString("_id");
 
 
                 // Monta AQUI um objeto consulta e adiciona na lista que deve ser retornada
 
-                Consulta consulta = new Consulta(observacao, hora, dataConsulta, status, cliente, medico, "", idConsulta);
+                Consulta consulta = new Consulta(observacao, hora, dataConsulta, status, cliente, medico, "", idConsulta, id);
                 consultas.add(consulta);
             }
 
@@ -365,7 +369,10 @@ public class JSONReader {
 
             for (int i = 0; i < minhaAgendaJson.length(); i++) {
                 jsonObjectMinhaAgenda = new JSONObject(minhaAgendaJson.getString(i));
-                String cliente = jsonObjectMinhaAgenda.getString("cliente");
+                String cliente = null;
+                if (jsonObjectMinhaAgenda.has("cliente")) {
+                    cliente = jsonObjectMinhaAgenda.getString("cliente");
+                }
                 String medico = jsonObjectMinhaAgenda.getString("medico");
                 String hora = jsonObjectMinhaAgenda.getString("hora");
                 String observacao = null;
@@ -375,7 +382,8 @@ public class JSONReader {
                 String idConsulta = jsonObjectMinhaAgenda.getString("idConsulta");
                 String dataConsulta = jsonObjectMinhaAgenda.getString("dataConsulta");
                 String status = jsonObjectMinhaAgenda.getString("status");
-                Consulta minhaConsulta =  new Consulta(observacao, hora, dataConsulta, status, cliente, medico, "", idConsulta);
+                String id = jsonObjectMinhaAgenda.getString("_id");
+                Consulta minhaConsulta =  new Consulta(observacao, hora, dataConsulta, status, cliente, medico, "", idConsulta, id);
                 minhaAgenda.add(minhaConsulta);
             }
 
@@ -395,7 +403,10 @@ public class JSONReader {
 
             for (int i = 0; i < consultasDispJson.length(); i++) {
                 jsonObjectConsulytasDisp = new JSONObject(consultasDispJson.getString(i));
-                String cliente = jsonObjectConsulytasDisp.getString("cliente");
+                String cliente = null;
+                if (jsonObjectConsulytasDisp.has("cliente")) {
+                    cliente = jsonObjectConsulytasDisp.getString("cliente");
+                }
                 String medico = jsonObjectConsulytasDisp.getString("medico");
                 String hora = jsonObjectConsulytasDisp.getString("hora");
                 String observacao = null;
@@ -405,10 +416,10 @@ public class JSONReader {
                 String idConsulta = jsonObjectConsulytasDisp.getString("idConsulta");
                 String dataConsulta = jsonObjectConsulytasDisp.getString("dataConsulta");
                 String status = jsonObjectConsulytasDisp.getString("status");
-                Consulta consultaDisp =  new Consulta(observacao, hora, dataConsulta, status, cliente, medico, "", idConsulta);
                 String id = jsonObjectConsulytasDisp.getString("_id");
-                consultaDisp.setId(id);
-consultasDisponiveis.add(consultaDisp);
+                Consulta consultaDisp =  new Consulta(observacao, hora, dataConsulta, status, cliente, medico, "", idConsulta, id);
+
+                consultasDisponiveis.add(consultaDisp);
             }
 
         } catch (JSONException e) {
@@ -452,11 +463,15 @@ consultasDisponiveis.add(consultaDisp);
                 }
                 String hora = jsonObjectNome.getString("hora");
                 String status = jsonObjectNome.getString("status");
-                String cliente = jsonObjectNome.getString("cliente");
+                String cliente = null;
+                if (jsonObjectNome.has("cliente")) {
+                    cliente = jsonObjectNome.getString("cliente");
+                }
                 String medico = jsonObjectNome.getString("medico");
                 String idConsulta = jsonObjectNome.getString("idConsulta");
                 String dataConsulta = jsonObjectNome.getString("dataconsulta");
-                Consulta consulta = new Consulta(observacao, hora, dataConsulta, status, cliente, medico, "", idConsulta);
+                String id = jsonObjectNome.getString("_id");
+                Consulta consulta = new Consulta(observacao, hora, dataConsulta, status, cliente, medico, "", idConsulta, id);
                 consultas.add(consulta);
             }
 
@@ -483,12 +498,15 @@ consultasDisponiveis.add(consultaDisp);
                 String hora = jsonObjectConsulta.getString("hora");
                 String dataConsulta = jsonObjectConsulta.getString("dataConsulta");
                 String status = jsonObjectConsulta.getString("status");
-                String cliente = jsonObjectConsulta.getString("cliente");
+                String cliente = null;
+                if (jsonObjectConsulta.has("cliente")) {
+                    cliente = jsonObjectConsulta.getString("cliente");
+                }
                 String medico = jsonObjectConsulta.getString("medico");
                 String idConsulta = jsonObjectConsulta.getString("idConsulta");
                 String id = jsonObjectConsulta.getString("_id");
                 //Consulta consulta = new Consulta(observacao, hora, dataConsulta, status, cliente, medico, "", idConsulta);
-                Consulta consulta = new Consulta(observacao, hora, dataConsulta, status, null, medico, "", idConsulta);
+                Consulta consulta = new Consulta(observacao, hora, dataConsulta, status, cliente, medico, "", idConsulta, id);
                 consultas.add(consulta);
             }
 
