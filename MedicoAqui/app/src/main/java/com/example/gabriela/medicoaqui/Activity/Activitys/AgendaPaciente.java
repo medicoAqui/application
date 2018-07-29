@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageButton;
 
@@ -62,7 +63,7 @@ public class AgendaPaciente  extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        //ordena lista de consultas por data
+        // Ordena lista de consultas por data/hora
         Collections.sort(lista_consultas_entity);
 
         recyclerView = (RecyclerView) findViewById(R.id.recycler);
@@ -201,8 +202,28 @@ public class AgendaPaciente  extends AppCompatActivity {
 
     private static AlertDialog alerta;
 
-    public  void dialogo_desmarcar(final String idConsulta) {
+    public void dialogo_desmarcar(final String idConsulta) {
 
+        LayoutInflater li = getLayoutInflater();
+
+        View view = li.inflate(R.layout.activity_dialogo_desmarcar_consulta, null);
+
+        view.findViewById(R.id.bt).setOnClickListener(new View.OnClickListener() {
+            public void onClick(View arg0) {
+                alerta.dismiss();
+                Intent it = new Intent(AgendaPaciente.this, AgendaPaciente.class);
+                startActivity(it);
+
+            }
+        });
+
+    }
+
+    /*    AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Consulta marcada!");
+        builder.setView(view);
+        alerta = builder.create();
+        alerta.show();
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Desmarcar consulta");
         builder.setMessage("Você deseja confirmar o cancelamento da consulta agendada?");
@@ -226,7 +247,7 @@ public class AgendaPaciente  extends AppCompatActivity {
 
         alerta = builder.create();
         alerta.show();
-    }
+    }*/
 
 }
 

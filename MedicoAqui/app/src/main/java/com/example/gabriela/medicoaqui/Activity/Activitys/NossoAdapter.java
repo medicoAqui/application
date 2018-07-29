@@ -86,6 +86,7 @@ public class NossoAdapter extends RecyclerView.Adapter {
                     e.printStackTrace();
                 }
 
+                //AgendaPaciente.
             }
         });
 
@@ -164,6 +165,8 @@ public class NossoAdapter extends RecyclerView.Adapter {
         }).start();
 
     }
+
+    //private static AlertDialog alerta;
 
     /*
     private static AlertDialog alerta;
