@@ -19,6 +19,10 @@ var medicoSchema = new Schema({
 		type:String,
 		required:true
 	},
+	email:{
+		type:String,
+		required:true
+	},
 	crm:{
 		type:String,
 		required:true,
