@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.gabriela.medicoaqui.Activity.Entities.Cliente;
 import com.example.gabriela.medicoaqui.Activity.Entities.Consulta;
 import com.example.gabriela.medicoaqui.Activity.Entities.Medico;
 import com.example.gabriela.medicoaqui.Activity.JsonOperators.JSONReader;
@@ -75,7 +76,11 @@ public class NossoAdapter extends RecyclerView.Adapter {
             @Override
             public void onClick(View view) {
 
-                desmarcarConsulta(position);
+                try {
+                    desmarcarConsulta(position);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
                 //Intent it = new Intent(DataHoraConsulta.this, Medicos.class);
                 //startActivity(it);
 
@@ -91,18 +96,19 @@ public class NossoAdapter extends RecyclerView.Adapter {
     }
 
 
-    private void desmarcarConsulta(int position) {
+    private void desmarcarConsulta(int position) throws InterruptedException {
         try {
 
-            desmarcarConsultaBanco(consultas.get(position).getIdConsulta());
-            while (!(consultas.get(position).getStatus().equals("C"))) {
-                Thread.sleep(1000);
-            }
+            desmarcarConsultaBanco(consultas.get(position));
+
+            consultas.get(position).setStatus("C");
+            consultas.get(position).setCliente(null);
 
         } catch (JSONException e) {
             e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        }
+        while (!(consultas.get(position).getStatus().equals("C"))) {
+            Thread.sleep(1000);
         }
         consultas.remove(position);
         notifyItemRemoved(position);
@@ -127,16 +133,16 @@ public class NossoAdapter extends RecyclerView.Adapter {
     }
 
 
-    public void desmarcarConsultaBanco(String idConsulta) throws JSONException {
+    public void desmarcarConsultaBanco(final Consulta consulta) throws JSONException {
 
         //put /idconsulta
 
         final JSONObject jsonTT = new JSONObject();
 
         jsonTT.put("status", "C"); //Status Cancelado - Cliente
-        jsonTT.put("cliente", "");
+        jsonTT.put("cliente", null);
 
-        final String url = "https://medicoishere.herokuapp.com/consulta/" + idConsulta;
+        final String url = "https://medicoishere.herokuapp.com/consulta/" + consulta.getId();
 
         new Thread(new Runnable() {
             @Override
