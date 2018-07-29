@@ -158,34 +158,66 @@ public class TelaLogin extends AppCompatActivity implements LoaderCallbacks<Curs
 
                 if (perfil.equals("paciente")) {
 
-                if (!("".equals(mEmailView.getText().toString()) || "".equals(mPasswordView.getText().toString()))) {
-                    mAuth.signInWithEmailAndPassword(mEmailView.getText().toString(), mPasswordView.getText().toString()).addOnCompleteListener(TelaLogin.this, new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
+                    if (!("".equals(mEmailView.getText().toString()) || "".equals(mPasswordView.getText().toString()))) {
+                        mAuth.signInWithEmailAndPassword(mEmailView.getText().toString(), mPasswordView.getText().toString()).addOnCompleteListener(TelaLogin.this, new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
 
-                            if (!task.isSuccessful()) {
-                                Log.w("AUTH", "Falha ao efetuar o Login: ", task.getException());
-                                builder.setMessage("Falha ao efetuar o Login, favor verificar email e senha");
-                                AlertDialog dialog = builder.create();
-                                dialog.show();
-                            } else {
-                                Log.d("AUTH", "Login Efetuado com sucesso!!!");
-                                attemptLogin();
-                                carregaClienteEmail(mEmailView.getText().toString());
+                                if (!task.isSuccessful()) {
+                                    Log.w("AUTH", "Falha ao efetuar o Login: ", task.getException());
+                                    builder.setMessage("Falha ao efetuar o Login, favor verificar email e senha");
+                                    AlertDialog dialog = builder.create();
+                                    dialog.show();
+                                } else {
+                                    Log.d("AUTH", "Login Efetuado com sucesso - paciente");
+                                    attemptLogin();
+                                    carregaClienteEmail(mEmailView.getText().toString());
 
+                                }
                             }
-                        }
-                    });
+                        });
 
-                } else {
-                    builder.setMessage("Favor insira os dados de email e senha");
-                    AlertDialog dialog = builder.create();
-                    dialog.show();
-                }
+                    } else {
+                        builder.setMessage("Favor insira os dados de email e senha");
+                        AlertDialog dialog = builder.create();
+                        dialog.show();
+                    }
 
                 } else if (perfil.equals("medico")) {
-                    //Validar loggin médico
-                    //Encaminhar para tela do médico
+                    if (!("".equals(mEmailView.getText().toString()) || "".equals(mPasswordView.getText().toString()))) {
+                        //vai no heroku e verifica se o e-mail existe
+                        boolean exists = true;
+                        if(exists){
+                            //faz login
+                            mAuth.signInWithEmailAndPassword(mEmailView.getText().toString(), mPasswordView.getText().toString()).addOnCompleteListener(TelaLogin.this, new OnCompleteListener<AuthResult>() {
+                                @Override
+                                public void onComplete(@NonNull Task<AuthResult> task) {
+                                    if (!task.isSuccessful()) {
+                                        Log.w("AUTH", "Falha ao efetuar o Login: ", task.getException());
+                                        builder.setMessage("Falha ao efetuar o Login. Favor verificar e-mail e senha");
+                                        AlertDialog dialog = builder.create();
+                                        dialog.show();
+                                    } else {
+                                        Log.d("AUTH", "Login Efetuado com sucesso - medico");
+                                        Intent sendIntent = new Intent(TelaLogin.this, MenuPrincipalMedico.class);
+                                        sendIntent.putExtra(Intent.EXTRA_TEXT, "test");
+                                        startActivity(sendIntent);
+                                    }
+                                }
+                            });
+                        }else{
+                            Log.w("AUTH", "Falha ao efetuar o Login. Medico nao cadastrado na base do heroku");
+                            builder.setMessage("Falha ao efetuar o Login. Favor verificar e-mail e senha");
+                            AlertDialog dialog = builder.create();
+                            dialog.show();
+                        }
+
+
+                    } else {
+                        builder.setMessage("Favor insira os dados de email e senha");
+                        AlertDialog dialog = builder.create();
+                        dialog.show();
+                    }
                 }
 
                 // Henrique Autenticacao - 24/05 - FIM

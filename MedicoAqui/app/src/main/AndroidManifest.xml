@@ -43,7 +43,15 @@
             android:label="Menu Principal"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
+            android:name=".Activity.Activitys.MenuPrincipalMedico"
+            android:label="Menu Principal"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
             android:name=".Activity.Activitys.AgendaPaciente"
+            android:label="Localização"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Activity.Activitys.AgendaMedico"
             android:label="Localização"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
