@@ -22,6 +22,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
 
@@ -60,6 +61,9 @@ public class AgendaPaciente  extends AppCompatActivity {
         }catch (InterruptedException e) {
             e.printStackTrace();
         }
+
+        //ordena lista de consultas por data
+        Collections.sort(lista_consultas_entity);
 
         recyclerView = (RecyclerView) findViewById(R.id.recycler);
         recyclerView.setAdapter(new NossoAdapter(lista_consultas_entity, this));
@@ -152,15 +156,6 @@ public class AgendaPaciente  extends AppCompatActivity {
 
     }
 
-
-    public void criaReciclerView() {
-
-        recyclerView = (RecyclerView) findViewById(R.id.recycler);
-        recyclerView.setAdapter(new NossoAdapter(lista_consultas_entity, this));
-        RecyclerView.LayoutManager layout = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-        recyclerView.setLayoutManager(layout);
-
-    }
 
     public static Consulta getConsultaEntity() {
 

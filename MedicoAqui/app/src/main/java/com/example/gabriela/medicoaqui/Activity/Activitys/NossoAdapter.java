@@ -21,6 +21,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Objects;
 
 
@@ -28,7 +29,7 @@ public class NossoAdapter extends RecyclerView.Adapter {
 
     private Context context;
     private ArrayList<Consulta> consultas;
-    static Medico medico;// = new Medico();
+    static Medico medico = new Medico(null, null, null, null, null, null, null, null, null);
     static JSONReader jsonReader = new JSONReader();
     static HttpConnections http = new HttpConnections();
 
@@ -53,22 +54,25 @@ public class NossoAdapter extends RecyclerView.Adapter {
         NossoViewHolder holder = (NossoViewHolder) viewHolder;
         Consulta consulta = consultas.get(position);
 
-        /*retornaMedicoByID(consulta.getMedico());
 
         try {
+
+            retornaMedicoByID(consulta.getMedico());
             while (medico.getCrm() == null) {
-                Thread.sleep(1000);
+                Thread.sleep(500);
             }
 
         }catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
             e.printStackTrace();
         }
 
         //retornaMedicoByID(consulta.getMedico());
         holder.medico.setText(medico.getNome());
         holder.crm.setText(medico.getCrm());
-        */
-        holder.medico.setText(consulta.getMedico());
+
+        //holder.medico.setText(consulta.getMedico());
         holder.dataHora.setText(consulta.getDataConsulta() + " " + consulta.getHora());
         //idConsulta = consulta.getIdConsulta();
 
@@ -81,11 +85,11 @@ public class NossoAdapter extends RecyclerView.Adapter {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                //Intent it = new Intent(DataHoraConsulta.this, Medicos.class);
-                //startActivity(it);
 
             }
-        });//view -> desmarcarConsulta(position));
+        });
+
+        medico = new Medico(null, null, null, null, null, null, null, null, null);
 
     }
 
@@ -116,7 +120,7 @@ public class NossoAdapter extends RecyclerView.Adapter {
     }
 
 
-    public static void retornaMedicoByID(String id_medico)  throws JSONException {
+    public static void retornaMedicoByID(String id_medico) throws JSONException {
 
         final JSONObject jsonTT = new JSONObject();
         //final String url = "https://medicoishere.herokuapp.com/medico/" + id_medico;
@@ -139,8 +143,6 @@ public class NossoAdapter extends RecyclerView.Adapter {
 
 
     public void desmarcarConsultaBanco(final Consulta consulta) throws JSONException {
-
-        //put /idconsulta
 
         final JSONObject jsonTT = new JSONObject();
 
@@ -168,7 +170,7 @@ public class NossoAdapter extends RecyclerView.Adapter {
 
     public  void dialogo_desmarcar(final String idConsulta) {
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(AgendaPaciente);
         builder.setTitle("Desmarcar consulta");
         builder.setMessage("Você deseja confirmar o cancelamento da consulta agendada?");
 

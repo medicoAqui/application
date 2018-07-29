@@ -1,6 +1,11 @@
 package com.example.gabriela.medicoaqui.Activity.Entities;
 
-public class Consulta {
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+public class Consulta implements Comparable<Consulta>{
 
 
     public String observacao, hora, dataConsulta, status, cliente, medico, consultorio, idConsulta, id;
@@ -89,6 +94,33 @@ public class Consulta {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    //@Override
+    public int compareTo(Consulta outraConsulta) {
+
+        if (stringToDate(this.dataConsulta + " " + hora).before(stringToDate(outraConsulta.getDataConsulta() + " " + outraConsulta.getHora()))) {
+            return -1;
+        }
+        if (stringToDate(this.dataConsulta + " " + hora).after(stringToDate(outraConsulta.getDataConsulta() + " " + outraConsulta.getHora()))) {
+            return 1;
+        }
+        return 0;
+    }
+
+    public Date stringToDate(String dataStr) {
+
+        dataStr.replaceAll("-", "/");
+        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        Date dataDt = new Date();
+
+        try {
+            dataDt = formato.parse(dataStr.replaceAll("-", "/"));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return dataDt;
     }
 
 }

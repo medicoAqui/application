@@ -264,6 +264,7 @@ public class DataHoraConsulta   extends AppCompatActivity {
         LayoutInflater li = getLayoutInflater();
 
         View view = li.inflate(R.layout.activity_dialogo_consulta_marcada, null);
+
         view.findViewById(R.id.bt).setOnClickListener(new View.OnClickListener() {
             public void onClick(View arg0) {
                 alerta.dismiss();

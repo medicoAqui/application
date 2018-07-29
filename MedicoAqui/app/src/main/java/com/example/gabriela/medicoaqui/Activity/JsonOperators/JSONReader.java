@@ -548,7 +548,12 @@ public class JSONReader {
 
             String nome = jsonObjectMedico.getString("name");
             String crm = jsonObjectMedico.getString("crm");
-            String especialidade = jsonObjectMedico.getString("especialidade");
+            String id = jsonObjectMedico.getString("_id");
+            //String email = jsonObjectMedico.getString("email");
+            //String especialidade = jsonObjectMedico.getString("especialidade");
+            //medico = new Medico(nome, String cpf, Date data, String genero, id, email, String telefone, String especialidade, crm);
+            medico = new Medico(nome, null, null, null, id, null, null, null, crm);
+
 
         } catch (JSONException e) {
             Log.e("Erro", "Erro no parsing do JSON", e);
