@@ -55,6 +55,19 @@ medicoRouter.post('/medicoByCrm',function(req,res){
   });
 });
 
+medicoRouter.post('/medicoByEmail',function(req,res){
+
+  var medico = Medico.findOne({email: req.body.email });
+  medico.exec(function(err,data){
+      console.log(data)
+      if(err){
+          res.status(500).send(err);
+      }else{
+          res.send(data);
+      }
+  });
+});
+
 medicoRouter.post('/medicoBy_id',function(req,res){
 
   var medico = Medico.findOne({_id: req.body._id });
