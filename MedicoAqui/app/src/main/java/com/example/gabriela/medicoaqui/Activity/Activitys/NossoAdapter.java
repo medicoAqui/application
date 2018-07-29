@@ -116,17 +116,22 @@ public class NossoAdapter extends RecyclerView.Adapter {
     }
 
 
-    public static void retornaMedicoByID(String id_medico) {
+    public static void retornaMedicoByID(String id_medico)  throws JSONException {
 
         final JSONObject jsonTT = new JSONObject();
-        final String url = "https://medicoishere.herokuapp.com/medico/" + id_medico;
+        //final String url = "https://medicoishere.herokuapp.com/medico/" + id_medico;
+
+        jsonTT.put("_id", id_medico);
 
         new Thread(new Runnable() {
             @Override
             public void run() {
-                String medicoBD = http.get(url);
-                medico = jsonReader.getMedicoByID(medicoBD);
-
+                try {
+                    String medicoBD = http.sendPost("http://medicoishere.herokuapp.com/medico/medicoBy_id", jsonTT.toString());
+                    medico = jsonReader.getMedicoByID(medicoBD);
+                } catch (HttpConnections.MinhaException e) {
+                    e.printStackTrace();
+                }
             }
         }).start();
 

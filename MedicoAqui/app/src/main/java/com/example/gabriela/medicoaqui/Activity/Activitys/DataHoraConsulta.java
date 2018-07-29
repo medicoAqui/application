@@ -46,6 +46,7 @@ public class DataHoraConsulta   extends AppCompatActivity {
     String id_consulta;
     String statusDisponivel = "D";
     String statusAgendado = "A";
+    String statusCancelado = "C";
     String crm;
     DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 
@@ -155,12 +156,17 @@ public class DataHoraConsulta   extends AppCompatActivity {
         Log.d(TAG, "carregaHoraDisponivel() called with: data = [" + dataStr + "]");
 
         final JSONObject jsonTT = new JSONObject();
+        final JSONObject jsonTT2 = new JSONObject();
 
         try {
 
             jsonTT.put("dataConsulta", dataStr);
             jsonTT.put("status", statusDisponivel);
             jsonTT.put("crm", Medicos.getMedicoSelecionado().getCrm());
+            jsonTT2.put("dataConsulta", dataStr);
+            jsonTT2.put("status", statusCancelado);
+            jsonTT2.put("crm", Medicos.getMedicoSelecionado().getCrm());
+
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -171,15 +177,27 @@ public class DataHoraConsulta   extends AppCompatActivity {
                     @Override
                     public void run() {
             try {
+
+                //Retorna horários com status D - Disponível
                 String horasBD = http.sendPost("http://medicoishere.herokuapp.com/consulta/consultasByDateCrmStatus", jsonTT.toString());
                 HashSet<String> horas = jsonReader.getHorasDisponiveis(horasBD);
                 HashSet<Consulta> consultasDisp = jsonReader.getConsultasDisponíveis(horasBD);
+                //Retorna horários com status C - Cancelado
+                String horasBD2 = http.sendPost("http://medicoishere.herokuapp.com/consulta/consultasByDateCrmStatus", jsonTT2.toString());
+                HashSet<String> horas2 = jsonReader.getHorasDisponiveis(horasBD2);
+                HashSet<Consulta> consultasDisp2 = jsonReader.getConsultasDisponíveis(horasBD2);
+
                 lista_hora.clear();
-                lista_hora.addAll(horas);
-                lista_consultas_disponiveis.addAll(consultasDisp);
+                lista_hora.addAll(horas); // Status D
+                lista_hora.addAll(horas2); // Status C
+
+                lista_consultas_disponiveis.addAll(consultasDisp); // Status D
+                lista_consultas_disponiveis.addAll(consultasDisp); // Status C
+
                 Collections.sort(lista_hora);
                 lista_hora.remove("Selecione");
                 lista_hora.add(0, "Selecione");
+
             } catch (HttpConnections.MinhaException e) {
                 e.printStackTrace();
             }

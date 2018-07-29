@@ -89,23 +89,33 @@ public class AgendaPaciente  extends AppCompatActivity {
         });
     }
 
-    private void carregaConsultas() {
+    private void carregaConsultas() throws JSONException {
 
         Log.d(TAG, "carregaConsultas() called");
 
         lista_consultas_entity.clear();
         final JSONObject jsonTT = new JSONObject();
 
+        String cpf_cliente = TelaLogin.getClientePerfil().getCpf();
+        jsonTT.put("cpf", cpf_cliente);
+
         new Thread(new Runnable() {
             @Override
             public void run() {
-                String consultasBD = http.get("https://medicoishere.herokuapp.com/consulta/consultas");
-                HashSet<Consulta> consultasEntity = jsonReader.getConsultasEntity(consultasBD);
-                //HashSet<String> consultasStr = jsonReader.getConsultas(consultasBD);
-                lista_consultas_entity.addAll(consultasEntity);
-                //lista_consultas.addAll(consultasStr);
+                String consultasBD = null;
+                try {
+                    consultasBD = http.sendPost("http://medicoishere.herokuapp.com/consulta/consultasByCpfCliente", jsonTT.toString());
+
+                    //String consultasBD = http.get("https://medicoishere.herokuapp.com/consulta/consultas");
+                    HashSet<Consulta> consultasEntity = jsonReader.getConsultasEntity(consultasBD);
+                    //HashSet<String> consultasStr = jsonReader.getConsultas(consultasBD);
+                    lista_consultas_entity.addAll(consultasEntity);
+                    //lista_consultas.addAll(consultasStr);
 
                 //criaReciclerView();
+                } catch (HttpConnections.MinhaException e) {
+                    e.printStackTrace();
+                }
 
             }
         }).start();
