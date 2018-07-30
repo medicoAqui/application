@@ -275,7 +275,7 @@ public class DataHoraConsulta   extends AppCompatActivity {
         });
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Consulta marcada!");
+        builder.setTitle("Consulta marcada");
         builder.setView(view);
         alerta = builder.create();
         alerta.show();
