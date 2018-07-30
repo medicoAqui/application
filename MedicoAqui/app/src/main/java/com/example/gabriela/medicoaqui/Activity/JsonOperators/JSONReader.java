@@ -149,16 +149,19 @@ public class JSONReader {
         try {
             JSONArray nomesJson = new JSONArray(jsonString);
             JSONObject jsonObjectNome;
-
-            for (int i = 0; i < nomesJson.length(); i++) {
-                jsonObjectNome = new JSONObject(nomesJson.getString(i));
-                Log.i("Nome: ","nome=" + jsonObjectNome.getString("name"));
-                String nome = jsonObjectNome.getString("name");
-                String crm = jsonObjectNome.getString("crm");
-                Medico medico = new Medico(nome, null, null, null, null, null, null, null, crm);
-                medicos.add(medico);
+            if (nomesJson.length() > 0) {
+                for (int i = 0; i < nomesJson.length(); i++) {
+                    jsonObjectNome = new JSONObject(nomesJson.getString(i));
+                    Log.i("Nome: ", "nome=" + jsonObjectNome.getString("name"));
+                    String nome = jsonObjectNome.getString("name");
+                    String crm = jsonObjectNome.getString("crm");
+                    Medico medico = new Medico(nome, null, null, null, null, null, null, null, crm);
+                    medicos.add(medico);
+                }
             }
-
+            else {
+                Log.d("Erro", "Nao foi encontrado nenhum medico por esta especialidade");
+            }
         } catch (JSONException e) {
             Log.e("Erro", "Erro no parsing do JSON", e);
         }
@@ -171,14 +174,17 @@ public class JSONReader {
         try {
             JSONArray nomesJson = new JSONArray(jsonString);
             JSONObject jsonObjectNome;
-
-            for (int i = 0; i < nomesJson.length(); i++) {
-                jsonObjectNome = new JSONObject(nomesJson.getString(i));
-                Log.i("Nome: ","nome=" + jsonObjectNome.getString("name"));
-                String nome = jsonObjectNome.getString("name");
-                nomes.add(nome.substring(0,1).toUpperCase().concat(nome.substring(1)));
+            if (nomesJson.length()>0) {
+                for (int i = 0; i < nomesJson.length(); i++) {
+                    jsonObjectNome = new JSONObject(nomesJson.getString(i));
+                    Log.i("Nome: ", "nome=" + jsonObjectNome.getString("name"));
+                    String nome = jsonObjectNome.getString("name");
+                    nomes.add(nome.substring(0, 1).toUpperCase().concat(nome.substring(1)));
+                }
             }
-
+            else {
+                Log.d("Erro", "Nao foi encontrado nenhum nome medico por esta especialidade");
+            }
         } catch (JSONException e) {
             Log.e("Erro", "Erro no parsing do JSON", e);
         }
@@ -193,14 +199,14 @@ public class JSONReader {
         try {
         JSONArray medicosJson = new JSONArray(jsonString);
         JSONObject jsonObjectMedico;
-
-        for (int i = 0; i < medicosJson.length(); i++) {
-            jsonObjectMedico = new JSONObject(medicosJson.getString(i));
-            Log.i("MEDICO ENCONTRADO: ","nome=" + jsonObjectMedico.getString("name"));
-            String especialidade = jsonObjectMedico.getString("idEspecializacao");
-            especialidades.add(especialidade.substring(0,1).toUpperCase().concat(especialidade.substring(1)));
+        if (medicosJson.length() >0) {
+            for (int i = 0; i < medicosJson.length(); i++) {
+                jsonObjectMedico = new JSONObject(medicosJson.getString(i));
+                Log.i("MEDICO ENCONTRADO: ", "nome=" + jsonObjectMedico.getString("name"));
+                String especialidade = jsonObjectMedico.getString("idEspecializacao");
+                especialidades.add(especialidade.substring(0, 1).toUpperCase().concat(especialidade.substring(1)));
+            }
         }
-
         } catch (JSONException e) {
             Log.e("Erro", "Erro no parsing do JSON", e);
         }
@@ -261,32 +267,37 @@ public class JSONReader {
             JSONArray consultasJson = new JSONArray(jsonString);
             JSONObject jsonObjectConsulta;
 
-            for (int i = 0; i < consultasJson.length(); i++) {
-                jsonObjectConsulta = new JSONObject(consultasJson.getString(i));
-                Log.i("Consulta: ","parametro=" + jsonObjectConsulta.getString("hora"));
 
-                String observacao = null;
-                if (jsonObjectConsulta.has("observacao")) {
-                    observacao = jsonObjectConsulta.getString("observacao");
+            if (consultasJson.length() > 0) {
+                for (int i = 0; i < consultasJson.length(); i++) {
+                    jsonObjectConsulta = new JSONObject(consultasJson.getString(i));
+                    Log.i("Consulta: ", "parametro=" + jsonObjectConsulta.getString("hora"));
+
+                    String observacao = null;
+                    if (jsonObjectConsulta.has("observacao")) {
+                        observacao = jsonObjectConsulta.getString("observacao");
+                    }
+                    String hora = jsonObjectConsulta.getString("hora");
+                    String status = jsonObjectConsulta.getString("status");
+                    String cliente = null;
+                    if (jsonObjectConsulta.has("cliente")) {
+                        cliente = jsonObjectConsulta.getString("cliente");
+                    }
+                    String medico = jsonObjectConsulta.getString("medico");
+                    String idConsulta = jsonObjectConsulta.getString("idConsulta");
+                    String dataConsulta = jsonObjectConsulta.getString("dataConsulta");
+                    String id = jsonObjectConsulta.getString("_id");
+
+
+                    // Monta AQUI um objeto consulta e adiciona na lista que deve ser retornada
+
+                    Consulta consulta = new Consulta(observacao, hora, dataConsulta, status, cliente, medico, "", idConsulta, id);
+                    consultas.add(consulta);
                 }
-                String hora = jsonObjectConsulta.getString("hora");
-                String status = jsonObjectConsulta.getString("status");
-                String cliente = null;
-                if (jsonObjectConsulta.has("cliente")) {
-                    cliente = jsonObjectConsulta.getString("cliente");
-                }
-                String medico = jsonObjectConsulta.getString("medico");
-                String idConsulta = jsonObjectConsulta.getString("idConsulta");
-                String dataConsulta = jsonObjectConsulta.getString("dataConsulta");
-                String id = jsonObjectConsulta.getString("_id");
-
-
-                // Monta AQUI um objeto consulta e adiciona na lista que deve ser retornada
-
-                Consulta consulta = new Consulta(observacao, hora, dataConsulta, status, cliente, medico, "", idConsulta, id);
-                consultas.add(consulta);
             }
-
+            else {
+                Log.d("Erro", "Nao foi encontrado nenhuma consulta por crm e data");
+            }
         } catch (JSONException e) {
             Log.e("Erro", "Erro no parsing do JSON", e);
         }
@@ -366,25 +377,29 @@ public class JSONReader {
         try {
             JSONArray minhaAgendaJson = new JSONArray(jsonString);
             JSONObject jsonObjectMinhaAgenda;
-
-            for (int i = 0; i < minhaAgendaJson.length(); i++) {
-                jsonObjectMinhaAgenda = new JSONObject(minhaAgendaJson.getString(i));
-                String cliente = null;
-                if (jsonObjectMinhaAgenda.has("cliente")) {
-                    cliente = jsonObjectMinhaAgenda.getString("cliente");
+            if (minhaAgendaJson.length() >0 ) {
+                for (int i = 0; i < minhaAgendaJson.length(); i++) {
+                    jsonObjectMinhaAgenda = new JSONObject(minhaAgendaJson.getString(i));
+                    String cliente = null;
+                    if (jsonObjectMinhaAgenda.has("cliente")) {
+                        cliente = jsonObjectMinhaAgenda.getString("cliente");
+                    }
+                    String medico = jsonObjectMinhaAgenda.getString("medico");
+                    String hora = jsonObjectMinhaAgenda.getString("hora");
+                    String observacao = null;
+                    if (jsonObjectMinhaAgenda.has("observacao")) {
+                        observacao = jsonObjectMinhaAgenda.getString("observacao");
+                    }
+                    String idConsulta = jsonObjectMinhaAgenda.getString("idConsulta");
+                    String dataConsulta = jsonObjectMinhaAgenda.getString("dataConsulta");
+                    String status = jsonObjectMinhaAgenda.getString("status");
+                    String id = jsonObjectMinhaAgenda.getString("_id");
+                    Consulta minhaConsulta = new Consulta(observacao, hora, dataConsulta, status, cliente, medico, "", idConsulta, id);
+                    minhaAgenda.add(minhaConsulta);
                 }
-                String medico = jsonObjectMinhaAgenda.getString("medico");
-                String hora = jsonObjectMinhaAgenda.getString("hora");
-                String observacao = null;
-                if (jsonObjectMinhaAgenda.has("observacao")) {
-                    observacao = jsonObjectMinhaAgenda.getString("observacao");
-                }
-                String idConsulta = jsonObjectMinhaAgenda.getString("idConsulta");
-                String dataConsulta = jsonObjectMinhaAgenda.getString("dataConsulta");
-                String status = jsonObjectMinhaAgenda.getString("status");
-                String id = jsonObjectMinhaAgenda.getString("_id");
-                Consulta minhaConsulta =  new Consulta(observacao, hora, dataConsulta, status, cliente, medico, "", idConsulta, id);
-                minhaAgenda.add(minhaConsulta);
+            }
+            else {
+                Log.d("Erro", "Nao foi encontrado nenhuma registro de agenda");
             }
 
         } catch (JSONException e) {
@@ -400,26 +415,30 @@ public class JSONReader {
         try {
             JSONArray consultasDispJson = new JSONArray(jsonString);
             JSONObject jsonObjectConsulytasDisp;
+            if (consultasDispJson.length() > 0) {
+                for (int i = 0; i < consultasDispJson.length(); i++) {
+                    jsonObjectConsulytasDisp = new JSONObject(consultasDispJson.getString(i));
+                    String cliente = null;
+                    if (jsonObjectConsulytasDisp.has("cliente")) {
+                        cliente = jsonObjectConsulytasDisp.getString("cliente");
+                    }
+                    String medico = jsonObjectConsulytasDisp.getString("medico");
+                    String hora = jsonObjectConsulytasDisp.getString("hora");
+                    String observacao = null;
+                    if (jsonObjectConsulytasDisp.has("observacao")) {
+                        observacao = jsonObjectConsulytasDisp.getString("observacao");
+                    }
+                    String idConsulta = jsonObjectConsulytasDisp.getString("idConsulta");
+                    String dataConsulta = jsonObjectConsulytasDisp.getString("dataConsulta");
+                    String status = jsonObjectConsulytasDisp.getString("status");
+                    String id = jsonObjectConsulytasDisp.getString("_id");
+                    Consulta consultaDisp = new Consulta(observacao, hora, dataConsulta, status, cliente, medico, "", idConsulta, id);
 
-            for (int i = 0; i < consultasDispJson.length(); i++) {
-                jsonObjectConsulytasDisp = new JSONObject(consultasDispJson.getString(i));
-                String cliente = null;
-                if (jsonObjectConsulytasDisp.has("cliente")) {
-                    cliente = jsonObjectConsulytasDisp.getString("cliente");
+                    consultasDisponiveis.add(consultaDisp);
                 }
-                String medico = jsonObjectConsulytasDisp.getString("medico");
-                String hora = jsonObjectConsulytasDisp.getString("hora");
-                String observacao = null;
-                if (jsonObjectConsulytasDisp.has("observacao")) {
-                    observacao = jsonObjectConsulytasDisp.getString("observacao");
-                }
-                String idConsulta = jsonObjectConsulytasDisp.getString("idConsulta");
-                String dataConsulta = jsonObjectConsulytasDisp.getString("dataConsulta");
-                String status = jsonObjectConsulytasDisp.getString("status");
-                String id = jsonObjectConsulytasDisp.getString("_id");
-                Consulta consultaDisp =  new Consulta(observacao, hora, dataConsulta, status, cliente, medico, "", idConsulta, id);
-
-                consultasDisponiveis.add(consultaDisp);
+            }
+            else {
+                Log.d("Erro", "Nao foi encontrado nenhuma consultaDisponivel");
             }
 
         } catch (JSONException e) {
@@ -434,13 +453,16 @@ public class JSONReader {
         try {
             JSONArray horasDispJson = new JSONArray(jsonString);
             JSONObject jsonObjectHorasDisp;
-
-            for (int i = 0; i < horasDispJson.length(); i++) {
-                jsonObjectHorasDisp = new JSONObject(horasDispJson.getString(i));
-                String hora = jsonObjectHorasDisp.getString("hora");
-                horasDisp.add(hora); //.substring(0,1).toUpperCase().concat(nome.substring(1)));
+            if(horasDispJson.length() > 0) {
+                for (int i = 0; i < horasDispJson.length(); i++) {
+                    jsonObjectHorasDisp = new JSONObject(horasDispJson.getString(i));
+                    String hora = jsonObjectHorasDisp.getString("hora");
+                    horasDisp.add(hora); //.substring(0,1).toUpperCase().concat(nome.substring(1)));
+                }
             }
-
+            else {
+                Log.d("Erro", "Nao foi encontrado nenhum horario");
+            }
         } catch (JSONException e) {
             Log.e("Erro", "Erro no parsing do JSON", e);
         }
@@ -454,27 +476,30 @@ public class JSONReader {
         try {
             JSONArray nomesJson = new JSONArray(jsonString);
             JSONObject jsonObjectNome;
-
-            for (int i = 0; i < nomesJson.length(); i++) {
-                jsonObjectNome = new JSONObject(nomesJson.getString(i));
-                String observacao = null;
-                if (jsonObjectNome.has("observacao")) {
-                    observacao = jsonObjectNome.getString("observacao");
+            if(nomesJson.length() > 0) {
+                for (int i = 0; i < nomesJson.length(); i++) {
+                    jsonObjectNome = new JSONObject(nomesJson.getString(i));
+                    String observacao = null;
+                    if (jsonObjectNome.has("observacao")) {
+                        observacao = jsonObjectNome.getString("observacao");
+                    }
+                    String hora = jsonObjectNome.getString("hora");
+                    String status = jsonObjectNome.getString("status");
+                    String cliente = null;
+                    if (jsonObjectNome.has("cliente")) {
+                        cliente = jsonObjectNome.getString("cliente");
+                    }
+                    String medico = jsonObjectNome.getString("medico");
+                    String idConsulta = jsonObjectNome.getString("idConsulta");
+                    String dataConsulta = jsonObjectNome.getString("dataconsulta");
+                    String id = jsonObjectNome.getString("_id");
+                    Consulta consulta = new Consulta(observacao, hora, dataConsulta, status, cliente, medico, "", idConsulta, id);
+                    consultas.add(consulta);
                 }
-                String hora = jsonObjectNome.getString("hora");
-                String status = jsonObjectNome.getString("status");
-                String cliente = null;
-                if (jsonObjectNome.has("cliente")) {
-                    cliente = jsonObjectNome.getString("cliente");
-                }
-                String medico = jsonObjectNome.getString("medico");
-                String idConsulta = jsonObjectNome.getString("idConsulta");
-                String dataConsulta = jsonObjectNome.getString("dataconsulta");
-                String id = jsonObjectNome.getString("_id");
-                Consulta consulta = new Consulta(observacao, hora, dataConsulta, status, cliente, medico, "", idConsulta, id);
-                consultas.add(consulta);
             }
-
+            else {
+                Log.d("Erro", "Nao foi encontrado nenhuma consulta_");
+            }
         } catch (JSONException e) {
             Log.e("Erro", "Erro no parsing do JSON", e);
         }
@@ -487,29 +512,32 @@ public class JSONReader {
         try {
             JSONArray consultasJson = new JSONArray(jsonString);
             JSONObject jsonObjectConsulta;
-
-            for (int i = 0; i < consultasJson.length(); i++) {
-                jsonObjectConsulta = new JSONObject(consultasJson.getString(i));
-                //Log.i("Nome: ","nome=" + jsonObjectEstado.getString("nome"));
-                String observacao = null;
-                if (jsonObjectConsulta.has("observacao")) {
-                    observacao = jsonObjectConsulta.getString("observacao");
+            if (consultasJson.length() > 0) {
+                for (int i = 0; i < consultasJson.length(); i++) {
+                    jsonObjectConsulta = new JSONObject(consultasJson.getString(i));
+                    //Log.i("Nome: ","nome=" + jsonObjectEstado.getString("nome"));
+                    String observacao = null;
+                    if (jsonObjectConsulta.has("observacao")) {
+                        observacao = jsonObjectConsulta.getString("observacao");
+                    }
+                    String hora = jsonObjectConsulta.getString("hora");
+                    String dataConsulta = jsonObjectConsulta.getString("dataConsulta");
+                    String status = jsonObjectConsulta.getString("status");
+                    String cliente = null;
+                    if (jsonObjectConsulta.has("cliente")) {
+                        cliente = jsonObjectConsulta.getString("cliente");
+                    }
+                    String medico = jsonObjectConsulta.getString("medico");
+                    String idConsulta = jsonObjectConsulta.getString("idConsulta");
+                    String id = jsonObjectConsulta.getString("_id");
+                    //Consulta consulta = new Consulta(observacao, hora, dataConsulta, status, cliente, medico, "", idConsulta);
+                    Consulta consulta = new Consulta(observacao, hora, dataConsulta, status, cliente, medico, "", idConsulta, id);
+                    consultas.add(consulta);
                 }
-                String hora = jsonObjectConsulta.getString("hora");
-                String dataConsulta = jsonObjectConsulta.getString("dataConsulta");
-                String status = jsonObjectConsulta.getString("status");
-                String cliente = null;
-                if (jsonObjectConsulta.has("cliente")) {
-                    cliente = jsonObjectConsulta.getString("cliente");
-                }
-                String medico = jsonObjectConsulta.getString("medico");
-                String idConsulta = jsonObjectConsulta.getString("idConsulta");
-                String id = jsonObjectConsulta.getString("_id");
-                //Consulta consulta = new Consulta(observacao, hora, dataConsulta, status, cliente, medico, "", idConsulta);
-                Consulta consulta = new Consulta(observacao, hora, dataConsulta, status, cliente, medico, "", idConsulta, id);
-                consultas.add(consulta);
             }
-
+            else {
+                Log.d("Erro", "Nao foi encontrado nenhuma consulta.");
+            }
         } catch (JSONException e) {
             Log.e("Erro", "Erro no parsing do JSON", e);
         }
@@ -523,14 +551,17 @@ public class JSONReader {
         try {
             JSONArray consultasJson = new JSONArray(jsonString);
             JSONObject jsonObjectConsulta;
-
-            for (int i = 0; i < consultasJson.length(); i++) {
-                jsonObjectConsulta = new JSONObject(consultasJson.getString(i));
-                //Log.i("Nome: ","nome=" + jsonObjectNome.getString("nome"));
-                String consulta = jsonObjectConsulta.getString("medico") + " - " + jsonObjectConsulta.getString("dataConsulta") + " - " + jsonObjectConsulta.getString("hora");
-                consultas.add(consulta); //.substring(0,1).toUpperCase().concat(nome.substring(1)));
+            if (consultasJson.length() > 0) {
+                for (int i = 0; i < consultasJson.length(); i++) {
+                    jsonObjectConsulta = new JSONObject(consultasJson.getString(i));
+                    //Log.i("Nome: ","nome=" + jsonObjectNome.getString("nome"));
+                    String consulta = jsonObjectConsulta.getString("medico") + " - " + jsonObjectConsulta.getString("dataConsulta") + " - " + jsonObjectConsulta.getString("hora");
+                    consultas.add(consulta); //.substring(0,1).toUpperCase().concat(nome.substring(1)));
+                }
             }
-
+            else {
+                Log.d("Erro", "Nao foi encontrado nenhuma consulta");
+            }
         } catch (JSONException e) {
             Log.e("Erro", "Erro no parsing do JSON", e);
         }
