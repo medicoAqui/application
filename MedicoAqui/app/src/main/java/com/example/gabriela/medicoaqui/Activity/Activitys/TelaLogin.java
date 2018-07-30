@@ -30,11 +30,11 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.example.gabriela.medicoaqui.Activity.Entities.Cliente;
+import com.example.gabriela.medicoaqui.Activity.Entities.Medico;
 import com.example.gabriela.medicoaqui.Activity.JsonOperators.JSONReader;
 import com.example.gabriela.medicoaqui.Activity.Service.HttpConnections;
 import com.example.gabriela.medicoaqui.R;
@@ -93,6 +93,8 @@ public class TelaLogin extends AppCompatActivity implements LoaderCallbacks<Curs
     public static String emailCliente;
     public static Cliente clientePerfil;
 
+    public Medico medicoLogado;
+
     public static String perfil = "paciente"; //Opção default
 
     @Override
@@ -148,6 +150,7 @@ public class TelaLogin extends AppCompatActivity implements LoaderCallbacks<Curs
 
         Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
+
             @Override
             public void onClick(View view) {
                 // Henrique Autenticacao - 24/05 - INICIO
@@ -186,9 +189,21 @@ public class TelaLogin extends AppCompatActivity implements LoaderCallbacks<Curs
                 } else if (perfil.equals("medico")) {
                     if (!("".equals(mEmailView.getText().toString()) || "".equals(mPasswordView.getText().toString()))) {
                         //vai no heroku e verifica se o e-mail existe
-                        boolean exists = true;
+
+                        try {
+                            recuperaMedicoPorEmail(mEmailView.getText().toString());
+                            Thread.sleep(5000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        boolean exists = false;
+                        if(null != getMedicoLogado() && null != getMedicoLogado().getEmail() && !getMedicoLogado().getEmail().isEmpty()) {
+
+                            exists = true;
+                        }
                         if(exists){
                             //faz login
+                            Log.d("Medico", "email existe na base dos medicos. Realizando tentativa de login pelo firebase");
                             mAuth.signInWithEmailAndPassword(mEmailView.getText().toString(), mPasswordView.getText().toString()).addOnCompleteListener(TelaLogin.this, new OnCompleteListener<AuthResult>() {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
@@ -199,6 +214,7 @@ public class TelaLogin extends AppCompatActivity implements LoaderCallbacks<Curs
                                         dialog.show();
                                     } else {
                                         Log.d("AUTH", "Login Efetuado com sucesso - medico");
+//                                        carregaMedicoPorEmail(mEmailView.getText().toString());
                                         Intent sendIntent = new Intent(TelaLogin.this, MenuPrincipalMedico.class);
                                         sendIntent.putExtra(Intent.EXTRA_TEXT, "test");
                                         startActivity(sendIntent);
@@ -425,6 +441,7 @@ public class TelaLogin extends AppCompatActivity implements LoaderCallbacks<Curs
 
     }
 
+
     private void addEmailsToAutoComplete(List<String> emailAddressCollection) {
         //Create adapter to tell the AutoCompleteTextView what to show in its dropdown list.
         ArrayAdapter<String> adapter =
@@ -533,9 +550,67 @@ public class TelaLogin extends AppCompatActivity implements LoaderCallbacks<Curs
         }).start();
     }
 
+    private void recuperaMedicoPorEmail(String email) {
+        Log.d("Thread", "Verificando se email consta na base dos medicos >" + email);
+        final JSONObject jsonTT = new JSONObject();
+        //Cliente cliente;
+        try {
+            jsonTT.put("email", email);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    String medicoBD = http.sendPost("http://medicoishere.herokuapp.com/medico/medicoByEmail", jsonTT.toString());
+                    Medico medico = getMedicoByID(medicoBD);
+                    Log.d("Thread", "Medico recuperado =" + medico.toString());
+                    setMedicoLogado(medico);
+                } catch (HttpConnections.MinhaException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+    }
+
+    public Medico getMedicoByID(String jsonString) {
+
+        Medico medico = new Medico();
+
+        try {
+
+            JSONObject jsonObjectMedico;
+            jsonObjectMedico = new JSONObject(jsonString);
+            Log.d("Acompanhando", jsonObjectMedico.toString());
+            String email = jsonObjectMedico.getString("email");
+            String nome = jsonObjectMedico.getString("name");
+            String crm = jsonObjectMedico.getString("crm");
+            String sexo = jsonObjectMedico.getString("sexo");
+            String dataNascimento = jsonObjectMedico.getString("DataNascimento");
+            // FALTAM ATRIBUTOS
+            medico.setEmail(email);
+            medico.setNome(nome);
+            medico.setCrm(crm);
+            medico.setGenero(sexo);
+            // FALTAM SETAR ATRIBUTOS
+        } catch (JSONException e) {
+            Log.e("Erro", "Erro no parsing do JSON", e);
+        }
+        return medico;
+    }
+
     private void setClientePerfil(Cliente cliente) {
         clientePerfil = cliente;
     }
 
+    private void setMedicoLogado(Medico medico) {
+        this.medicoLogado = medico;
+    }
+
     public static Cliente getClientePerfil() { return clientePerfil; }
+
+    public Medico getMedicoLogado() { return this.medicoLogado; }
 }
