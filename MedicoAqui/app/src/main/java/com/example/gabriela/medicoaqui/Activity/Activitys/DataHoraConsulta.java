@@ -192,7 +192,7 @@ public class DataHoraConsulta   extends AppCompatActivity {
                 lista_hora.addAll(horas2); // Status C
 
                 lista_consultas_disponiveis.addAll(consultasDisp); // Status D
-                lista_consultas_disponiveis.addAll(consultasDisp); // Status C
+                lista_consultas_disponiveis.addAll(consultasDisp2); // Status C
 
                 Collections.sort(lista_hora);
                 lista_hora.remove("Selecione");

@@ -1,7 +1,9 @@
 package com.example.gabriela.medicoaqui.Activity.Activitys;
 
 import android.provider.ContactsContract;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
@@ -41,6 +43,7 @@ public class Medicos extends AppCompatActivity {
     static ArrayList<Medico> lista_medicos_entity = new ArrayList();
     public static String medico;
     public static Medico medicoInfo;
+    public Boolean flagCarregaMedicosCalled;
 
 
     @Override
@@ -61,87 +64,100 @@ public class Medicos extends AppCompatActivity {
         dataAdapterMedicos.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner_medicos.setAdapter(dataAdapterMedicos);
 
+        flagCarregaMedicosCalled = false;
         carregaMedicos(Especialidade.getEspecialidade());
 
-        spinner_medicos.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        try {
+            while ((lista_medicos_entity.size() == 0) && !flagCarregaMedicosCalled) {
+                Thread.sleep(500);
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
-            @Override
-            public void onItemSelected(AdapterView<?> parentView, View view, int pos, long id) {
+        if ((lista_medicos_entity.size() == 0) && flagCarregaMedicosCalled) {
+            dialogo_medicos_nao_cadastrados();
+        } else {
+            spinner_medicos.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
-                medico = spinner_medicos.getSelectedItem().toString();
-                if (medico.equals("Selecione")) {
-                    button_medicos.setEnabled(false);
-                    linearLayout_medicos.setEnabled(false);
-                    nomeMedico.setEnabled(false);
-                    crmMedico.setEnabled(false);
-                    especialidadeMedico.setEnabled(false);
-                    telefoneMedico.setEnabled(false);
-                    emailMedico.setEnabled(false);
-                } else {
-                    button_medicos.setEnabled(true);
-                    linearLayout_medicos.setEnabled(true);
-                    nomeMedico.setEnabled(true);
-                    crmMedico.setEnabled(true);
-                    especialidadeMedico.setEnabled(true);
-                    telefoneMedico.setEnabled(true);
-                    emailMedico.setEnabled(true);
+                @Override
+                public void onItemSelected(AdapterView<?> parentView, View view, int pos, long id) {
 
-                    medicoInfo = getMedicoConsulta();
+                    medico = spinner_medicos.getSelectedItem().toString();
+                    if (medico.equals("Selecione")) {
+                        button_medicos.setEnabled(false);
+                        linearLayout_medicos.setEnabled(false);
+                        nomeMedico.setEnabled(false);
+                        crmMedico.setEnabled(false);
+                        especialidadeMedico.setEnabled(false);
+                        telefoneMedico.setEnabled(false);
+                        emailMedico.setEnabled(false);
+                    } else {
+                        button_medicos.setEnabled(true);
+                        linearLayout_medicos.setEnabled(true);
+                        nomeMedico.setEnabled(true);
+                        crmMedico.setEnabled(true);
+                        especialidadeMedico.setEnabled(true);
+                        telefoneMedico.setEnabled(true);
+                        emailMedico.setEnabled(true);
 
-                    nomeMedico.setText(medicoInfo.getNome());
-                    crmMedico.setText("CRM: " + medicoInfo.getCrm());
-                    especialidadeMedico.setText(medicoInfo.getEspecialidade());
-                    telefoneMedico.setText(medicoInfo.getTelefone());
-                    emailMedico.setText(medicoInfo.getEmail());
+                        medicoInfo = getMedicoConsulta();
 
-                    //spinner_cidade.setSelection(0);
-                    //carregaCidades(buscaIDEstado(estado));
+                        nomeMedico.setText(medicoInfo.getNome());
+                        crmMedico.setText("CRM: " + medicoInfo.getCrm());
+                        especialidadeMedico.setText(medicoInfo.getEspecialidade());
+                        telefoneMedico.setText(medicoInfo.getTelefone());
+                        emailMedico.setText(medicoInfo.getEmail());
+
+                        //spinner_cidade.setSelection(0);
+                        //carregaCidades(buscaIDEstado(estado));
+                    }
                 }
-            }
 
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
 
-            }
-        });
-
-
-        button_medicos.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                //cidade_uf.setNomeCidade(cidade);
-                //cidade_uf.setNomeEstado(estado);
+                }
+            });
 
 
-                Intent it = new Intent(Medicos.this, DataHoraConsulta.class);
-                startActivity(it);
+            button_medicos.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View view) {
 
-            }
-        });
+                    //cidade_uf.setNomeCidade(cidade);
+                    //cidade_uf.setNomeEstado(estado);
 
-        final ImageButton button_voltar = (ImageButton) findViewById(R.id.button_voltar);
-        button_voltar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
 
-                Intent it = new Intent(Medicos.this, Especialidade.class);
-                startActivity(it);
+                    Intent it = new Intent(Medicos.this, DataHoraConsulta.class);
+                    startActivity(it);
 
-            }
-        });
+                }
+            });
 
-        final ImageButton button_home = (ImageButton) findViewById(R.id.button_home);
-        button_home.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+            final ImageButton button_voltar = (ImageButton) findViewById(R.id.button_voltar);
+            button_voltar.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
 
-                Intent it = new Intent(Medicos.this, MenuPrincipal.class);
-                startActivity(it);
+                    Intent it = new Intent(Medicos.this, Especialidade.class);
+                    startActivity(it);
 
-            }
-        });
+                }
+            });
 
+            final ImageButton button_home = (ImageButton) findViewById(R.id.button_home);
+            button_home.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    Intent it = new Intent(Medicos.this, MenuPrincipal.class);
+                    startActivity(it);
+
+                }
+            });
+
+        }
     }
 
     private void carregaMedicos(String especialidade) {
@@ -171,6 +187,7 @@ public class Medicos extends AppCompatActivity {
                     lista_medicos_entity.addAll(medicosEntity);
                     lista_medicos.remove("Selecione");
                     lista_medicos.add(0,"Selecione");
+                    flagCarregaMedicosCalled = true;
                 } catch (HttpConnections.MinhaException e) {
                     e.printStackTrace();
                 }
@@ -211,6 +228,30 @@ public class Medicos extends AppCompatActivity {
         return medicoInfo;
     }
 
+    private AlertDialog alerta;
+
+    private void dialogo_medicos_nao_cadastrados() {
+
+        LayoutInflater li = getLayoutInflater();
+
+        View view = li.inflate(R.layout.activity_dialogo_medicos_nao_cadastrados, null);
+
+        view.findViewById(R.id.bt).setOnClickListener(new View.OnClickListener() {
+            public void onClick(View arg0) {
+                alerta.dismiss();
+                Intent it = new Intent(Medicos.this, Localizacao.class);
+                startActivity(it);
+
+            }
+        });
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Info");
+        builder.setView(view);
+        alerta = builder.create();
+        alerta.show();
+
+    }
 }
 
 

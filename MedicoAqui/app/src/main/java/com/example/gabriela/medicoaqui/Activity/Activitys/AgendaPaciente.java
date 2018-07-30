@@ -39,6 +39,7 @@ public class AgendaPaciente  extends AppCompatActivity {
     public static String consulta;
     public static Consulta consultaInfo;
     public static String idConsulta;
+    public Boolean flagCarregaConsultasCalled;
 
     public RecyclerView recyclerView;
 
@@ -48,14 +49,16 @@ public class AgendaPaciente  extends AppCompatActivity {
 
         //carregaConsultas();
         try {
+            flagCarregaConsultasCalled = false;
             carregaConsultasAgendasPorCliente(TelaLogin.getClientePerfil());
         } catch (JSONException e) {
             e.printStackTrace();
             Log.d(TAG, "Falha ao recuperar o cliente da sessão.");
         }
 
+        // quando não tem consulta entra num loop infinito =( CORRIGIR
         try {
-            while (lista_consultas_entity.size() == 0) {
+            while ((lista_consultas_entity.size() == 0) && !flagCarregaConsultasCalled) {
                 Thread.sleep(1000);
             }
 
@@ -149,9 +152,7 @@ public class AgendaPaciente  extends AppCompatActivity {
                 //HashSet<String> consultasStr = jsonReader.getConsultas(consultasBD);
                 lista_consultas_entity.addAll(consultasEntity);
                 //lista_consultas.addAll(consultasStr);
-
-                //criaReciclerView();
-
+                flagCarregaConsultasCalled = true;
             }
         }).start();
 
