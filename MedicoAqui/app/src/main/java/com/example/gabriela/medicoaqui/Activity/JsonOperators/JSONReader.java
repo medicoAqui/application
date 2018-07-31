@@ -518,13 +518,14 @@ public class JSONReader {
 
     public HashSet<Consulta> getConsultasEntity(String jsonString) {
         HashSet<Consulta> consultas = new HashSet<Consulta>();
-
+        Log.d("Acompanhando", "jsonString = " + jsonString);
         try {
             JSONArray consultasJson = new JSONArray(jsonString);
             JSONObject jsonObjectConsulta;
             if (consultasJson.length() > 0) {
                 for (int i = 0; i < consultasJson.length(); i++) {
                     jsonObjectConsulta = new JSONObject(consultasJson.getString(i));
+                    Log.d("Acompanhando", "jsonObjectConsulta = " + jsonObjectConsulta);
                     //Log.i("Nome: ","nome=" + jsonObjectEstado.getString("nome"));
                     String observacao = null;
                     if (jsonObjectConsulta.has("observacao")) {

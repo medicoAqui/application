@@ -54,27 +54,16 @@ public class NossoAdapter extends RecyclerView.Adapter {
         NossoViewHolder holder = (NossoViewHolder) viewHolder;
         Consulta consulta = consultas.get(position);
 
-//        Log.d("Acompanhando", "id do medico =" + consulta.getMedico());
-//        try {
-//
-//            retornaMedicoByID(consulta.getMedico());
-//            while (medico.getCrm() == null) {
-//                Thread.sleep(500);
-//            }
-//
-//        }catch (InterruptedException e) {
-//            e.printStackTrace();
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
+        Log.d("Acompanhando", "consulta =" + consulta.toString());
 
-        //retornaMedicoByID(consulta.getMedico());
-        holder.medico.setText(TelaLogin.medicoLogado.getNome());
-        holder.crm.setText(TelaLogin.medicoLogado.getCrm());
+        holder.medico.setText(consulta.getCliente());
+        if("D".equals(consulta.getStatus())){
+            holder.crm.setText("Desmarcada");
+        }else if("A".equals(consulta.getStatus())){
+            holder.crm.setText("Confirmada");
+        }
 
-        //holder.medico.setText(consulta.getMedico());
         holder.dataHora.setText(consulta.getDataConsulta() + " " + consulta.getHora());
-        //idConsulta = consulta.getIdConsulta();
 
         holder.desmarcar_consulta.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -123,22 +112,7 @@ public class NossoAdapter extends RecyclerView.Adapter {
 
     public static void retornaMedicoByID(String id_medico) throws JSONException {
 
-        final JSONObject jsonTT = new JSONObject();
-        //final String url = "https://medicoishere.herokuapp.com/medico/" + id_medico;
         medico = TelaLogin.medicoLogado;
-        /*jsonTT.put("id", id_medico);
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    String medicoBD = http.sendPost("https://medicoishere.herokuapp.com/consulta/consultaByIdMedico", jsonTT.toString());
-                    medico = jsonReader.getMedicoByID(medicoBD);
-                } catch (HttpConnections.MinhaException e) {
-                    e.printStackTrace();
-                }
-            }
-        }).start();*/
 
     }
 
@@ -165,36 +139,4 @@ public class NossoAdapter extends RecyclerView.Adapter {
         }).start();
 
     }
-
-    //private static AlertDialog alerta;
-
-    /*
-    private static AlertDialog alerta;
-
-    public  void dialogo_desmarcar(final String idConsulta) {
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(AgendaPaciente);
-        builder.setTitle("Desmarcar consulta");
-        builder.setMessage("Você deseja confirmar o cancelamento da consulta agendada?");
-
-        builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface arg0, int arg1) {
-                try {
-                    desmarcarConsulta(idConsulta);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                alerta.dismiss();
-            }
-        });
-
-        builder.setNegativeButton("Não", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface arg0, int arg1) {
-                alerta.dismiss();
-            }
-        });
-
-        alerta = builder.create();
-        alerta.show();
-    }*/
 }

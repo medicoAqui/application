@@ -24,6 +24,11 @@ public class Consulta implements Comparable<Consulta>{
 
     }
 
+    @Override
+    public String toString(){
+        return "Obs:" + observacao + ", Hora: " + hora + " data: " + dataConsulta + " status: " + status + " cliente: " + cliente + " medico: " + medico + " consultorio: " + consultorio;
+    }
+
     public String getObservacao() {
         return observacao;
     }

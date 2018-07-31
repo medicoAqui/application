@@ -101,7 +101,7 @@ public class AgendaMedico extends AppCompatActivity {
             }
         });
     }
-        private void carregaAgendaMedico(Medico medico) throws JSONException {
+    private void carregaAgendaMedico(Medico medico) throws JSONException {
 
         Log.d(TAG, "carregaAgendaMedico() called");
 
