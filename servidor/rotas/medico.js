@@ -180,6 +180,38 @@ medicoRouter.post('/medicosByEspecialidade',function(req,res){
   });
 });
 
+medicoRouter.post('/medicosByEspecialidadeAndEstadoCidade',function(req,res){
+  var jobQueries = [];
+  Especialidade.findOne({nomeEspecialidade: req.body.nomeEspecialidade}, function(err,espec){
+    if(espec == undefined || err){
+        res.status(400).json('Nao foi encontrado endereco registrado para este estado e cidade' );
+    }
+    else{
+        var endereco  = Endereco.find({cidade: req.body.cidade, uf:req.body.uf });
+        endereco.then(function(ends){
+        console.log(ends);
+
+          ends.forEach(function(end) {
+            var consultorioFind = Consultorio.find({endereco :end._id});
+            consultorioFind.then(function(consults){
+              console.log(espec._id);
+
+              consults.forEach(function(consult) {
+                jobQueries.push(Medico.find({consultorio:consult._id, especialidades: espec._id}));
+              });
+              return Promise.all(jobQueries );
+              }).then(function(listOfJobs) {
+                  res.send(listOfJobs);
+              }).catch(function(error) {
+                  res.status(500).send('one of the queries failed', error);
+              });
+          });
+
+      });
+    }
+  });
+});
+
 medicoRouter.post('/EspecialidadesByCidadeAndUF',function(req,res){
 
   var endereco = Endereco.find({cidade: req.body.cidade, uf: req.body.uf });
