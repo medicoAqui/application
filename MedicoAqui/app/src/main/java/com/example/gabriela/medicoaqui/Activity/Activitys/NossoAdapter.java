@@ -54,23 +54,23 @@ public class NossoAdapter extends RecyclerView.Adapter {
         NossoViewHolder holder = (NossoViewHolder) viewHolder;
         Consulta consulta = consultas.get(position);
 
-
-        try {
-
-            retornaMedicoByID(consulta.getMedico());
-            while (medico.getCrm() == null) {
-                Thread.sleep(500);
-            }
-
-        }catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+//        Log.d("Acompanhando", "id do medico =" + consulta.getMedico());
+//        try {
+//
+//            retornaMedicoByID(consulta.getMedico());
+//            while (medico.getCrm() == null) {
+//                Thread.sleep(500);
+//            }
+//
+//        }catch (InterruptedException e) {
+//            e.printStackTrace();
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
 
         //retornaMedicoByID(consulta.getMedico());
-        holder.medico.setText(medico.getNome());
-        holder.crm.setText(medico.getCrm());
+        holder.medico.setText(TelaLogin.medicoLogado.getNome());
+        holder.crm.setText(TelaLogin.medicoLogado.getCrm());
 
         //holder.medico.setText(consulta.getMedico());
         holder.dataHora.setText(consulta.getDataConsulta() + " " + consulta.getHora());
@@ -90,7 +90,7 @@ public class NossoAdapter extends RecyclerView.Adapter {
             }
         });
 
-        medico = new Medico(null, null, null, null, null, null, null, null, null);
+        medico = TelaLogin.medicoLogado;
 
     }
 
@@ -125,20 +125,20 @@ public class NossoAdapter extends RecyclerView.Adapter {
 
         final JSONObject jsonTT = new JSONObject();
         //final String url = "https://medicoishere.herokuapp.com/medico/" + id_medico;
-
-        jsonTT.put("_id", id_medico);
+        medico = TelaLogin.medicoLogado;
+        /*jsonTT.put("id", id_medico);
 
         new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    String medicoBD = http.sendPost("http://medicoishere.herokuapp.com/medico/medicoBy_id", jsonTT.toString());
+                    String medicoBD = http.sendPost("https://medicoishere.herokuapp.com/consulta/consultaByIdMedico", jsonTT.toString());
                     medico = jsonReader.getMedicoByID(medicoBD);
                 } catch (HttpConnections.MinhaException e) {
                     e.printStackTrace();
                 }
             }
-        }).start();
+        }).start();*/
 
     }
 
