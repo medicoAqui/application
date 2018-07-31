@@ -4,6 +4,7 @@ package com.example.gabriela.medicoaqui.Activity.JsonOperators;
  * Created by henri on 14/06/2018.
  */
 
+import android.util.JsonReader;
 import android.util.Log;
 
 import com.example.gabriela.medicoaqui.Activity.Entities.Cidade_UF;
@@ -147,16 +148,20 @@ public class JSONReader {
         HashSet<Medico> medicos = new HashSet<Medico>();
 
         try {
-            JSONArray nomesJson = new JSONArray(jsonString);
+            JSONArray nomesArrayExtJson = new JSONArray(jsonString);
+            JSONArray nomesArrayIntJson;
             JSONObject jsonObjectNome;
-            if (nomesJson.length() > 0) {
-                for (int i = 0; i < nomesJson.length(); i++) {
-                    jsonObjectNome = new JSONObject(nomesJson.getString(i));
-                    Log.i("Nome: ", "nome=" + jsonObjectNome.getString("name"));
-                    String nome = jsonObjectNome.getString("name");
-                    String crm = jsonObjectNome.getString("crm");
-                    Medico medico = new Medico(nome, null, null, null, null, null, null, null, crm);
-                    medicos.add(medico);
+            if (nomesArrayExtJson.length() > 0) {
+                for (int i = 0; i < nomesArrayExtJson.length(); i++) {
+                    nomesArrayIntJson = new JSONArray(nomesArrayExtJson.getString(i));
+                    for (int j = 0; j < nomesArrayIntJson.length(); j++) {
+                        jsonObjectNome = new JSONObject(nomesArrayIntJson.getString(j));
+                        //Log.i("Nome: ", "nome=" + jsonObjectNome.getString("name"));
+                        String nome = jsonObjectNome.getString("name");
+                        String crm = jsonObjectNome.getString("crm");
+                        Medico medico = new Medico(nome, null, null, null, null, null, null, null, crm);
+                        medicos.add(medico);
+                    }
                 }
             }
             else {
@@ -172,14 +177,19 @@ public class JSONReader {
         HashSet<String> nomes = new HashSet<String>();
 
         try {
-            JSONArray nomesJson = new JSONArray(jsonString);
+            JSONArray nomesArrayExtJson = new JSONArray(jsonString);
+            JSONArray nomesArrayIntJson;
             JSONObject jsonObjectNome;
-            if (nomesJson.length()>0) {
-                for (int i = 0; i < nomesJson.length(); i++) {
-                    jsonObjectNome = new JSONObject(nomesJson.getString(i));
-                    Log.i("Nome: ", "nome=" + jsonObjectNome.getString("name"));
-                    String nome = jsonObjectNome.getString("name");
-                    nomes.add(nome.substring(0, 1).toUpperCase().concat(nome.substring(1)));
+
+            if (nomesArrayExtJson.length()>0) {
+                for (int i = 0; i < nomesArrayExtJson.length(); i++) {
+                    nomesArrayIntJson = new JSONArray(nomesArrayExtJson.getString(i));
+                    for (int j = 0; j < nomesArrayIntJson.length(); j++) {
+                        jsonObjectNome = new JSONObject(nomesArrayIntJson.getString(j));
+                        //Log.i("Nome: ", "nome=" + jsonObjectNome.getString("name"));
+                        String nome = jsonObjectNome.getString("name");
+                        nomes.add(nome.substring(0, 1).toUpperCase().concat(nome.substring(1)));
+                   }
                 }
             }
             else {
@@ -590,5 +600,21 @@ public class JSONReader {
             Log.e("Erro", "Erro no parsing do JSON", e);
         }
         return medico;
+    }
+
+    public Boolean getDisponibilidadeMedico(String jsonString) {
+        HashSet<Consulta> consultasDisponiveis = new HashSet<Consulta>();
+
+        try {
+            JSONArray consultasDispJson = new JSONArray(jsonString);
+            JSONObject jsonObjectConsulytasDisp;
+            if (consultasDispJson.length() > 0) {
+                return true;
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return false;
     }
 }

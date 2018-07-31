@@ -40,9 +40,11 @@ public class Localizacao  extends AppCompatActivity {
     ArrayList<Estado> lista_estados_entity = new ArrayList();
     ArrayList<String> lista_cidades = new ArrayList<String>(){{add("Selecione");}};
     public Cidade_UF cidade_uf = new Cidade_UF(null, null, null);
-    public String cidade;
-    public String estado;
-    public String sigla;
+    public static String cidade;
+    public static String estado;
+    public static String sigla;
+    public Boolean flagCarregaEstados;
+    public Boolean flagCarregaCidades;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -61,7 +63,17 @@ public class Localizacao  extends AppCompatActivity {
         dataAdapterCidade.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner_cidade.setAdapter(dataAdapterCidade);
 
+
         carregaEstados();
+
+        try {
+            flagCarregaEstados = false;
+            while (lista_estados_entity.size() == 0 && flagCarregaEstados) {
+                Thread.sleep(500);
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         spinner_estado.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
@@ -75,6 +87,14 @@ public class Localizacao  extends AppCompatActivity {
                     spinner_cidade.setEnabled(true);
                     spinner_cidade.setSelection(0);
                     carregaCidades(buscaIDEstado(estado));
+                    try {
+                        flagCarregaCidades = false;
+                        while (lista_cidades.size() == 0 && flagCarregaCidades) {
+                            Thread.sleep(500);
+                        }
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
 
@@ -159,6 +179,7 @@ public class Localizacao  extends AppCompatActivity {
                 lista_estados_entity.addAll(estadosEntity);
                 lista_estados.remove("Selecione");
                 lista_estados.add(0,"Selecione");
+                flagCarregaEstados = true;
             }
         }).start();
 
@@ -182,6 +203,7 @@ public class Localizacao  extends AppCompatActivity {
                     Collections.sort(lista_cidades);
                     lista_cidades.remove("Selecione");
                     lista_cidades.add(0,"Selecione");
+                    flagCarregaCidades = true;
                // } catch (HttpConnections.MinhaException e) {
                 //    e.printStackTrace();
                 //}
@@ -207,17 +229,30 @@ public class Localizacao  extends AppCompatActivity {
 
     private String buscaSiglaEstado(String estado) {
 
-        String sigla = null;
+        //String sigla = null;
 
         for (int i = 0; i < lista_estados_entity.size(); i++) {
 
             if (lista_estados_entity.get(i).getNome().equals(estado)) {
                 sigla = lista_estados_entity.get(i).getSigla();
+                i = lista_estados_entity.size(); // testar melhora de performance
             }
         }
 
         Log.d(TAG, "buscaIDEstado() called with: estado = [" + estado + "]. Returned: " + sigla);
         return sigla;
+    }
+
+    public static String getSiglaUFLocalizacao() {
+        return sigla;
+    }
+
+    public static String getCidadeLocalizacao() {
+        return cidade;
+    }
+
+    public static String getEstadoLocalizacao() {
+        return estado;
     }
 
 }

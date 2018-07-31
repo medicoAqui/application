@@ -167,6 +167,8 @@ public class Medicos extends AppCompatActivity {
         final JSONObject jsonTT = new JSONObject();
 
         try {
+            jsonTT.put("uf", Localizacao.getSiglaUFLocalizacao());
+            jsonTT.put("cidade", Localizacao.getCidadeLocalizacao());
             jsonTT.put("nomeEspecialidade", especialidade);
         } catch (JSONException e) {
             e.printStackTrace();
@@ -179,14 +181,16 @@ public class Medicos extends AppCompatActivity {
                 try {
                     lista_medicos.clear();
                     lista_medicos_entity.clear();
-                    String medicosBD = http.sendPost("http://medicoishere.herokuapp.com/medico/medicosByEspecialidade", jsonTT.toString());
+                    String medicosBD = null;
+                    // Erro para corrigir - retorna exceção na linha abaixo, precisa validar
+                    medicosBD = http.sendPost("https://medicoishere.herokuapp.com/medico/medicosByEspecialidadeAndEstadoCidade", jsonTT.toString());
                     HashSet<String> medicos = jsonReader.getMedicosByEspecialidade(medicosBD);
                     HashSet<Medico> medicosEntity = jsonReader.getMedicosByEspecialidadeEntity(medicosBD);
                     lista_medicos.addAll(medicos);
                     //Collections.sort(lista_medicos);
                     lista_medicos_entity.addAll(medicosEntity);
                     lista_medicos.remove("Selecione");
-                    lista_medicos.add(0,"Selecione");
+                    lista_medicos.add(0, "Selecione");
                     flagCarregaMedicosCalled = true;
                 } catch (HttpConnections.MinhaException e) {
                     e.printStackTrace();

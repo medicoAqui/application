@@ -55,6 +55,7 @@ public class DataHoraConsulta   extends AppCompatActivity {
     }};
     ArrayList<Consulta> lista_consultas_disponiveis = new ArrayList<Consulta>();
 
+    Boolean retornoDispMedico;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -70,84 +71,101 @@ public class DataHoraConsulta   extends AppCompatActivity {
         dataAdapterHora.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner_hora.setAdapter(dataAdapterHora);
 
-        calendario.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+        //consulta se medico tem algum horario com status C ou D na agenda
+        /*
+        consultaDispHorarioMédico(Medicos.getMedicoSelecionado().getId());
+        while (retornoDispMedico == null) {
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
 
-            @Override
-            public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
+        if (!retornoDispMedico) {
+            dialogo_sem_horario();
+        } else {
+        */
 
-                dataStr = formataDoisDigitos(dayOfMonth) + "-" + formataDoisDigitos((month +1)) + "-" + year;
+            calendario.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
 
-                carregaHoraDisponivel(dataStr);
+                @Override
+                public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
 
-                spinner_hora.setSelection(dataAdapterHora.getPosition("Selecione"));
-                if (lista_hora.size() == 0) {
-                    spinner_hora.setEnabled(false);
-                    //exibir mensagem
-                } else {
-                    spinner_hora.setEnabled(true);
+                    dataStr = formataDoisDigitos(dayOfMonth) + "-" + formataDoisDigitos((month + 1)) + "-" + year;
+
+                    carregaHoraDisponivel(dataStr);
+
+                    spinner_hora.setSelection(dataAdapterHora.getPosition("Selecione"));
+                    if (lista_hora.size() == 0) {
+                        spinner_hora.setEnabled(false);
+                        //exibir mensagem
+                    } else {
+                        spinner_hora.setEnabled(true);
+                    }
+
                 }
 
-            }
+            });
 
-        });
+            spinner_hora.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
-        spinner_hora.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parentView, View view, int pos, long id) {
 
-            @Override
-            public void onItemSelected(AdapterView<?> parentView, View view, int pos, long id) {
+                    hora = spinner_hora.getSelectedItem().toString();
 
-                hora = spinner_hora.getSelectedItem().toString();
-
-                if (hora.equals("Selecione")) {
-                    button_marcar_consulta.setEnabled(false);
-                } else {
-                    button_marcar_consulta.setEnabled(true);
+                    if (hora.equals("Selecione")) {
+                        button_marcar_consulta.setEnabled(false);
+                    } else {
+                        button_marcar_consulta.setEnabled(true);
+                    }
                 }
-            }
 
-            @Override
+                @Override
                 public void onNothingSelected(AdapterView<?> parent) {
 
                 }
-        });
+            });
 
 
-        button_marcar_consulta.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+            button_marcar_consulta.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
 
-                marcarConsulta(getIdConsulta(hora));
-                dialogo_marcar_consulta();
-                //Toast.makeText(DataHoraConsulta.this, "Solicitação de consulta enviada", Toast.LENGTH_SHORT).show();
-                //Intent it = new Intent(DataHoraConsulta.this, AgendaPaciente.class);
-                //startActivity(it);
+                    marcarConsulta(getIdConsulta(hora));
+                    dialogo_marcar_consulta();
+                    //Toast.makeText(DataHoraConsulta.this, "Solicitação de consulta enviada", Toast.LENGTH_SHORT).show();
+                    //Intent it = new Intent(DataHoraConsulta.this, AgendaPaciente.class);
+                    //startActivity(it);
 
-            }
-        });
-
-
-        final ImageButton button_voltar = (ImageButton) findViewById(R.id.button_voltar);
-        button_voltar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                Intent it = new Intent(DataHoraConsulta.this, Medicos.class);
-                startActivity(it);
-
-            }
-        });
+                }
+            });
 
 
-        final ImageButton button_home = (ImageButton) findViewById(R.id.button_home);
-        button_home.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+            final ImageButton button_voltar = (ImageButton) findViewById(R.id.button_voltar);
+            button_voltar.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
 
-                Intent it = new Intent(DataHoraConsulta.this, MenuPrincipal.class);
-                startActivity(it);
+                    Intent it = new Intent(DataHoraConsulta.this, Medicos.class);
+                    startActivity(it);
 
-            }
-        });
+                }
+            });
+
+
+            final ImageButton button_home = (ImageButton) findViewById(R.id.button_home);
+            button_home.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    Intent it = new Intent(DataHoraConsulta.this, MenuPrincipal.class);
+                    startActivity(it);
+
+                }
+            });
+        //}  // else da verificação de horario disponivel
 
     }
 
@@ -282,4 +300,74 @@ public class DataHoraConsulta   extends AppCompatActivity {
 
     }
 
+    private void dialogo_sem_horario() {
+
+        LayoutInflater li = getLayoutInflater();
+
+        View view = li.inflate(R.layout.activity_dialogo_sem_horario, null);
+
+        view.findViewById(R.id.bt).setOnClickListener(new View.OnClickListener() {
+            public void onClick(View arg0) {
+                alerta.dismiss();
+                Intent it = new Intent(DataHoraConsulta.this, Localizacao.class);
+                startActivity(it);
+
+            }
+        });
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Disponibilidade");
+        builder.setView(view);
+        alerta = builder.create();
+        alerta.show();
+
+    }
+
+
+    public void consultaDispHorarioMédico(String idMedico) {
+        //Verifica se o médico possui alguma data disponível
+        //consulta/consultaByIdMedicoAndStatus, metodo post, parametro _id ( do medico) , status
+
+        Log.d(TAG, "consultaDispHorarioMédico() called");
+
+        final JSONObject jsonTT = new JSONObject();
+        final JSONObject jsonTT2 = new JSONObject();
+
+        //Boolean consultasDisp_D = false;
+        //Boolean consultasDisp_C = false;
+
+        //String diasBD;
+
+        try {
+
+            jsonTT.put("_id ", idMedico);
+            jsonTT.put("status", statusDisponivel);
+            jsonTT2.put("_id ", idMedico);
+            jsonTT2.put("status", statusCancelado);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+
+                    //Retorna horários com status D - Disponível
+                    String diasBD = http.sendPost("http://medicoishere.herokuapp.com/consulta/consultaByIdMedicoAndStatus", jsonTT.toString());
+                    Boolean consultasDisp_D = jsonReader.getDisponibilidadeMedico(diasBD);
+                    //Retorna horários com status C - Cancelado
+                    String diasBD2 = http.sendPost("http://medicoishere.herokuapp.com/consulta/consultaByIdMedicoAndStatus", jsonTT2.toString());
+                    Boolean consultasDisp_C = jsonReader.getDisponibilidadeMedico(diasBD2);
+                    retornoDispMedico = (consultasDisp_D || consultasDisp_C);
+
+                } catch (HttpConnections.MinhaException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }).start();
+
+    }
 }
