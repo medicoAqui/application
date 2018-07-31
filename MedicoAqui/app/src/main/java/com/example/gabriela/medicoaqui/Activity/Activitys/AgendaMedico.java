@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.example.gabriela.medicoaqui.Activity.Entities.Cliente;
 import com.example.gabriela.medicoaqui.Activity.Entities.Consulta;
@@ -26,29 +27,30 @@ import java.util.HashSet;
 
 public class AgendaMedico extends AppCompatActivity {
 
-    private static final String TAG = "AgendaPaciente";
+    private static final String TAG = "AgendaMedico";
 
     JSONObject jsonTT = new JSONObject();
     static JSONReader jsonReader = new JSONReader();
     static HttpConnections http = new HttpConnections();
-    static ArrayList<Consulta> lista_consultas_entity = new ArrayList();
+    static ArrayList<Consulta> lista_consultas_entity;
     public static String consulta;
 
     public RecyclerView recyclerView;
+    public TextView emptyView;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_agenda_medico);
 
         try {
-            carregaAgendaMedico(new Medico());
+            carregaAgendaMedico(TelaLogin.medicoLogado);
         } catch (JSONException e) {
             e.printStackTrace();
             Log.d(TAG, "Falha ao recuperar o cliente da sessão.");
         }
 
         try {
-            while (lista_consultas_entity.size() == 0) {
+            while (lista_consultas_entity == null) {
                 Thread.sleep(1000);
             }
 
@@ -56,17 +58,33 @@ public class AgendaMedico extends AppCompatActivity {
             e.printStackTrace();
         }
 
+        Log.d("Acompanhando", "Lista de consultas = " + lista_consultas_entity.toString());
+
         recyclerView = (RecyclerView) findViewById(R.id.recycler);
         recyclerView.setAdapter(new NossoAdapter(lista_consultas_entity, this));
         RecyclerView.LayoutManager layout = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layout);
 
+        emptyView = (TextView) findViewById(R.id.empty_view);
+
+        if (lista_consultas_entity.isEmpty()) {
+            Log.d("Acompanhando", "Exibindo mensagem de agenda vazia");
+            recyclerView.setVisibility(View.GONE);
+            emptyView.setVisibility(View.VISIBLE);
+
+        }
+        else {
+            recyclerView.setVisibility(View.VISIBLE);
+            emptyView.setVisibility(View.GONE);
+        }
+
         final ImageButton button_voltar = (ImageButton) findViewById(R.id.button_voltar);
+
         button_voltar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                Intent it = new Intent(AgendaMedico.this, MenuPrincipal.class);
+                Intent it = new Intent(AgendaMedico.this, MenuPrincipalMedico.class);
                 startActivity(it);
 
             }
@@ -77,7 +95,7 @@ public class AgendaMedico extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                Intent it = new Intent(AgendaMedico.this, MenuPrincipal.class);
+                Intent it = new Intent(AgendaMedico.this, MenuPrincipalMedico.class);
                 startActivity(it);
 
             }
@@ -87,21 +105,22 @@ public class AgendaMedico extends AppCompatActivity {
 
         Log.d(TAG, "carregaAgendaMedico() called");
 
-        lista_consultas_entity.clear();
+//        lista_consultas_entity.clear();
         final JSONObject jsonTT = new JSONObject();
-        jsonTT.put("cpf", medico.getCpf());
-        jsonTT.put("status", "A");
+        jsonTT.put("id", medico.getId());
 
         new Thread(new Runnable() {
             @Override
             public void run() {
                 String consultasBD = null;
                 try {
-                    consultasBD = http.sendPost("https://medicoishere.herokuapp.com/consulta/consultasByCpfClienteAndStatus",jsonTT.toString());
+                    consultasBD = http.sendPost("https://medicoishere.herokuapp.com/consulta/consultaByIdMedico",jsonTT.toString());
                 } catch (HttpConnections.MinhaException e) {
                     e.printStackTrace();
                 }
                 HashSet<Consulta> consultasEntity = jsonReader.getConsultasEntity(consultasBD);
+
+                lista_consultas_entity = new ArrayList();
                 lista_consultas_entity.addAll(consultasEntity);
 
             }
@@ -132,7 +151,7 @@ public class AgendaMedico extends AppCompatActivity {
     }
 
 
-    public void desmarcarConsulta(String idConsulta) throws JSONException {
+    /*public void desmarcarConsulta(String idConsulta) throws JSONException {
 
         //put /idconsulta
 
@@ -157,11 +176,11 @@ public class AgendaMedico extends AppCompatActivity {
             }
         }).start();
 
-    }
+    }*/
 
-    private static AlertDialog alerta;
+//    private static AlertDialog alerta;
 
-    public  void dialogo_desmarcar(final String idConsulta) {
+    /*public  void dialogo_desmarcar(final String idConsulta) {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Desmarcar consulta");
@@ -186,7 +205,7 @@ public class AgendaMedico extends AppCompatActivity {
 
         alerta = builder.create();
         alerta.show();
-    }
+    }*/
 
 }
 

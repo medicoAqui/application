@@ -93,7 +93,7 @@ public class TelaLogin extends AppCompatActivity implements LoaderCallbacks<Curs
     public static String emailCliente;
     public static Cliente clientePerfil;
 
-    public Medico medicoLogado;
+    public static Medico medicoLogado;
 
     public static String perfil = "paciente"; //Opção default
 
@@ -192,7 +192,9 @@ public class TelaLogin extends AppCompatActivity implements LoaderCallbacks<Curs
 
                         try {
                             recuperaMedicoPorEmail(mEmailView.getText().toString());
-                            Thread.sleep(5000);
+                            while(getMedicoLogado() == null){
+                                Thread.sleep(1000);
+                            }
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }

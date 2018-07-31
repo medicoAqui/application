@@ -546,7 +546,7 @@ public class JSONReader {
                 }
             }
             else {
-                Log.d("Erro", "Nao foi encontrado nenhuma consulta.");
+                Log.w("Erro", "Nao foi encontrado nenhuma consulta.");
             }
         } catch (JSONException e) {
             Log.e("Erro", "Erro no parsing do JSON", e);
