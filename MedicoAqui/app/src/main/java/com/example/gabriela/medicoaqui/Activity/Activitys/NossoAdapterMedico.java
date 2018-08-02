@@ -25,7 +25,7 @@ import java.util.Date;
 import java.util.Objects;
 
 
-public class NossoAdapter extends RecyclerView.Adapter {
+public class NossoAdapterMedico extends RecyclerView.Adapter {
 
     private Context context;
     private ArrayList<Consulta> consultas;
@@ -34,7 +34,7 @@ public class NossoAdapter extends RecyclerView.Adapter {
     static HttpConnections http = new HttpConnections();
 
 
-    public NossoAdapter(ArrayList<Consulta> consultas, Context context) {
+    public NossoAdapterMedico(ArrayList<Consulta> consultas, Context context) {
         this.consultas = consultas;
         this.context = context;
     }
@@ -54,27 +54,22 @@ public class NossoAdapter extends RecyclerView.Adapter {
         NossoViewHolder holder = (NossoViewHolder) viewHolder;
         Consulta consulta = consultas.get(position);
 
+        Log.d("Acompanhando", "consulta =" + consulta.toString());
 
-        try {
-
-            retornaMedicoByID(consulta.getMedico());
-            while (medico.getCrm() == null) {
-                Thread.sleep(500);
-            }
-
-        }catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
+        if(null != consulta.getCliente()){
+            holder.medico.setText(consulta.getCliente());
+        }else{
+            holder.medico.setText("-");
+        }
+        if("D".equals(consulta.getStatus())){
+            holder.crm.setText("Disponivel");
+        }else if("A".equals(consulta.getStatus())){
+            holder.crm.setText("Agendada");
+        }else if("C".equals(consulta.getStatus())){
+            holder.crm.setText("Cancelada");
         }
 
-        //retornaMedicoByID(consulta.getMedico());
-        holder.medico.setText(medico.getNome());
-        holder.crm.setText(medico.getCrm());
-
-        //holder.medico.setText(consulta.getMedico());
         holder.dataHora.setText(consulta.getDataConsulta() + " " + consulta.getHora());
-        //idConsulta = consulta.getIdConsulta();
 
         holder.desmarcar_consulta.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,7 +85,7 @@ public class NossoAdapter extends RecyclerView.Adapter {
             }
         });
 
-        medico = new Medico(null, null, null, null, null, null, null, null, null);
+        medico = TelaLogin.medicoLogado;
 
     }
 
@@ -123,22 +118,7 @@ public class NossoAdapter extends RecyclerView.Adapter {
 
     public static void retornaMedicoByID(String id_medico) throws JSONException {
 
-        final JSONObject jsonTT = new JSONObject();
-        //final String url = "https://medicoishere.herokuapp.com/medico/" + id_medico;
-
-        jsonTT.put("_id", id_medico);
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    String medicoBD = http.sendPost("http://medicoishere.herokuapp.com/medico/medicoBy_id", jsonTT.toString());
-                    medico = jsonReader.getMedicoByID(medicoBD);
-                } catch (HttpConnections.MinhaException e) {
-                    e.printStackTrace();
-                }
-            }
-        }).start();
+        medico = TelaLogin.medicoLogado;
 
     }
 
@@ -165,31 +145,4 @@ public class NossoAdapter extends RecyclerView.Adapter {
         }).start();
 
     }
-
-    //private static AlertDialog alerta;
-
-    /*
-    private static AlertDialog alerta;
-    public  void dialogo_desmarcar(final String idConsulta) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(AgendaPaciente);
-        builder.setTitle("Desmarcar consulta");
-        builder.setMessage("Você deseja confirmar o cancelamento da consulta agendada?");
-        builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface arg0, int arg1) {
-                try {
-                    desmarcarConsulta(idConsulta);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                alerta.dismiss();
-            }
-        });
-        builder.setNegativeButton("Não", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface arg0, int arg1) {
-                alerta.dismiss();
-            }
-        });
-        alerta = builder.create();
-        alerta.show();
-    }*/
 }
