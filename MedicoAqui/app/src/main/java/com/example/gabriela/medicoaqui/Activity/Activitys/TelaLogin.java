@@ -591,12 +591,14 @@ public class TelaLogin extends AppCompatActivity implements LoaderCallbacks<Curs
             String nome = jsonObjectMedico.getString("name");
             String crm = jsonObjectMedico.getString("crm");
             String sexo = jsonObjectMedico.getString("sexo");
+            String id = jsonObjectMedico.getString("_id");
             String dataNascimento = jsonObjectMedico.getString("DataNascimento");
             // FALTAM ATRIBUTOS
             medico.setEmail(email);
             medico.setNome(nome);
             medico.setCrm(crm);
             medico.setGenero(sexo);
+            medico.setId(id);
             // FALTAM SETAR ATRIBUTOS
         } catch (JSONException e) {
             Log.e("Erro", "Erro no parsing do JSON", e);
