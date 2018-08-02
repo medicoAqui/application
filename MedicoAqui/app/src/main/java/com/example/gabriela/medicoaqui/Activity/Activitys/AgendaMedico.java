@@ -61,7 +61,7 @@ public class AgendaMedico extends AppCompatActivity {
         Log.d("Acompanhando", "Lista de consultas = " + lista_consultas_entity.toString());
 
         recyclerView = (RecyclerView) findViewById(R.id.recycler);
-        recyclerView.setAdapter(new NossoAdapter(lista_consultas_entity, this));
+        recyclerView.setAdapter(new NossoAdapterMedico(lista_consultas_entity, this));
         RecyclerView.LayoutManager layout = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layout);
 
@@ -130,7 +130,7 @@ public class AgendaMedico extends AppCompatActivity {
     public void criaReciclerView() {
 
         recyclerView = (RecyclerView) findViewById(R.id.recycler);
-        recyclerView.setAdapter(new NossoAdapter(lista_consultas_entity, this));
+        recyclerView.setAdapter(new NossoAdapterMedico(lista_consultas_entity, this));
         RecyclerView.LayoutManager layout = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layout);
 
