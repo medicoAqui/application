@@ -56,11 +56,17 @@ public class NossoAdapter extends RecyclerView.Adapter {
 
         Log.d("Acompanhando", "consulta =" + consulta.toString());
 
-        holder.medico.setText(consulta.getCliente());
+        if(null != consulta.getCliente()){
+            holder.medico.setText(consulta.getCliente());
+        }else{
+            holder.medico.setText("-");
+        }
         if("D".equals(consulta.getStatus())){
-            holder.crm.setText("Desmarcada");
+            holder.crm.setText("Disponivel");
         }else if("A".equals(consulta.getStatus())){
-            holder.crm.setText("Confirmada");
+            holder.crm.setText("Agendada");
+        }else if("C".equals(consulta.getStatus())){
+            holder.crm.setText("Cancelada");
         }
 
         holder.dataHora.setText(consulta.getDataConsulta() + " " + consulta.getHora());
