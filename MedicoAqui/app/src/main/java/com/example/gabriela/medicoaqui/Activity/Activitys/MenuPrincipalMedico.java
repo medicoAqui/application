@@ -28,7 +28,7 @@ public class MenuPrincipalMedico extends AppCompatActivity {
         setContentView(R.layout.activity_menu_principal_medico);
 
 
-        final Button button_consulta_menu = (Button) findViewById(R.id.button_consulta_menu);
+        /*final Button button_consulta_menu = (Button) findViewById(R.id.button_consulta_menu);
         button_consulta_menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -37,7 +37,7 @@ public class MenuPrincipalMedico extends AppCompatActivity {
                 startActivity(it);
 
             }
-        });
+        });*/
 
 
         final Button button_agenda_medico = (Button) findViewById(R.id.button_agenda_medico);
@@ -57,13 +57,13 @@ public class MenuPrincipalMedico extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                Intent it = new Intent(MenuPrincipalMedico.this, VisualizarPerfil.class);
+                Intent it = new Intent(MenuPrincipalMedico.this, VisualizarPerfilMedico.class);
                 startActivity(it);
 
             }
         });
 
-        final Button button_perguntas_menu = (Button) findViewById(R.id.button_perguntas_menu);
+        /*final Button button_perguntas_menu = (Button) findViewById(R.id.button_perguntas_menu);
         button_perguntas_menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -74,7 +74,7 @@ public class MenuPrincipalMedico extends AppCompatActivity {
             }
         });
 
-
+*/
         final ImageButton button_logout = (ImageButton) findViewById(R.id.button_logout);
         button_logout.setOnClickListener(new View.OnClickListener() {
             @Override

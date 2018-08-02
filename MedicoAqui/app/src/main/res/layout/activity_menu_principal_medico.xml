@@ -9,7 +9,7 @@
     <!--android:background="#33414b">-->
 
 
-    <Button
+    <!--<Button
         android:id="@+id/button_consulta_menu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -21,7 +21,7 @@
         android:textColor="#ffffff"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
+-->
     <Button
         android:id="@+id/button_agenda_medico"
         android:layout_width="wrap_content"
@@ -40,16 +40,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="65dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="100dp"
         android:background="@android:color/transparent"
-        android:drawableTop="@drawable/perfil_menu"
-        android:text="Meu perfil"
+        android:drawableTop="@drawable/consulta_menu"
+        android:text="Meu Perfil"
         android:textColor="#ffffff"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_consulta_menu" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 
-    <Button
+    <!--<Button
         android:id="@+id/button_perguntas_menu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -61,7 +61,7 @@
         android:textColor="#ffffff"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button_agenda_medico" />
-
+-->
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="wrap_content"
