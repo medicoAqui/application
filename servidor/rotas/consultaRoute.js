@@ -284,5 +284,29 @@ consultaRouter.put('/:idConsulta',function(req,res){
     });
 });
 
+consultaRouter.post('/consultaByIdMedico', function(req,res){
+  Consulta.find({medico: req.body.id}).exec(function(err,data){
+    console.log(req.body.id);
+    console.log(data);
+    if(err){
+      res.sendStatus(400).send('medico nao cadastrado no sistema');
+    }else{
+      res.send(data);
+    }
+
+  });
+});
+
+consultaRouter.post('/consultaByIdMedicoAndStatus', function(req,res){
+  Consulta.find({medico: req.body.id, status: req.body.status}).exec(function(err,consultas){
+    if(err){
+      res.sendStatus(400).send('medico ou estatos nao cadastrado no sistema');
+    }else{
+      res.send(consultas);
+    }
+
+  });
+});
+
 
 module.exports = consultaRouter;
