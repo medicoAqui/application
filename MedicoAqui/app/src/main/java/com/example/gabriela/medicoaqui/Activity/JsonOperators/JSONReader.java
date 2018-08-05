@@ -156,10 +156,18 @@ public class JSONReader {
                     nomesArrayIntJson = new JSONArray(nomesArrayExtJson.getString(i));
                     for (int j = 0; j < nomesArrayIntJson.length(); j++) {
                         jsonObjectNome = new JSONObject(nomesArrayIntJson.getString(j));
-                        //Log.i("Nome: ", "nome=" + jsonObjectNome.getString("name"));
+
+                        Log.d("Acompanhando medico ", jsonObjectNome.toString());
+                        String email = jsonObjectNome.getString("email");
                         String nome = jsonObjectNome.getString("name");
                         String crm = jsonObjectNome.getString("crm");
-                        Medico medico = new Medico(nome, null, null, null, null, null, null, null, crm);
+                        String sexo = jsonObjectNome.getString("sexo");
+                        String id = jsonObjectNome.getString("_id");
+                        String cpf = jsonObjectNome.getString("cpf");
+                        //String telefone = jsonObjectNome.getString("telefone");
+                       // String dataNascimento = jsonObjectNome.getString("DataNascimento");
+
+                        Medico medico = new Medico(nome, cpf, null, sexo, id, email, null, null, crm);
                         medicos.add(medico);
                     }
                 }

@@ -108,16 +108,18 @@ public class AgendaMedico extends AppCompatActivity {
 //        lista_consultas_entity.clear();
         final JSONObject jsonTT = new JSONObject();
         jsonTT.put("id", medico.getId());
+        jsonTT.put("status", "A");
 
         new Thread(new Runnable() {
             @Override
             public void run() {
                 String consultasBD = null;
                 try {
-                    consultasBD = http.sendPost("https://medicoishere.herokuapp.com/consulta/consultaByIdMedico",jsonTT.toString());
+                    consultasBD = http.sendPost("https://medicoishere.herokuapp.com/consulta/consultaByIdMedicoAndStatus",jsonTT.toString());
                 } catch (HttpConnections.MinhaException e) {
                     e.printStackTrace();
                 }
+
                 HashSet<Consulta> consultasEntity = jsonReader.getConsultasEntity(consultasBD);
 
                 lista_consultas_entity = new ArrayList();
