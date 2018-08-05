@@ -165,7 +165,7 @@ public class JSONReader {
                         String id = jsonObjectNome.getString("_id");
                         String cpf = jsonObjectNome.getString("cpf");
                         //String telefone = jsonObjectNome.getString("telefone");
-                       // String dataNascimento = jsonObjectNome.getString("DataNascimento");
+                        //String dataNascimento = jsonObjectNome.getString("DataNascimento");
 
                         Medico medico = new Medico(nome, cpf, null, sexo, id, email, null, null, crm);
                         medicos.add(medico);
@@ -625,5 +625,29 @@ public class JSONReader {
         }
 
         return false;
+    }
+
+    public Medico getEndereçoByIDConsultorio(String jsonString) {
+
+        Medico medico = new Medico();
+
+        try {
+
+            JSONObject jsonObjectMedico;
+            jsonObjectMedico = new JSONObject(jsonString);
+
+            String nome = jsonObjectMedico.getString("name");
+            String crm = jsonObjectMedico.getString("crm");
+            String id = jsonObjectMedico.getString("_id");
+            //String email = jsonObjectMedico.getString("email");
+            //String especialidade = jsonObjectMedico.getString("especialidade");
+            //medico = new Medico(nome, String cpf, Date data, String genero, id, email, String telefone, String especialidade, crm);
+            medico = new Medico(nome, null, null, null, id, null, null, null, crm);
+
+
+        } catch (JSONException e) {
+            Log.e("Erro", "Erro no parsing do JSON", e);
+        }
+        return medico;
     }
 }

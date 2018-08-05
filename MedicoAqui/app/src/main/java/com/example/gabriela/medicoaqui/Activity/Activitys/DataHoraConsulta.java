@@ -72,7 +72,7 @@ public class DataHoraConsulta   extends AppCompatActivity {
         spinner_hora.setAdapter(dataAdapterHora);
 
         //consulta se medico tem algum horario com status C ou D na agenda
-        /*
+
         consultaDispHorarioMédico(Medicos.getMedicoSelecionado().getId());
         while (retornoDispMedico == null) {
             try {
@@ -85,7 +85,7 @@ public class DataHoraConsulta   extends AppCompatActivity {
         if (!retornoDispMedico) {
             dialogo_sem_horario();
         } else {
-        */
+
 
             calendario.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
 
@@ -165,7 +165,7 @@ public class DataHoraConsulta   extends AppCompatActivity {
 
                 }
             });
-        //}  // else da verificação de horario disponivel
+        }  // else da verificação de horario disponivel
 
     }
 
@@ -326,23 +326,17 @@ public class DataHoraConsulta   extends AppCompatActivity {
 
     public void consultaDispHorarioMédico(String idMedico) {
         //Verifica se o médico possui alguma data disponível
-        //consulta/consultaByIdMedicoAndStatus, metodo post, parametro _id ( do medico) , status
 
         Log.d(TAG, "consultaDispHorarioMédico() called");
 
         final JSONObject jsonTT = new JSONObject();
         final JSONObject jsonTT2 = new JSONObject();
 
-        //Boolean consultasDisp_D = false;
-        //Boolean consultasDisp_C = false;
-
-        //String diasBD;
-
         try {
 
-            jsonTT.put("_id ", idMedico);
+            jsonTT.put("id", idMedico);
             jsonTT.put("status", statusDisponivel);
-            jsonTT2.put("_id ", idMedico);
+            jsonTT2.put("id", idMedico);
             jsonTT2.put("status", statusCancelado);
 
         } catch (JSONException e) {
@@ -356,11 +350,12 @@ public class DataHoraConsulta   extends AppCompatActivity {
 
                     //Retorna horários com status D - Disponível
                     String diasBD = http.sendPost("http://medicoishere.herokuapp.com/consulta/consultaByIdMedicoAndStatus", jsonTT.toString());
-                    Boolean consultasDisp_D = jsonReader.getDisponibilidadeMedico(diasBD);
+                    Boolean disponibilidade = jsonReader.getDisponibilidadeMedico(diasBD);
                     //Retorna horários com status C - Cancelado
                     String diasBD2 = http.sendPost("http://medicoishere.herokuapp.com/consulta/consultaByIdMedicoAndStatus", jsonTT2.toString());
-                    Boolean consultasDisp_C = jsonReader.getDisponibilidadeMedico(diasBD2);
-                    retornoDispMedico = (consultasDisp_D || consultasDisp_C);
+                    Boolean disponibilidade2 = jsonReader.getDisponibilidadeMedico(diasBD2);
+
+                    retornoDispMedico = disponibilidade || disponibilidade2;
 
                 } catch (HttpConnections.MinhaException e) {
                     e.printStackTrace();

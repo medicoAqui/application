@@ -56,7 +56,6 @@ public class AgendaPaciente  extends AppCompatActivity {
             Log.d(TAG, "Falha ao recuperar o cliente da sessão.");
         }
 
-        // quando não tem consulta entra num loop infinito =( CORRIGIR
         try {
             while ((lista_consultas_entity.size() == 0) && !flagCarregaConsultasCalled) {
                 Thread.sleep(1000);
@@ -66,35 +65,45 @@ public class AgendaPaciente  extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        // Ordena lista de consultas por data/hora
-        Collections.sort(lista_consultas_entity);
+        if ((lista_consultas_entity.size() == 0) && flagCarregaConsultasCalled) {
 
-        recyclerView = (RecyclerView) findViewById(R.id.recycler);
-        recyclerView.setAdapter(new NossoAdapter(lista_consultas_entity, this));
-        RecyclerView.LayoutManager layout = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-        recyclerView.setLayoutManager(layout);
+            dialogo_agenda_vazia();
 
-        final ImageButton button_voltar = (ImageButton) findViewById(R.id.button_voltar);
-        button_voltar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        } else {
 
-                Intent it = new Intent(AgendaPaciente.this, MenuPrincipal.class);
-                startActivity(it);
+            // Ordena lista de consultas por data/hora
+            Collections.sort(lista_consultas_entity);
 
-            }
-        });
+            recyclerView = (RecyclerView) findViewById(R.id.recycler);
+            recyclerView.setAdapter(new NossoAdapter(lista_consultas_entity, this));
+            RecyclerView.LayoutManager layout = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+            recyclerView.setLayoutManager(layout);
 
-        final ImageButton button_home = (ImageButton) findViewById(R.id.button_home);
-        button_home.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
 
-                Intent it = new Intent(AgendaPaciente.this, MenuPrincipal.class);
-                startActivity(it);
+            final ImageButton button_voltar = (ImageButton) findViewById(R.id.button_voltar);
+            button_voltar.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
 
-            }
-        });
+                    Intent it = new Intent(AgendaPaciente.this, MenuPrincipal.class);
+                    startActivity(it);
+
+                }
+            });
+
+            final ImageButton button_home = (ImageButton) findViewById(R.id.button_home);
+            button_home.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    Intent it = new Intent(AgendaPaciente.this, MenuPrincipal.class);
+                    startActivity(it);
+
+                }
+            });
+
+        }
+
     }
 
     private void carregaConsultas() throws JSONException {
@@ -217,6 +226,29 @@ public class AgendaPaciente  extends AppCompatActivity {
 
             }
         });
+
+    }
+
+    public void dialogo_agenda_vazia() {
+
+        LayoutInflater li = getLayoutInflater();
+
+        View view = li.inflate(R.layout.activity_dialogo_agenda_vazia, null);
+
+        view.findViewById(R.id.bt).setOnClickListener(new View.OnClickListener() {
+            public void onClick(View arg0) {
+                alerta.dismiss();
+                Intent it = new Intent(AgendaPaciente.this, MenuPrincipal.class);
+                startActivity(it);
+
+            }
+        });
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Agenda");
+        builder.setView(view);
+        alerta = builder.create();
+        alerta.show();
 
     }
 

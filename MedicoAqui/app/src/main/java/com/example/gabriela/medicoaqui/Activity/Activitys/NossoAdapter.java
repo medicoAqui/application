@@ -68,6 +68,13 @@ public class NossoAdapter extends RecyclerView.Adapter {
             e.printStackTrace();
         }
 
+        /*try {
+            retornaConsultorioByID(consulta.getConsultorio());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }*/
+
+
         //retornaMedicoByID(consulta.getMedico());
         holder.medico.setText(medico.getNome());
         holder.crm.setText(medico.getCrm());
@@ -141,6 +148,29 @@ public class NossoAdapter extends RecyclerView.Adapter {
         }).start();
 
     }
+
+    public static void retornaConsultorioByID(String id_consultorio) throws JSONException {
+
+        final JSONObject jsonTT = new JSONObject();
+
+        jsonTT.put("_id", id_consultorio);
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    //http://medicoishere.herokuapp.com/consultorio/enderecoByIdConsultorio
+                    String consultorioBD = http.sendPost("http://medicoishere.herokuapp.com/consultorio/enderecoByIdConsultorio", jsonTT.toString());
+                    //consultorio = jsonReader.getMedicoByID(consultorioBD);
+                } catch (HttpConnections.MinhaException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+
+    }
+
+
 
 
     public void desmarcarConsultaBanco(final Consulta consulta) throws JSONException {
