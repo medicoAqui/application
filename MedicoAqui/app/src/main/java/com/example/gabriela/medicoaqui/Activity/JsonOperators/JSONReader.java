@@ -251,8 +251,9 @@ public class JSONReader {
         return especialidades;
     }
 
-    public Cliente getClienteByEmail(String jsonString) { //}, String email) {
+    public Cliente  getClienteByEmail(String jsonString) { //}, String email) {
         Cliente cliente = new Cliente();
+        Log.i("Cliente: ","Json retornado" + jsonString);
         try {
             JSONObject jsonObjectCliente = new JSONObject(jsonString);
 

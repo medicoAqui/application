@@ -83,6 +83,7 @@ public class MenuPrincipalMedico extends AppCompatActivity {
                 mAuth = FirebaseAuth.getInstance();
                 finish();
                 mAuth.signOut();
+                TelaLogin.setClientePerfil(null);
                 Intent it = new Intent(MenuPrincipalMedico.this, TelaPrincipal.class);
                 startActivity(it);
                 Log.d(TAG, "Logout");

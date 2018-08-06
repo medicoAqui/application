@@ -153,7 +153,7 @@ public class AgendaMedico extends AppCompatActivity {
     }
 
 
-    /*public void desmarcarConsulta(String idConsulta) throws JSONException {
+    public void desmarcarConsulta(String idConsulta) throws JSONException {
 
         //put /idconsulta
 
@@ -178,11 +178,11 @@ public class AgendaMedico extends AppCompatActivity {
             }
         }).start();
 
-    }*/
+    }
 
-//    private static AlertDialog alerta;
+    private static AlertDialog alerta;
 
-    /*public  void dialogo_desmarcar(final String idConsulta) {
+    public  void dialogo_desmarcar(final String idConsulta) {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Desmarcar consulta");
@@ -207,7 +207,7 @@ public class AgendaMedico extends AppCompatActivity {
 
         alerta = builder.create();
         alerta.show();
-    }*/
+    }
 
 }
 

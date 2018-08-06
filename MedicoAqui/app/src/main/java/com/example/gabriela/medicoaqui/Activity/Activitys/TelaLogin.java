@@ -162,23 +162,45 @@ public class TelaLogin extends AppCompatActivity implements LoaderCallbacks<Curs
                 if (perfil.equals("paciente")) {
 
                     if (!("".equals(mEmailView.getText().toString()) || "".equals(mPasswordView.getText().toString()))) {
-                        mAuth.signInWithEmailAndPassword(mEmailView.getText().toString(), mPasswordView.getText().toString()).addOnCompleteListener(TelaLogin.this, new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
 
-                                if (!task.isSuccessful()) {
-                                    Log.w("AUTH", "Falha ao efetuar o Login: ", task.getException());
-                                    builder.setMessage("Falha ao efetuar o Login, favor verificar email e senha");
-                                    AlertDialog dialog = builder.create();
-                                    dialog.show();
-                                } else {
-                                    Log.d("AUTH", "Login Efetuado com sucesso - paciente");
-                                    attemptLogin();
-                                    carregaClienteEmail(mEmailView.getText().toString());
-
-                                }
+                        try {
+                            carregaClienteEmail(mEmailView.getText().toString());
+                            while(getClientePerfil() == null){
+                                Thread.sleep(1000);
                             }
-                        });
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        boolean exists = false;
+                        if(null != getClientePerfil() && null != getClientePerfil().getEmail() && !getClientePerfil().getEmail().isEmpty()) {
+                            exists = true;
+                        }
+                        if(exists){
+                            mAuth.signInWithEmailAndPassword(mEmailView.getText().toString(), mPasswordView.getText().toString()).addOnCompleteListener(TelaLogin.this, new OnCompleteListener<AuthResult>() {
+                                @Override
+                                public void onComplete(@NonNull Task<AuthResult> task) {
+
+                                    Log.d("Cliente", "email existe na base dos pacientes. Realizando tentativa de login pelo firebase");
+                                    if (!task.isSuccessful()) {
+                                        Log.w("AUTH", "Falha ao efetuar o Login: ", task.getException());
+                                        builder.setMessage("Falha ao efetuar o Login, favor verificar email e senha");
+                                        AlertDialog dialog = builder.create();
+                                        dialog.show();
+                                    } else {
+                                        Log.d("AUTH", "Login Efetuado com sucesso - paciente");
+                                        attemptLogin();
+                                        carregaClienteEmail(mEmailView.getText().toString());
+
+                                    }
+                                }
+                            });
+                        }else{
+                            Log.w("AUTH", "Falha ao efetuar o Login.");
+                            builder.setMessage("Falha ao efetuar o Login, favor verificar email e senha");
+                            AlertDialog dialog = builder.create();
+                            dialog.show();
+                        }
+
 
                     } else {
                         builder.setMessage("Favor insira os dados de email e senha");
@@ -200,7 +222,6 @@ public class TelaLogin extends AppCompatActivity implements LoaderCallbacks<Curs
                         }
                         boolean exists = false;
                         if(null != getMedicoLogado() && null != getMedicoLogado().getEmail() && !getMedicoLogado().getEmail().isEmpty()) {
-
                             exists = true;
                         }
                         if(exists){
@@ -226,6 +247,7 @@ public class TelaLogin extends AppCompatActivity implements LoaderCallbacks<Curs
                         }else{
                             Log.w("AUTH", "Falha ao efetuar o Login. Medico nao cadastrado na base do heroku");
                             builder.setMessage("Falha ao efetuar o Login. Favor verificar e-mail e senha");
+                            setClientePerfil(null);
                             AlertDialog dialog = builder.create();
                             dialog.show();
                         }
@@ -530,7 +552,7 @@ public class TelaLogin extends AppCompatActivity implements LoaderCallbacks<Curs
 
     private void carregaClienteEmail(String email) {
         final JSONObject jsonTT = new JSONObject();
-        //Cliente cliente;
+        Log.d("Cliente", "Verificando se email consta na base dos pacientes >" + email);
         try {
             jsonTT.put("email", email);
         } catch (JSONException e) {
@@ -546,6 +568,8 @@ public class TelaLogin extends AppCompatActivity implements LoaderCallbacks<Curs
                     Cliente cliente = jsonReader.getClienteByEmail(clienteBD);
                     setClientePerfil(cliente);
                 } catch (HttpConnections.MinhaException e) {
+                    setClientePerfil(new Cliente());
+                    Log.d("Cliente", "Cliente nao encontrado.");
                     e.printStackTrace();
                 }
             }
@@ -606,7 +630,7 @@ public class TelaLogin extends AppCompatActivity implements LoaderCallbacks<Curs
         return medico;
     }
 
-    private void setClientePerfil(Cliente cliente) {
+    public static void setClientePerfil(Cliente cliente) {
         clientePerfil = cliente;
     }
 
