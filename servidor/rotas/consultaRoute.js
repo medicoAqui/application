@@ -285,6 +285,19 @@ consultaRouter.put('/desmarcarConsulta/:idConsulta',function(req,res){
     });
 });
 
+consultaRouter.put('/:idConsulta',function(req,res){
+    var corpo = req.body;
+    console.log(corpo);
+    console.log(req.params.idConsulta);
+    Consulta.findByIdAndUpdate(req.params.idConsulta,corpo,{new: true}, function(err,data){
+        if(err){
+             res.status(500).send(err);
+        }else{
+             res.send(data)
+        }
+    });
+});
+
 
 consultaRouter.post('/consultaByIdMedico', function(req,res){
   Consulta.find({medico: req.body.id}).exec(function(err,data){
