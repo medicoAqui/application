@@ -112,4 +112,16 @@ usuarioRouter.post('/clientePorEmail', function(req,res){
 
 });
 
+usuarioRouter.post('/clientePor_id', function(req,res){
+
+    Usuario.findOne({_id: req.body._id}, function(err,data){
+        console.log(data)
+        if(data == null){
+            res.status(400).json('Cliente não encontrado.');
+        }else{
+            res.send(data);
+        }
+    });
+
+});
 module.exports = usuarioRouter;
