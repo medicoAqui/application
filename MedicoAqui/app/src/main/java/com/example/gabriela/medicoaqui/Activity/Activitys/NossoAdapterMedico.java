@@ -22,6 +22,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 
@@ -32,12 +33,21 @@ public class NossoAdapterMedico extends RecyclerView.Adapter {
     static Medico medico = new Medico(null, null, null, null, null, null, null, null, null);
     static JSONReader jsonReader = new JSONReader();
     static HttpConnections http = new HttpConnections();
-
+    private static Cliente cliente;
 
     public NossoAdapterMedico(ArrayList<Consulta> consultas, Context context) {
         this.consultas = consultas;
         this.context = context;
     }
+
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -54,10 +64,22 @@ public class NossoAdapterMedico extends RecyclerView.Adapter {
         NossoViewHolder holder = (NossoViewHolder) viewHolder;
         Consulta consulta = consultas.get(position);
 
+        try {
+            clientePorId(consulta.getCliente());
+            while (cliente == null) {
+                Thread.sleep(1000);
+            }
+
+        }catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
         Log.d("Acompanhando", "consulta =" + consulta.toString());
 
-        if(null != consulta.getCliente()){
-            holder.medico.setText(consulta.getCliente());
+        if(null != cliente && null != cliente.getNome()){
+            holder.medico.setText(cliente.getNome());
         }else{
             holder.medico.setText("-");
         }
@@ -145,4 +167,29 @@ public class NossoAdapterMedico extends RecyclerView.Adapter {
         }).start();
 
     }
+
+    private void clientePorId(String idCliente) throws JSONException {
+
+        Log.d("Acompanhando", "clientePorId() called "+ idCliente);
+//        lista_consultas_entity.clear();
+        final JSONObject jsonTT = new JSONObject();
+        jsonTT.put("_id", idCliente);
+
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                String consultasBD = null;
+                try {
+                    consultasBD = http.sendPost("https://medicoishere.herokuapp.com/cliente/clientePor_id", jsonTT.toString());
+                } catch (HttpConnections.MinhaException e) {
+                    e.printStackTrace();
+                }
+
+                cliente = jsonReader.getClienteByEmail(consultasBD);
+
+            }
+        }).start();
+    }
+
 }
