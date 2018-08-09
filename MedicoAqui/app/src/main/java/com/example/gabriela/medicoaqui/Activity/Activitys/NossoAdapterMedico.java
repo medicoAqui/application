@@ -152,7 +152,7 @@ public class NossoAdapterMedico extends RecyclerView.Adapter {
         jsonTT.put("status", "C"); //Status Cancelado - Cliente
         jsonTT.put("cliente", null);
 
-        final String url = "https://medicoishere.herokuapp.com/consulta/" + consulta.getId();
+        final String url = "https://medicoishere.herokuapp.com/consulta/desmarcarConsulta/" + consulta.getId();
 
         new Thread(new Runnable() {
             @Override
