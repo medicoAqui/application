@@ -63,6 +63,17 @@ public class MenuPrincipalMedico extends AppCompatActivity {
             }
         });
 
+        final ImageButton button_disponibilidade = (ImageButton) findViewById(R.id.button_disponibiliza);
+        button_disponibilidade.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent it = new Intent(MenuPrincipalMedico.this, DisponibilizaConsulta.class);
+                startActivity(it);
+
+            }
+        });
+
         /*final Button button_perguntas_menu = (Button) findViewById(R.id.button_perguntas_menu);
         button_perguntas_menu.setOnClickListener(new View.OnClickListener() {
             @Override

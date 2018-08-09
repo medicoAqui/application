@@ -16,7 +16,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar">
-    <activity
+        <activity
             android:name=".Activity.Activitys.Splash"
             android:theme="@style/Theme.AppCompat.NoActionBar">
             <intent-filter>
@@ -27,7 +27,7 @@
         </activity>
         <activity
             android:name=".Activity.Activitys.TelaPrincipal"
-            android:theme="@style/Theme.AppCompat.NoActionBar"/>
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
             android:name=".Activity.Activitys.TelaLogin"
             android:label="Login" />
@@ -73,23 +73,26 @@
         <activity
             android:name=".Activity.Activitys.VisualizarPerfil"
             android:label="VisualizarPerfil"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Activity.Activitys.VisualizarPerfilMedico"
             android:label="VisualizarPerfil"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Activity.Activitys.EditarPerfil"
             android:label="EditarPerfil"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Activity.Activitys.VisualizarHistorico"
             android:label="@string/title_activity_visualizar_historico"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".Activity.Activitys.MarcarConsultaActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Activity.Activitys.MarcarConsultaActivity"
             android:label="@string/title_activity_marcar_consulta" />
-        <activity android:name=".Activity.Activitys.PerguntasFrequentesActivity"
+        <activity
+            android:name=".Activity.Activitys.PerguntasFrequentesActivity"
             android:label="@string/title_activity_perguntas_frequentes" />
+        <activity android:name=".Activity.Activitys.DisponibilizaConsulta"></activity>
     </application>
 
 </manifest>
