@@ -285,17 +285,7 @@ medicoRouter.post('/testeE', function(req,res){
 
 });
 
-medicoRouter.post('/me',function(req,res){
 
-    Medico.findOne({crm: req.body.rcm}, function(err,data){
-        console.log(data)
-        if(err){
-            res.status(500).send('Medico nao cadastrado');
-        }else{
-            res.send(data);
-        }
-    });
-});
 
 medicoRouter.put('/:crm', function(req,res){
     var corpo = req.body;
@@ -337,6 +327,8 @@ medicoRouter.delete('/:crm', function(req,res){
 	});
 
 });
+
+medicoRouter.post();
 
 
 module.exports = medicoRouter;
