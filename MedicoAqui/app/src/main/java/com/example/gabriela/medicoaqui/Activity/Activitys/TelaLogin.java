@@ -268,6 +268,11 @@ public class TelaLogin extends AppCompatActivity implements LoaderCallbacks<Curs
         mProgressView = findViewById(R.id.login_progress);
     }
 
+    public void callReset(View view){
+        Intent intent = new Intent( this, EsqueciSenhaActivity.class );
+        startActivity(intent);
+    }
+
     // Henrique Autenticacao - 24/05 - INICIO
 
     @Override
