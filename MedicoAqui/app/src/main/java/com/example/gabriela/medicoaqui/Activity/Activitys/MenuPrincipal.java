@@ -1,6 +1,7 @@
 package com.example.gabriela.medicoaqui.Activity.Activitys;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -83,6 +84,21 @@ public class MenuPrincipal extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+                SharedPreferences.Editor editor = getSharedPreferences("INFORMACOES_LOGIN_AUTOMATICO", MODE_PRIVATE).edit();
+                editor.putString("email", "");
+                editor.putString("password", "");
+                editor.putString("perfil", "");
+
+                Splash.login = "";
+
+                Splash.senha = "";
+
+                Splash.dadosUsuarioEmCache = false;
+
+                Splash.perfil = "";
+
+                editor.commit();
+
                 mAuth = FirebaseAuth.getInstance();
                 finish();
                 mAuth.signOut();
@@ -108,6 +124,21 @@ public class MenuPrincipal extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         switch (item.getItemId()) {
             case R.id.logout:
+
+                SharedPreferences.Editor editor = getSharedPreferences("INFORMACOES_LOGIN_AUTOMATICO", MODE_PRIVATE).edit();
+                editor.putString("email", "");
+                editor.putString("password", "");
+                editor.putString("perfil", "");
+
+                Splash.login = "";
+
+                Splash.senha = "";
+
+                Splash.dadosUsuarioEmCache = false;
+
+                Splash.perfil = "";
+
+                editor.commit();
                 Intent intentFazerLogout = new Intent(getApplicationContext(), TelaLogin.class);
                 startActivity(intentFazerLogout);
                 finish();
