@@ -41,6 +41,8 @@ consultaRouter.get('/:id',function(res,req){
 	});
 });
 
+
+
 consultaRouter.post('/consultasByDateAndCrm',function(req,res){
 
   var medico = Medico.find({crm: req.body.crm});
@@ -182,17 +184,7 @@ consultaRouter.post('/consultasByDateCrmStatus',function(req,res){
 
 });
 
-consultaRouter.get('/:id',function(res,req){
-	var consulta = Consulta.find({_id: req.param.id});
 
-	consulta.exec(function(err,data){
-		if(err) {
-            res.sendStatus(400).json('Consulta nao encontrada no sistema');
-        }else{
-			res.json(data);
-		}
-	});
-});
 
 
 /*
@@ -274,8 +266,7 @@ consultaRouter.post('/add', function(req,res){
 
 consultaRouter.put('/desmarcarConsulta/:idConsulta',function(req,res){
     var corpo = req.body;
-    console.log(corpo);
-    console.log(req.params.idConsulta);
+    
     Consulta.findByIdAndUpdate(req.params.idConsulta,corpo,{new: true}, function(err,data){
         if(err){
              res.status(500).send(err);

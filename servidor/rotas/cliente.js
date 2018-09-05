@@ -82,12 +82,10 @@ usuarioRouter.post('/clientePor_id', function(req,res){
 });
 
 
-usuarioRouter.put('/:cpf',function(req,res){
-    //var idCliente = {_id: req.params.id};
+usuarioRouter.put('/:id',function(req,res){
     var corpo = req.body;
     console.log(corpo);
-console.log(req.params.cpf);
-    Usuario.findByIdAndUpdate(req.params.cpf,corpo,{new: true}, function(err,data){
+    Usuario.findByIdAndUpdate(req.params.id,corpo,{new: true}, function(err,data){
         if(err){
              res.status(500).send(err);
         }else{
@@ -97,24 +95,9 @@ console.log(req.params.cpf);
 });
 
 
-usuarioRouter.put('/consulta/:cpf', function(req,res){
-    var corpo = req.body;
-    console.log(corpo);
 
-    Consulta.findByIdAndUpdate(req.params.cpf,corpo,{new: true}, function(err,data){
-        console.log(data);
-        if(err){
-            res.status(500).send(err);
-        }else{
-            res.send(data)
-        }
-    });
-
-});
-
-
-usuarioRouter.delete('/:cpf', function(req,res){
-	var idUsuario = { cpf: req.params.cpf };
+usuarioRouter.delete('/:id', function(req,res){
+	var idUsuario = { cpf: req.params.id };
 
 	Usuario.remove(idUsuario, function(err, data) {
 		if (err) {
