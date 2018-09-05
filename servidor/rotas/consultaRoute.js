@@ -184,85 +184,60 @@ consultaRouter.post('/consultasByDateCrmStatus',function(req,res){
 
 });
 
-
-
-
-/*
-
-esse era o teu , ele estava quebrando
 consultaRouter.post('/add', function(req,res){
+    var novaConsulta = new Consulta(req.body);
+    if(req.body.medico == null){
+        res.sendStatus(400).send('Medico precisa estar cadastrado no sistema');
+    }else{
+        var novaconsulta = new Consulta(req.body);
+        if(req.body.cliente == null){
+            novaConsulta.cliente = null;
+            novaConsulta.save(function(err, consulta) {
+                if (err) {
+                    res.status(400).send(err);
+                } else {
+                    res.status(201).send(consulta);
+                }
+            });
 
-    Cliente.findOne({cpf: req.body.cpf }, function(err,data0){
+        }else{
+            novaConsulta.save(function(err, consulta) {
+                if (err) {
+                    res.status(400).send(err);
+                } else {
+                    res.status(201).send(consulta);
+                }
+            });
 
-        if(data0 == undefined || err){
-          console.log("_______________Nao foi encontrado o cliente para cadastro de consulta_________________");
-          res.status(400).json("Cliente nao encontrado");
         }
-        else{
+    }
 
-          Medico.findOne({crm: req.body.crm }, function(err,data1){
+});
 
-              if(data1 == undefined || err){
-                console.log("_______________Nao foi encontrado o Medico para cadastro de consulta_________________");
-                res.status(400).json("Medico nao encontrado");
-              }
-              else{
-
-                var cliente;
-                var medico;
-                cliente = data0;
-                medico = data1;
-                console.log("_______________ INSERINDO CONSULTA_________________");
-                var novaConsulta = new Consulta(req.body);
-                novaConsulta.cliente = cliente;
-                novaConsulta.medico = medico;
-                novaConsulta.save(function(err, data3) {
-
-                    if (err) {
-                        res.status(400).json(err);
-                    } else {
-                        res.status(201).json(data3);
-                    }
-                });
-              }
-          });
+consultaRouter.post('/consultaByIdMedico', function(req,res){
+    Consulta.find({medico: req.body.id}).exec(function(err,data){
+        console.log(req.body.id);
+        console.log(data);
+        if(err){
+            res.sendStatus(400).send('medico nao cadastrado no sistema');
+        }else{
+            res.send(data);
         }
+
     });
 });
 
-*/
 
-consultaRouter.post('/add', function(req,res){
-  var novaConsulta = new Consulta(req.body);
-  if(req.body.medico == null){
-    res.sendStatus(400).send('Medico precisa estar cadastrado no sistema');
-  }else{
-    var novaconsulta = new Consulta(req.body);
-    if(req.body.cliente == null){
-      novaConsulta.cliente = null;
-      novaConsulta.save(function(err, consulta) {
-           if (err) {
-              res.status(400).send(err);
-            } else {
-              res.status(201).send(consulta);
-            }
-        });
+consultaRouter.post('/consultaByIdMedicoAndStatus', function(req,res){
+    Consulta.find({medico: req.body.id, status: req.body.status}).exec(function(err,consultas){
+        if(err){
+            res.sendStatus(400).send('medico ou estatos nao cadastrado no sistema');
+        }else{
+            res.send(consultas);
+        }
 
-    }else{
-      novaConsulta.save(function(err, consulta) {
-           if (err) {
-              res.status(400).send(err);
-            } else {
-              res.status(201).send(consulta);
-            }
-        });
-
-    }
-  }
-
+    });
 });
-
-
 
 consultaRouter.put('/desmarcarConsulta/:idConsulta',function(req,res){
     var corpo = req.body;
@@ -275,6 +250,8 @@ consultaRouter.put('/desmarcarConsulta/:idConsulta',function(req,res){
         }
     });
 });
+
+
 
 consultaRouter.put('/:idConsulta',function(req,res){
     var corpo = req.body;
@@ -290,30 +267,7 @@ consultaRouter.put('/:idConsulta',function(req,res){
 });
 
 
-consultaRouter.post('/consultaByIdMedico', function(req,res){
-  Consulta.find({medico: req.body.id}).exec(function(err,data){
-    console.log(req.body.id);
-    console.log(data);
-    if(err){
-      res.sendStatus(400).send('medico nao cadastrado no sistema');
-    }else{
-      res.send(data);
-    }
 
-  });
-});
-
-
-consultaRouter.post('/consultaByIdMedicoAndStatus', function(req,res){
-  Consulta.find({medico: req.body.id, status: req.body.status}).exec(function(err,consultas){
-    if(err){
-      res.sendStatus(400).send('medico ou estatos nao cadastrado no sistema');
-    }else{
-      res.send(consultas);
-    }
-
-  });
-});
 
 
 module.exports = consultaRouter;

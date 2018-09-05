@@ -24,20 +24,6 @@ usuarioRouter.get('/clientes', function(req, res) {
     });
 });
 
-/*
-usuarioRouter.post('/me',function(req,res){
-
-    Usuario.findOne({cpf: req.body.cpf}, function(err,data){
-        console.log(data)
-        if(err){
-            res.status(500).send(err);
-        }else{
-            res.send(data);
-        }
-    });
-});
-
-*/
 
 usuarioRouter.post('/add', function(req,res){
 	var novoUsuario = new Usuario(req.body);
@@ -97,7 +83,7 @@ usuarioRouter.put('/:id',function(req,res){
 
 
 usuarioRouter.delete('/:id', function(req,res){
-	var idUsuario = { cpf: req.params.id };
+	var idUsuario = { _id: req.params.id };
 
 	Usuario.remove(idUsuario, function(err, data) {
 		if (err) {

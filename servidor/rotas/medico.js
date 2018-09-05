@@ -212,6 +212,8 @@ medicoRouter.post('/medicosByEspecialidadeAndEstadoCidade',function(req,res){
   });
 });
 
+
+/*
 medicoRouter.post('/EspecialidadesByCidadeAndUF',function(req,res){
 
   Endereco.find({cidade: req.body.cidade, uf: req.body.uf }).exec(function(err,endereco){
@@ -286,6 +288,7 @@ medicoRouter.post('/testeE', function(req,res){
 });
 
 
+*/
 
 medicoRouter.put('/:id', function(req,res){
     var corpo = req.body;
@@ -300,7 +303,7 @@ medicoRouter.put('/:id', function(req,res){
     });
 
 });
-
+ /*
 medicoRouter.put('/consulta/:crm', function(red,res){
     var corpo = req.body;
     console.log(corpo);
@@ -315,8 +318,10 @@ medicoRouter.put('/consulta/:crm', function(red,res){
 
 });
 
-medicoRouter.delete('/:crm', function(req,res){
-	var idUsuario = { crm: req.params.crm };
+ */
+
+medicoRouter.delete('/:id', function(req,res){
+	var idUsuario = { _id: req.params.id };
 
 	Medico.remove(idUsuario, function(err, data) {
 		if (err) {
