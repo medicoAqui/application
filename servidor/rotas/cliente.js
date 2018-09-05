@@ -24,6 +24,7 @@ usuarioRouter.get('/clientes', function(req, res) {
     });
 });
 
+/*
 usuarioRouter.post('/me',function(req,res){
 
     Usuario.findOne({cpf: req.body.cpf}, function(err,data){
@@ -36,7 +37,7 @@ usuarioRouter.post('/me',function(req,res){
     });
 });
 
-
+*/
 
 usuarioRouter.post('/add', function(req,res){
 	var novoUsuario = new Usuario(req.body);
@@ -51,6 +52,32 @@ usuarioRouter.post('/add', function(req,res){
 			res.status(201).json(data);
 		}
 	});
+
+});
+
+usuarioRouter.post('/clientePorEmail', function(req,res){
+
+    Usuario.findOne({email: req.body.email}, function(err,data){
+        console.log(data)
+        if(data == null){
+            res.status(400).json('Email não encontrado.');
+        }else{
+            res.send(data);
+        }
+    });
+
+});
+
+usuarioRouter.post('/clientePor_id', function(req,res){
+
+    Usuario.findOne({_id: req.body._id}, function(err,data){
+        console.log(data)
+        if(data == null){
+            res.status(400).json('Cliente não encontrado.');
+        }else{
+            res.send(data);
+        }
+    });
 
 });
 
@@ -99,29 +126,7 @@ usuarioRouter.delete('/:cpf', function(req,res){
 
 });
 
-usuarioRouter.post('/clientePorEmail', function(req,res){
 
-    Usuario.findOne({email: req.body.email}, function(err,data){
-        console.log(data)
-        if(data == null){
-            res.status(400).json('Email não encontrado.');
-        }else{
-            res.send(data);
-        }
-    });
 
-});
 
-usuarioRouter.post('/clientePor_id', function(req,res){
-
-    Usuario.findOne({_id: req.body._id}, function(err,data){
-        console.log(data)
-        if(data == null){
-            res.status(400).json('Cliente não encontrado.');
-        }else{
-            res.send(data);
-        }
-    });
-
-});
 module.exports = usuarioRouter;

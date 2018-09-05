@@ -4,7 +4,7 @@ var cors = require('cors');
 var morgan = require('morgan');
 var mongoose = require('mongoose');
 var config = require('./config');
-var auth = require("./rotas/auth");
+
 
 
 //let config = require('./config');

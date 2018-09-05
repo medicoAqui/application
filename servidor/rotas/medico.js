@@ -287,11 +287,11 @@ medicoRouter.post('/testeE', function(req,res){
 
 
 
-medicoRouter.put('/:crm', function(req,res){
+medicoRouter.put('/:id', function(req,res){
     var corpo = req.body;
     console.log(corpo);
 
-    Medico.findByIdAndUpdate(req.params.crm,corpo,{new: true}, function(err,data){
+    Medico.findByIdAndUpdate(req.params.id,corpo,{new: true}, function(err,data){
         if(err){
             res.status(500).send(err);
         }else{
@@ -328,7 +328,7 @@ medicoRouter.delete('/:crm', function(req,res){
 
 });
 
-medicoRouter.post();
+
 
 
 module.exports = medicoRouter;
