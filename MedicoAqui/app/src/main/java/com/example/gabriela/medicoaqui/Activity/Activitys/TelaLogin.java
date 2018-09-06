@@ -2,9 +2,11 @@ package com.example.gabriela.medicoaqui.Activity.Activitys;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -83,6 +85,7 @@ public class TelaLogin extends AppCompatActivity implements LoaderCallbacks<Curs
     // Henrique Autenticacao - 24/05 - INICIO
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
+    public static final String NOME_PREFERENCE = "INFORMACOES_LOGIN_AUTOMATICO";
     // Henrique Autenticacao - 24/05 - FIM
 
     private JSONObject jsonTT = new JSONObject();
@@ -97,8 +100,10 @@ public class TelaLogin extends AppCompatActivity implements LoaderCallbacks<Curs
 
     public static String perfil = "paciente"; //Opção default
 
+    @SuppressLint("ResourceType")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        perfil = "paciente"; //Opção default
 
         super.onCreate(savedInstanceState);
         // Henrique Autenticacao - 24/05 - INICIO
@@ -116,156 +121,281 @@ public class TelaLogin extends AppCompatActivity implements LoaderCallbacks<Curs
             }
         };
         // Henrique Autenticacao - 24/05 - FIM
+        boolean loginFromView = true;
 
-        setContentView(R.layout.activity_tela_login);
-        // Set up the login form.
-        mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
-        populateAutoComplete();
-
-        mPasswordView = (EditText) findViewById(R.id.password);
-        mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
-                if (id == EditorInfo.IME_ACTION_DONE || id == EditorInfo.IME_NULL) {
-                    //attemptLogin();
-                    return true;
-                }
-                return false;
-            }
-        });
-
-        final RadioGroup radioGroup = (RadioGroup) findViewById(R.id.group_perfil);
-        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-
-                if(checkedId == R.id.perfil_paciente) {
-                    perfil = "paciente";
-                } else if(checkedId == R.id.perfil_medico) {
-                    perfil = "medico";
+        if (Splash.dadosUsuarioEmCache){
+            if (Splash.perfil != null && "paciente".equals(Splash.perfil)){
+                try {
+                    carregaClienteEmail(Splash.login);
+                    while(getClientePerfil() == null){
+                        Thread.sleep(1000);
+                    }
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
 
-            }
-        });
+                boolean exists = false;
+                if(null != getClientePerfil() && null != getClientePerfil().getEmail() && !getClientePerfil().getEmail().isEmpty()) {
+                    exists = true;
+                }
 
-        Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
-        mEmailSignInButton.setOnClickListener(new OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-                // Henrique Autenticacao - 24/05 - INICIO
-                // 1. Instantiate an AlertDialog.Builder with its constructor
                 final AlertDialog.Builder builder = new AlertDialog.Builder(TelaLogin.this);
                 builder.setTitle("Falha de autenticação");
-                setEmailCliente(mEmailView.getText().toString());
 
-                if (perfil.equals("paciente")) {
 
-                    if (!("".equals(mEmailView.getText().toString()) || "".equals(mPasswordView.getText().toString()))) {
+                if(exists){
+                    mAuth.signInWithEmailAndPassword(Splash.login, Splash.senha).addOnCompleteListener(TelaLogin.this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
 
-                        try {
-                            carregaClienteEmail(mEmailView.getText().toString());
-                            while(getClientePerfil() == null){
-                                Thread.sleep(1000);
+                            Log.d("Cliente", "email existe na base dos pacientes. Realizando tentativa de login pelo firebase");
+                            if (!task.isSuccessful()) {
+                                Log.w("AUTH", "Falha ao efetuar o Login VIA CACHE: ", task.getException());
+                                builder.setMessage("Falha ao efetuar o Login VIA CACHE, favor verificar email e senha");
+                                AlertDialog dialog = builder.create();
+                                dialog.show();
+                            } else {
+                                Log.d("AUTH", "Login Efetuado VIA CACHE com sucesso - paciente");
+
+                                mAuthTask = new UserLoginTask(Splash.login, Splash.senha);
+                                mAuthTask.execute((Void) null);
+
+                                carregaClienteEmail(Splash.login);
+
+                                //Intent sendIntent = new Intent(this, MedicoAqui.class);
+                                Intent sendIntent = new Intent(TelaLogin.this, MenuPrincipal.class);
+                                setContentView(R.layout.activity_menu_principal);
+                                sendIntent.putExtra(Intent.EXTRA_TEXT, "test2");
+                                startActivity(sendIntent);
+
                             }
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
                         }
-                        boolean exists = false;
-                        if(null != getClientePerfil() && null != getClientePerfil().getEmail() && !getClientePerfil().getEmail().isEmpty()) {
-                            exists = true;
-                        }
-                        if(exists){
-                            mAuth.signInWithEmailAndPassword(mEmailView.getText().toString(), mPasswordView.getText().toString()).addOnCompleteListener(TelaLogin.this, new OnCompleteListener<AuthResult>() {
-                                @Override
-                                public void onComplete(@NonNull Task<AuthResult> task) {
+                    });
+                    loginFromView = false;
+                }
+                else{
+                    loginFromView = true;
+                }
+            }
+            if (Splash.perfil != null && "medico".equals(Splash.perfil)){
 
-                                    Log.d("Cliente", "email existe na base dos pacientes. Realizando tentativa de login pelo firebase");
-                                    if (!task.isSuccessful()) {
-                                        Log.w("AUTH", "Falha ao efetuar o Login: ", task.getException());
-                                        builder.setMessage("Falha ao efetuar o Login, favor verificar email e senha");
-                                        AlertDialog dialog = builder.create();
-                                        dialog.show();
-                                    } else {
-                                        Log.d("AUTH", "Login Efetuado com sucesso - paciente");
-                                        attemptLogin();
-                                        carregaClienteEmail(mEmailView.getText().toString());
-
-                                    }
-                                }
-                            });
-                        }else{
-                            Log.w("AUTH", "Falha ao efetuar o Login.");
-                            builder.setMessage("Falha ao efetuar o Login, favor verificar email e senha");
-                            AlertDialog dialog = builder.create();
-                            dialog.show();
-                        }
-
-
-                    } else {
-                        builder.setMessage("Favor insira os dados de email e senha");
-                        AlertDialog dialog = builder.create();
-                        dialog.show();
+                try {
+                    recuperaMedicoPorEmail(Splash.login);
+                    while(getMedicoLogado() == null){
+                        Thread.sleep(1000);
                     }
-
-                } else if (perfil.equals("medico")) {
-                    if (!("".equals(mEmailView.getText().toString()) || "".equals(mPasswordView.getText().toString()))) {
-                        //vai no heroku e verifica se o e-mail existe
-
-                        try {
-                            recuperaMedicoPorEmail(mEmailView.getText().toString());
-                            while(getMedicoLogado() == null){
-                                Thread.sleep(1000);
-                            }
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                        boolean exists = false;
-                        if(null != getMedicoLogado() && null != getMedicoLogado().getEmail() && !getMedicoLogado().getEmail().isEmpty()) {
-                            exists = true;
-                        }
-                        if(exists){
-                            //faz login
-                            Log.d("Medico", "email existe na base dos medicos. Realizando tentativa de login pelo firebase");
-                            mAuth.signInWithEmailAndPassword(mEmailView.getText().toString(), mPasswordView.getText().toString()).addOnCompleteListener(TelaLogin.this, new OnCompleteListener<AuthResult>() {
-                                @Override
-                                public void onComplete(@NonNull Task<AuthResult> task) {
-                                    if (!task.isSuccessful()) {
-                                        Log.w("AUTH", "Falha ao efetuar o Login: ", task.getException());
-                                        builder.setMessage("Falha ao efetuar o Login. Favor verificar e-mail e senha");
-                                        AlertDialog dialog = builder.create();
-                                        dialog.show();
-                                    } else {
-                                        Log.d("AUTH", "Login Efetuado com sucesso - medico");
-//                                        carregaMedicoPorEmail(mEmailView.getText().toString());
-                                        Intent sendIntent = new Intent(TelaLogin.this, MenuPrincipalMedico.class);
-                                        sendIntent.putExtra(Intent.EXTRA_TEXT, "test");
-                                        startActivity(sendIntent);
-                                    }
-                                }
-                            });
-                        }else{
-                            Log.w("AUTH", "Falha ao efetuar o Login. Medico nao cadastrado na base do heroku");
-                            builder.setMessage("Falha ao efetuar o Login. Favor verificar e-mail e senha");
-                            setClientePerfil(null);
-                            AlertDialog dialog = builder.create();
-                            dialog.show();
-                        }
-
-
-                    } else {
-                        builder.setMessage("Favor insira os dados de email e senha");
-                        AlertDialog dialog = builder.create();
-                        dialog.show();
-                    }
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                boolean exists = false;
+                if(null != getMedicoLogado() && null != getMedicoLogado().getEmail() && !getMedicoLogado().getEmail().isEmpty()) {
+                    exists = true;
                 }
 
-                // Henrique Autenticacao - 24/05 - FIM
-            }
-        });
+                final AlertDialog.Builder builder = new AlertDialog.Builder(TelaLogin.this);
+                builder.setTitle("Falha de autenticação");
 
-        mLoginFormView = findViewById(R.id.login_form);
-        mProgressView = findViewById(R.id.login_progress);
+                if(exists){
+                    //faz login
+                    Log.d("Medico", "email existe na base dos medicos. Realizando tentativa de login pelo firebase");
+                    mAuth.signInWithEmailAndPassword(Splash.login, Splash.senha).addOnCompleteListener(TelaLogin.this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (!task.isSuccessful()) {
+                                Log.w("AUTH", "Falha ao efetuar o Login VIA CACHE: ", task.getException());
+                                builder.setMessage("Falha ao efetuar o Login VIA CACHE. Favor verificar e-mail e senha");
+                                AlertDialog dialog = builder.create();
+                                dialog.show();
+                            } else {
+                                Log.d("AUTH", "Login Efetuado com sucesso - medico");
+//                                        carregaMedicoPorEmail(mEmailView.getText().toString());
+
+                                Intent sendIntent = new Intent(TelaLogin.this, MenuPrincipalMedico.class);
+                                sendIntent.putExtra(Intent.EXTRA_TEXT, "test");
+                                startActivity(sendIntent);
+                            }
+                        }
+                    });
+                    loginFromView = false;
+                }
+                else{
+                    loginFromView = true;
+                }
+            }
+            if (Splash.perfil == null){
+                loginFromView = true;
+            }
+        }
+        if(loginFromView){
+
+            setContentView(R.layout.activity_tela_login);
+            // Set up the login form.
+            mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
+            populateAutoComplete();
+
+            mPasswordView = (EditText) findViewById(R.id.password);
+            mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+                @Override
+                public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
+                    if (id == EditorInfo.IME_ACTION_DONE || id == EditorInfo.IME_NULL) {
+                        //attemptLogin();
+                        return true;
+                    }
+                    return false;
+                }
+            });
+
+            final RadioGroup radioGroup = (RadioGroup) findViewById(R.id.group_perfil);
+            radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(RadioGroup group, int checkedId) {
+
+                    if(checkedId == R.id.perfil_paciente) {
+                        perfil = "paciente";
+                    } else if(checkedId == R.id.perfil_medico) {
+                        perfil = "medico";
+                    }
+
+                }
+            });
+
+            Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
+            mEmailSignInButton.setOnClickListener(new OnClickListener() {
+
+                @Override
+                public void onClick(View view) {
+                    // Henrique Autenticacao - 24/05 - INICIO
+                    // 1. Instantiate an AlertDialog.Builder with its constructor
+                    final AlertDialog.Builder builder = new AlertDialog.Builder(TelaLogin.this);
+                    builder.setTitle("Falha de autenticação");
+                    setEmailCliente(mEmailView.getText().toString());
+
+                    if (perfil.equals("paciente")) {
+
+                        if (!("".equals(mEmailView.getText().toString()) || "".equals(mPasswordView.getText().toString()))) {
+
+                            try {
+                                carregaClienteEmail(mEmailView.getText().toString());
+                                while(getClientePerfil() == null){
+                                    Thread.sleep(1000);
+                                }
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                            boolean exists = false;
+                            if(null != getClientePerfil() && null != getClientePerfil().getEmail() && !getClientePerfil().getEmail().isEmpty()) {
+                                exists = true;
+                            }
+                            if(exists){
+                                mAuth.signInWithEmailAndPassword(mEmailView.getText().toString(), mPasswordView.getText().toString()).addOnCompleteListener(TelaLogin.this, new OnCompleteListener<AuthResult>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<AuthResult> task) {
+
+                                        Log.d("Cliente", "email existe na base dos pacientes. Realizando tentativa de login pelo firebase");
+                                        if (!task.isSuccessful()) {
+                                            Log.w("AUTH", "Falha ao efetuar o Login: ", task.getException());
+                                            builder.setMessage("Falha ao efetuar o Login, favor verificar email e senha");
+                                            AlertDialog dialog = builder.create();
+                                            dialog.show();
+                                        } else {
+                                            Log.d("AUTH", "Login Efetuado com sucesso - paciente");
+                                            attemptLogin();
+                                            carregaClienteEmail(mEmailView.getText().toString());
+
+                                            SharedPreferences.Editor editor = getSharedPreferences(NOME_PREFERENCE, MODE_PRIVATE).edit();
+                                            editor.putString("email", mEmailView.getText().toString());
+                                            editor.putString("password", mPasswordView.getText().toString());
+                                            editor.putString("perfil", "paciente");
+                                            editor.commit();
+
+                                        }
+                                    }
+                                });
+                            }else{
+                                Log.w("AUTH", "Falha ao efetuar o Login.");
+                                builder.setMessage("Falha ao efetuar o Login, favor verificar email e senha");
+                                AlertDialog dialog = builder.create();
+                                dialog.show();
+                            }
+
+
+                        } else {
+                            builder.setMessage("Favor insira os dados de email e senha");
+                            AlertDialog dialog = builder.create();
+                            dialog.show();
+                        }
+
+                    } else if (perfil.equals("medico")) {
+                        if (!("".equals(mEmailView.getText().toString()) || "".equals(mPasswordView.getText().toString()))) {
+                            //vai no heroku e verifica se o e-mail existe
+
+                            try {
+                                recuperaMedicoPorEmail(mEmailView.getText().toString());
+                                while(getMedicoLogado() == null){
+                                    Thread.sleep(1000);
+                                }
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                            boolean exists = false;
+                            if(null != getMedicoLogado() && null != getMedicoLogado().getEmail() && !getMedicoLogado().getEmail().isEmpty() && getMedicoLogado().getCrm() != null && !"".equals(getMedicoLogado().getCrm()) ) {
+                                exists = true;
+                            }
+                            if(exists){
+                                //faz login
+                                Log.d("Medico", "email existe na base dos medicos. Realizando tentativa de login pelo firebase");
+                                mAuth.signInWithEmailAndPassword(mEmailView.getText().toString(), mPasswordView.getText().toString()).addOnCompleteListener(TelaLogin.this, new OnCompleteListener<AuthResult>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<AuthResult> task) {
+                                        if (!task.isSuccessful()) {
+                                            Log.w("AUTH", "Falha ao efetuar o Login: ", task.getException());
+                                            builder.setMessage("Falha ao efetuar o Login. Favor verificar e-mail e senha");
+                                            AlertDialog dialog = builder.create();
+                                            dialog.show();
+                                        } else {
+                                            Log.d("AUTH", "Login Efetuado com sucesso - medico");
+    //                                        carregaMedicoPorEmail(mEmailView.getText().toString());
+
+                                            SharedPreferences.Editor editor = getSharedPreferences(NOME_PREFERENCE, MODE_PRIVATE).edit();
+                                            editor.putString("email", mEmailView.getText().toString());
+                                            editor.putString("password", mPasswordView.getText().toString());
+                                            editor.putString("perfil", "medico");
+                                            editor.commit();
+
+                                            Intent sendIntent = new Intent(TelaLogin.this, MenuPrincipalMedico.class);
+                                            sendIntent.putExtra(Intent.EXTRA_TEXT, "test");
+                                            startActivity(sendIntent);
+                                        }
+                                    }
+                                });
+                            }else{
+                                Log.w("AUTH", "Falha ao efetuar o Login. Medico nao cadastrado na base do heroku");
+                                builder.setMessage("Falha ao efetuar o Login. Favor verificar e-mail e senha");
+                                setClientePerfil(null);
+                                AlertDialog dialog = builder.create();
+                                dialog.show();
+                            }
+
+
+                        } else {
+                            builder.setMessage("Favor insira os dados de email e senha");
+                            AlertDialog dialog = builder.create();
+                            dialog.show();
+                        }
+                    }
+
+                    // Henrique Autenticacao - 24/05 - FIM
+                }
+            });
+
+            mLoginFormView = findViewById(R.id.login_form);
+            mProgressView = findViewById(R.id.login_progress);
+        }
+    }
+
+    public void callReset(View view){
+        Intent intent = new Intent( this, EsqueciSenhaActivity.class );
+        startActivity(intent);
     }
 
     // Henrique Autenticacao - 24/05 - INICIO
@@ -400,34 +530,37 @@ public class TelaLogin extends AppCompatActivity implements LoaderCallbacks<Curs
      */
     @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
     private void showProgress(final boolean show) {
-        // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
-        // for very easy animations. If available, use these APIs to fade-in
-        // the progress spinner.
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
-            int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
 
-            mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-            mLoginFormView.animate().setDuration(shortAnimTime).alpha(
-                    show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-                }
-            });
+        if (mLoginFormView != null && mProgressView != null) {
+            // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
+            // for very easy animations. If available, use these APIs to fade-in
+            // the progress spinner.
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
+                int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
 
-            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-            mProgressView.animate().setDuration(shortAnimTime).alpha(
-                    show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-                }
-            });
-        } else {
-            // The ViewPropertyAnimator APIs are not available, so simply show
-            // and hide the relevant UI components.
-            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-            mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
+                mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
+                mLoginFormView.animate().setDuration(shortAnimTime).alpha(
+                        show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
+                    }
+                });
+
+                mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
+                mProgressView.animate().setDuration(shortAnimTime).alpha(
+                        show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
+                    }
+                });
+            } else {
+                // The ViewPropertyAnimator APIs are not available, so simply show
+                // and hide the relevant UI components.
+                mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
+                mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
+            }
         }
     }
 
