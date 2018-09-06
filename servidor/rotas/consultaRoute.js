@@ -65,6 +65,19 @@ consultaRouter.post('/consultasByDateAndCrm',function(req,res){
 
 });
 
+//ok
+consultaRouter.post('/TconsultasByDateAndCrm',function(req,res){
+  Consulta.find({dataConsulta: req.body.dataConsulta, medico: req.body.idMedico}).exec(function(err,data){
+    if (err){
+      res.status(400).send("Medico nao cadastrado ou horario invalido");
+    }else{
+      res.send(data);
+    }
+  });
+
+});
+
+
 consultaRouter.post('/consultasByDateCrmAndCpfCliente',function(req,res){
 
   var medico = Medico.find({crm: req.body.crm});
@@ -96,6 +109,21 @@ consultaRouter.post('/consultasByDateCrmAndCpfCliente',function(req,res){
 
 });
 
+//ok
+consultaRouter.post('/TconsultasByDateCrmAndCpfCliente',function(req,res){
+  Consulta.find({dataConsulta: req.body.dataConsulta, medico: req.body.idMedico, cliente: req.body.idCliente})
+  .exec(function(err,data){
+    if(err){
+      res.sendStatus(400).send("Medico ou cliente nao encontrado no sistema");
+    }else{
+      res.send(data);
+    }
+  });
+
+});
+
+
+
 consultaRouter.post('/consultasByDateAndCpfCliente',function(req,res){
 
   var cliente = Cliente.find({cpf: req.body.cpf});
@@ -118,8 +146,9 @@ consultaRouter.post('/consultasByDateAndCpfCliente',function(req,res){
 
 });
 
-consultaRouter.post('/consultasByDateAndCpfCliente',function(req,res){
-    Consulta.find({dataConsulta: req.body.dataConsulta, cliente: req.params.id}).exec(function(err,data){
+//ok   
+consultaRouter.post('/TconsultasByDateAndCpfCliente',function(req,res){
+    Consulta.find({dataConsulta: req.body.dataConsulta, cliente: req.body.id}).exec(function(err,data){
         if(err){
             res.sendStatus(400).send("Cliente não cadastrado no sistema");
 
@@ -152,8 +181,9 @@ consultaRouter.post('/consultasByCpfClienteAndStatus',function(req,res){
 
 });
 
+//ok
 consultaRouter.post('/TconsultasByCpfClienteAndStatus',function(req,res){
-    Consulta.find({status: req.body.status, cliente: req.param.id}).exec(function(err,data){
+    Consulta.find({status: req.body.status, cliente: req.body.idCliente}).exec(function(err,data){
         if(err){
             res.sendStatus(400).send("cliente não cadastrado no sistema");
         }else{
@@ -185,8 +215,9 @@ consultaRouter.post('/consultasByCpfCliente',function(req,res){
 
 });
 
+//ok
 consultaRouter.post('/TconsultasByCpfCliente',function(req,res){
-    Consulta.find({cliente: req.params.id}).exec(function(err,data){
+    Consulta.find({cliente: req.body.idCliente}).exec(function(err,data){
         if ( err){
             res.sendStatus(400).send('Cliente nao encontrado no sistema');
         }else{
@@ -218,18 +249,18 @@ consultaRouter.post('/consultasByDateCrmStatus',function(req,res){
 
 });
 
-consultaRouter('/TconsultasByDateCrmStatus', function(req,res){
-    Consulta.find({dataConsulta: req.body.dataConsulta, status:req.body.status, medico: req.params.id })
-    .exec(function(err,data){
+//ok
+consultaRouter.post('/TconsultasByDateCrmStatus', function(req,res){
+    Consulta.find({dataConsulta: req.body.dataConsulta, status:req.body.status, medico: req.body.idMedico }).exec(function(err,data){
         if(err){
             res.sendStatus(400).send("Medico não econtrado no sistema" );
         }else{
             res.send(data);
         }
-    })
-
+    });
 
 });
+
 
 consultaRouter.post('/add', function(req,res){
     var novaConsulta = new Consulta(req.body);
