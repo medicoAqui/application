@@ -175,7 +175,7 @@ public class Medicos extends AppCompatActivity {
         }
 
 
-        new Thread(new Runnable() {
+        Thread thr_carregaMedicos = new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
@@ -196,7 +196,8 @@ public class Medicos extends AppCompatActivity {
                     e.printStackTrace();
                 }
             }
-        }).start();
+        });
+        thr_carregaMedicos.start();
 
     }
 
