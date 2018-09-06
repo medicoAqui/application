@@ -118,6 +118,18 @@ consultaRouter.post('/consultasByDateAndCpfCliente',function(req,res){
 
 });
 
+consultaRouter.post('/consultasByDateAndCpfCliente',function(req,res){
+    Consulta.find({dataConsulta: req.body.dataConsulta, cliente: req.params.id}).exec(function(err,data){
+        if(err){
+            res.sendStatus(400).send("Cliente não cadastrado no sistema");
+
+        }else{
+            res.send(data);
+        }
+    });
+
+});
+
 consultaRouter.post('/consultasByCpfClienteAndStatus',function(req,res){
 
   var cliente = Cliente.find({cpf: req.body.cpf});
@@ -137,6 +149,17 @@ consultaRouter.post('/consultasByCpfClienteAndStatus',function(req,res){
         });
       }
   });
+
+});
+
+consultaRouter.post('/TconsultasByCpfClienteAndStatus',function(req,res){
+    Consulta.find({status: req.body.status, cliente: req.param.id}).exec(function(err,data){
+        if(err){
+            res.sendStatus(400).send("cliente não cadastrado no sistema");
+        }else{
+            res.send(data);
+        }
+    })
 
 });
 
@@ -162,6 +185,17 @@ consultaRouter.post('/consultasByCpfCliente',function(req,res){
 
 });
 
+consultaRouter.post('/TconsultasByCpfCliente',function(req,res){
+    Consulta.find({cliente: req.params.id}).exec(function(err,data){
+        if ( err){
+            res.sendStatus(400).send('Cliente nao encontrado no sistema');
+        }else{
+            res.send(data);
+        }
+    });
+
+});
+
 consultaRouter.post('/consultasByDateCrmStatus',function(req,res){
 
   var medico = Medico.find({crm: req.body.crm});
@@ -181,6 +215,19 @@ consultaRouter.post('/consultasByDateCrmStatus',function(req,res){
         });
       }
   });
+
+});
+
+consultaRouter('/TconsultasByDateCrmStatus', function(req,res){
+    Consulta.find({dataConsulta: req.body.dataConsulta, status:req.body.status, medico: req.params.id })
+    .exec(function(err,data){
+        if(err){
+            res.sendStatus(400).send("Medico não econtrado no sistema" );
+        }else{
+            res.send(data);
+        }
+    })
+
 
 });
 
