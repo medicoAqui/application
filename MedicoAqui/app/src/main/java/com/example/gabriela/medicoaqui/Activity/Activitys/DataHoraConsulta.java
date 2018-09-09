@@ -191,7 +191,7 @@ public class DataHoraConsulta   extends AppCompatActivity {
         }
 
 
-        new Thread(new Runnable() {
+        Thread thr_carregaHoraDisponivel = new Thread(new Runnable() {
                     @Override
                     public void run() {
             try {
@@ -221,7 +221,10 @@ public class DataHoraConsulta   extends AppCompatActivity {
             }
 
             }
-        }).start();
+        });
+
+        thr_carregaHoraDisponivel.start();
+        thr_carregaHoraDisponivel.interrupt();
 
     }
 
@@ -241,7 +244,7 @@ public class DataHoraConsulta   extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        new Thread(new Runnable() {
+        Thread thr_marcaConsulta = new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
@@ -250,7 +253,9 @@ public class DataHoraConsulta   extends AppCompatActivity {
                     e.printStackTrace();
                 }
             }
-        }).start();
+        });
+        thr_marcaConsulta.start();
+
 
     }
 
@@ -343,7 +348,7 @@ public class DataHoraConsulta   extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        new Thread(new Runnable() {
+        Thread thr_ConsultaHorarioDisponivel = new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
@@ -362,7 +367,9 @@ public class DataHoraConsulta   extends AppCompatActivity {
                 }
 
             }
-        }).start();
+        });
+        thr_ConsultaHorarioDisponivel.start();
+        thr_ConsultaHorarioDisponivel.interrupt();
 
     }
 }

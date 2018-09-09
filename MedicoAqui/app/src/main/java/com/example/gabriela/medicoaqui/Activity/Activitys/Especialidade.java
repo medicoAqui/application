@@ -105,7 +105,7 @@ public class Especialidade  extends AppCompatActivity {
 
         Log.d(TAG, "carregaEspecialidadesEmLista() called");
 
-        new Thread(new Runnable() {
+        Thread thr_CarregaEspecialidade = new Thread(new Runnable() {
             @Override
             public void run() {
             String especialidadesBD = http.get("https://medicoishere.herokuapp.com/especialidade/especialidades");
@@ -115,7 +115,9 @@ public class Especialidade  extends AppCompatActivity {
             lista_especialidades.remove("Selecione");
             lista_especialidades.add(0,"Selecione");
             }
-        }).start();
+        });
+        thr_CarregaEspecialidade.start();
+
     }
 
 

@@ -163,7 +163,7 @@ public class DisponibilizaConsulta extends AppCompatActivity {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                    new Thread(new Runnable() {
+                    Thread thr_EnviaConsulta = new Thread(new Runnable() {
                         @Override
                         public void run() {
                             try {
@@ -173,7 +173,9 @@ public class DisponibilizaConsulta extends AppCompatActivity {
                                 e.printStackTrace();
                             }
                         }
-                    }).start();
+                    });
+                    thr_EnviaConsulta.start();
+                    thr_EnviaConsulta.interrupt();
 
                     String res = "Cadastro de consulta realizado com sucesso.";
                     AlertDialog.Builder dialogo = new AlertDialog.Builder(DisponibilizaConsulta.this);

@@ -111,7 +111,7 @@ public class AgendaMedico extends AppCompatActivity {
         jsonTT.put("id", medico.getId());
         jsonTT.put("status", "A");
 
-        new Thread(new Runnable() {
+        Thread thr_carregaAgenda = new Thread(new Runnable() {
             @Override
             public void run() {
                 String consultasBD = null;
@@ -127,7 +127,10 @@ public class AgendaMedico extends AppCompatActivity {
                 lista_consultas_entity.addAll(consultasEntity);
 
             }
-        }).start();
+        });
+
+        thr_carregaAgenda.start();
+
     }
 
     public void criaReciclerView() {
@@ -167,7 +170,7 @@ public class AgendaMedico extends AppCompatActivity {
 
         final String url = "https://medicoishere.herokuapp.com/consulta/" + idConsulta;
 
-        new Thread(new Runnable() {
+        Thread thr_desmarcar = new Thread(new Runnable() {
             @Override
             public void run() {
             String consultasBD = null;
@@ -177,7 +180,9 @@ public class AgendaMedico extends AppCompatActivity {
                     e.printStackTrace();
                 }
             }
-        }).start();
+        });
+        thr_desmarcar.start();
+        thr_desmarcar.interrupt();
 
     }
 

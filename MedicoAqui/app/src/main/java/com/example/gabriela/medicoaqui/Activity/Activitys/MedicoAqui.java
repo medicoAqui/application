@@ -27,7 +27,7 @@ public class MedicoAqui extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        new Thread(new Runnable() {
+       Thread thr_inicial = new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
@@ -37,8 +37,8 @@ public class MedicoAqui extends AppCompatActivity {
                     // Não faz nada.
                 }
             }
-        }).start();
-
+        });
+        thr_inicial.start();
 
     }
 

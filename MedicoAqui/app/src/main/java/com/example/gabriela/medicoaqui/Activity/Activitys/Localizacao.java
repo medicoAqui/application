@@ -1,5 +1,6 @@
 package com.example.gabriela.medicoaqui.Activity.Activitys;
 
+import android.content.SharedPreferences;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.widget.ImageButton;
@@ -168,47 +169,101 @@ public class Localizacao  extends AppCompatActivity {
 
         final JSONObject jsonTT = new JSONObject();
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                String estadosBD = http.get("https://servicodados.ibge.gov.br/api/v1/localidades/estados");
-                HashSet<String> estados = jsonReader.getEstados(estadosBD);
-                HashSet<Estado> estadosEntity = jsonReader.getEstadosEntity(estadosBD);
-                lista_estados.addAll(estados);
-                Collections.sort(lista_estados);
-                lista_estados_entity.addAll(estadosEntity);
-                lista_estados.remove("Selecione");
-                lista_estados.add(0,"Selecione");
-                flagCarregaEstados = true;
-            }
-        }).start();
+        SharedPreferences prefs = getSharedPreferences("CACHE_ESTADOS", MODE_PRIVATE);
+        String estadosCache= prefs.getString("estados", null);
+
+        boolean estadosEmCache = false;
+        if (estadosCache != null && !"".equals(estadosCache)) {
+
+            estadosEmCache = true;
+
+            Log.d("ESTADOS CACHE: ", (estadosCache));
+
+            HashSet<String> estados = jsonReader.getEstados(estadosCache);
+            HashSet<Estado> estadosEntity = jsonReader.getEstadosEntity(estadosCache);
+            lista_estados.addAll(estados);
+            Collections.sort(lista_estados);
+            lista_estados_entity.addAll(estadosEntity);
+            lista_estados.remove("Selecione");
+            lista_estados.add(0,"Selecione");
+            flagCarregaEstados = true;
+
+
+        } else {
+            estadosEmCache = false;
+
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    String estadosBD = http.get("https://servicodados.ibge.gov.br/api/v1/localidades/estados");
+
+                    Log.d("ESTADOS CONSULTADOS: ", (estadosBD));
+                    SharedPreferences.Editor editor = getSharedPreferences("CACHE_ESTADOS", MODE_PRIVATE).edit();
+                    editor.putString("estados", estadosBD);
+                    editor.commit();
+
+                    HashSet<String> estados = jsonReader.getEstados(estadosBD);
+                    HashSet<Estado> estadosEntity = jsonReader.getEstadosEntity(estadosBD);
+                    lista_estados.addAll(estados);
+                    Collections.sort(lista_estados);
+                    lista_estados_entity.addAll(estadosEntity);
+                    lista_estados.remove("Selecione");
+                    lista_estados.add(0,"Selecione");
+                    flagCarregaEstados = true;
+                }
+            }).start();
+
+        }
 
     }
 
 
-    private void carregaCidades(Integer idEstado) {
+    private void carregaCidades(final Integer idEstado) {
         Log.d(TAG, "carregaCidades() called with: idEstado = [" + idEstado + "]");
 
         final JSONObject jsonTT = new JSONObject();
         final String urlCidade = "https://servicodados.ibge.gov.br/api/v1/localidades/estados/" + idEstado + "/municipios";
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                //try {
+        SharedPreferences prefs = getSharedPreferences("CACHE_CIDADES_BY_ID_ESTADO", MODE_PRIVATE);
+        final String cidadesByUFCache= prefs.getString(String.valueOf(idEstado), null);
+
+        if (cidadesByUFCache != null && !"".equals(cidadesByUFCache)) {
+
+            Log.d("CIDADES CACHE: ", (cidadesByUFCache));
+
+            lista_cidades.clear();
+            HashSet<String> cidades = jsonReader.getCidades(cidadesByUFCache);
+            lista_cidades.addAll(cidades);
+            Collections.sort(lista_cidades);
+            lista_cidades.remove("Selecione");
+            lista_cidades.add(0, "Selecione");
+            flagCarregaCidades = true;
+
+
+        } else {
+
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+
                     lista_cidades.clear();
                     String cidadesBD = http.get(urlCidade);
+
+                    SharedPreferences.Editor editor = getSharedPreferences("CACHE_CIDADES_BY_ID_ESTADO", MODE_PRIVATE).edit();
+                    editor.putString(String.valueOf(idEstado), cidadesBD);
+                    editor.commit();
+
+                    Log.d("CIDADES CONSULTADAS: ", (cidadesBD));
                     HashSet<String> cidades = jsonReader.getCidades(cidadesBD);
                     lista_cidades.addAll(cidades);
                     Collections.sort(lista_cidades);
                     lista_cidades.remove("Selecione");
-                    lista_cidades.add(0,"Selecione");
+                    lista_cidades.add(0, "Selecione");
                     flagCarregaCidades = true;
-               // } catch (HttpConnections.MinhaException e) {
-                //    e.printStackTrace();
-                //}
-            }
-        }).start();
+
+                }
+            }).start();
+        }
     }
 
     private Integer buscaIDEstado(String estado) {
