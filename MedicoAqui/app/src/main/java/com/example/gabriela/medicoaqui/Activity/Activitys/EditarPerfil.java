@@ -20,7 +20,10 @@ import com.example.gabriela.medicoaqui.Activity.Service.HttpConnections;
 import com.example.gabriela.medicoaqui.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.EmailAuthProvider;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import org.json.JSONException;
@@ -30,6 +33,8 @@ public class EditarPerfil extends AppCompatActivity {
 
     private JSONObject EditPerfilJsonTT = new JSONObject();
     private static HttpConnections http = new HttpConnections();
+    private FirebaseAuth firebaseAuth;
+
 
     public String nome, sobrenome, email, cpf, password, telefone, sexo;
 
@@ -39,7 +44,8 @@ public class EditarPerfil extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editar_perfil);
-        
+        firebaseAuth = FirebaseAuth.getInstance();
+
         final android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(EditarPerfil.this);
 
         final EditText nomeEdit = findViewById(R.id.nomeEdit);
@@ -160,5 +166,10 @@ public class EditarPerfil extends AppCompatActivity {
         EditPerfilJsonTT.put("sexo", sexo);
         EditPerfilJsonTT.put("telefone", telefone);
 
+    }
+
+    public void changePassword (View view){
+        Intent intent = new Intent( this, AlterarSenhaActivity.class );
+        startActivity(intent);
     }
 }

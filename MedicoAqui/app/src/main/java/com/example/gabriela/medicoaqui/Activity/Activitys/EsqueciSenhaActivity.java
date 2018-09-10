@@ -17,7 +17,9 @@ import com.google.firebase.auth.FirebaseAuth;
 public class EsqueciSenhaActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
-    private AutoCompleteTextView email;
+    private AutoCompleteTextView etPassword;
+    private AutoCompleteTextView etPasswordAgain;
+    private AutoCompleteTextView etNewPassword;
     private FirebaseAuth firebaseAuth;
 
     @Override
@@ -38,36 +40,13 @@ public class EsqueciSenhaActivity extends AppCompatActivity {
     }
 
     private void init(){
-        email = (AutoCompleteTextView) findViewById(R.id.email);
+        etPassword = (AutoCompleteTextView) findViewById(R.id.etPassword);
+        etPasswordAgain = (AutoCompleteTextView) findViewById(R.id.etPasswordAgain);
+        etNewPassword = (AutoCompleteTextView) findViewById(R.id.etNewPassword);
     }
 
 
     public void reset( View view ){
-        firebaseAuth
-                .sendPasswordResetEmail( email.getText().toString() )
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
 
-                        if( task.isSuccessful() ){
-                            email.setText("");
-                            Toast.makeText(
-                                    EsqueciSenhaActivity.this,
-                                    "Recuperação de acesso iniciada. Email enviado.",
-                                    Toast.LENGTH_SHORT
-                            ).show();
-
-                            Intent it = new Intent(EsqueciSenhaActivity.this, TelaLogin.class);
-                            startActivity(it);
-                        }
-                        else{
-                            Toast.makeText(
-                                    EsqueciSenhaActivity.this,
-                                    "Falha ao enviar e-mail. Tente novamente",
-                                    Toast.LENGTH_SHORT
-                            ).show();
-                        }
-                    }
-                });
     }
 }
