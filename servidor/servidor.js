@@ -16,10 +16,9 @@ var app = express();
 
 var rotaCliente = require('./rotas/cliente');
 var rotaMedico = require('./rotas/medico');
-var rotaAcesso = require('./rotas/acesso');
 var rotaEspecialidade = require('./rotas/especialidadeR');
 
-var rotaEndereco = require('./rotas/enderecoRoute');
+//var rotaEndereco = require('./rotas/enderecoRoute');
 var rotaConsultorio = require('./rotas/consultorioRoute');
 var rotaConsulta = require('./rotas/consultaRoute');
 
@@ -28,7 +27,7 @@ var rotaConsulta = require('./rotas/consultaRoute');
 app.use(cors());
 app.use(morgan('dev'));
 
-mongoose.connect('mongodb://medicoaqui:medicoaqui123@ds155674.mlab.com:55674/medicoaqui',function(err,db){
+mongoose.connect('mongodb://medico2:medico1234@ds151382.mlab.com:51382/medico2',function(err,db){
   if(err) {
     console.log("erro: " + err);
   } else {
@@ -43,10 +42,10 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 app.use('/cliente',rotaCliente)
 app.use('/medico',rotaMedico);
-app.use('/auth', rotaAcesso);
+//app.use('/auth', rotaAcesso);
 app.use('/especialidade',rotaEspecialidade);
 
-app.use('/endereco',rotaEndereco);
+//app.use('/endereco',rotaEndereco);
 app.use('/consultorio',rotaConsultorio);
 app.use('/consulta',rotaConsulta);
 

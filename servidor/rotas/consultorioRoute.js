@@ -2,7 +2,7 @@ var express = require('express');
 var consultorioRouter =  express.Router();
 
 var Consultorio = require('../modelos/consultorio');
-var Endereco = require('../modelos/endereco');
+//var Endereco = require('../modelos/endereco');
 
 
 consultorioRouter.use(function(req, res, next) {
@@ -27,7 +27,7 @@ consultorioRouter.get('/consultorios', function(req, res) {
   });
 });
 
-consultorioRouter.get('/:id',function(res,req){
+consultorioRouter.get('/:id',function(req,res){
 	var consultorio = Consultorio.find({_id: req.param.id});
 
 	consultorio.exec(function(err,data){
@@ -39,72 +39,47 @@ consultorioRouter.get('/:id',function(res,req){
 	});
 });
 
-consultorioRouter.post('/consultorioByNome',function(res,req){
-	var consultorio = Consultorio.find({nomeConsultorio: req.param.nomeConsultorio});
 
-	consultorio.exec(function(err,data){
-		if(err) {
-            res.sendStatus(400).json('Consutolrio nao encontrado no sistema');
-        }else{
-			res.json(data);
-		}
-	});
+
+consultorioRouter.post('/consultorioByNome',function(req,res){
+	var consultorio = Consultorio.find({nomeConsultorio: req.body.nomeConsultorio}).exec(function(err,data){
+    if(err){
+      res.send("nome de consultorio nao existe");
+    }else{
+      res.send(data);
+    }
+  });
+
+	
 });
 
 
 consultorioRouter.post('/add', function(req,res){
+  var novoConsultorio = new Consultorio(req.body);
 
-    var endereco;
+  novoConsultorio.save(function(err, data) {
+    if (err) {
+      res.status(400).json(err);
+    } else {
+      res.status(201).json(data);
+    }
+  });
 
-    Endereco.findOne({idEndereco: req.body.idEndereco }, function(err,data){
-
-        if(data == undefined || err){
-          console.log("_______________FALHA AO CADASTRAR consultorio (Endereco NAO ENCONTRADO)_________________");
-          res.status(400).json("Endereco nao encontrado");
-        }
-        else{
-          endereco = data;
-          console.log(endereco);
-          console.log("_______________ INSERINDO CONSULTORIO_________________");
-          var novoConsultorio = new Consultorio(req.body);
-          novoConsultorio.endereco = endereco;
-          novoConsultorio.save(function(err, data) {
-
-              if (err) {
-                  res.status(400).json(err);
-              } else {
-                  res.status(201).json(data);
-              }
-          });
-          console.log("_______________Consultorio REGISTRADO_________________");
-        }
-    });
+    
 });
 
 
 consultorioRouter.post('/enderecoByIdConsultorio',function(req,res){
 
-  var endereco;
-
-  Consultorio.findOne({idConsultorio: req.body.idConsultorio }, function(err,data1){
-    console.log(data1);
-
-    if(data == undefined || err){
-        res.status(400).json(err);
+   Consultorio.findOne({_id: req.body.idConsultorio }).exec(function(err,data1){
+    if(err){
+      res.sendStatus(400).send(err);
+    }else{
+      res.send(data1);
     }
-    else{
 
-      var endereco = Endereco.find({idEndereco: data1.endereco.idEndereco});
+   });
 
-      endereco.exec(function(err,data2){
-        if(err) {
-                res.sendStatus(400).json('Endereco nao encontrado no sistema');
-            }else{
-          res.json(data2);
-        }
-      });
-    }
-  });
 });
 
 module.exports = consultorioRouter;
