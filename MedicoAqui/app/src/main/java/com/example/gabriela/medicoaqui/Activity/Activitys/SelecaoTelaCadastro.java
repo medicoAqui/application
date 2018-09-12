@@ -26,5 +26,16 @@ public class SelecaoTelaCadastro extends AppCompatActivity {
 
             }
         });
+
+        final ImageView button_cadastro_med =  findViewById(R.id.button_cadastro_medico);
+        button_cadastro_med.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent it = new Intent(SelecaoTelaCadastro.this, TelaCadastroMedico.class);
+                startActivity(it);
+
+            }
+        });
     }
 }
