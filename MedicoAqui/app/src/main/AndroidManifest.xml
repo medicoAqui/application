@@ -98,7 +98,8 @@
         <activity
             android:name=".Activity.Activitys.AlterarSenhaActivity"
             android:label="Alterar Senha" />
-        <activity android:name=".Activity.Activitys.DisponibilizaConsulta"></activity>
+        <activity android:name=".Activity.Activitys.DisponibilizaConsulta" />
+        <activity android:name=".Activity.Activitys.SelecaoTelaCadastro"></activity>
     </application>
 
 </manifest>

@@ -24,7 +24,7 @@ public class TelaPrincipal extends AppCompatActivity{
 
             @Override
             public void onClick(View v) {
-                Intent it = new Intent(TelaPrincipal.this, TelaCadastro.class);
+                Intent it = new Intent(TelaPrincipal.this, SelecaoTelaCadastro.class);
                 startActivity(it);
             }
 
