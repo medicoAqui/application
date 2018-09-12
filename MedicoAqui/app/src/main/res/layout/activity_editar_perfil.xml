@@ -172,7 +172,7 @@
         android:text=" Alterar Senha "
         android:layout_marginBottom="4dp"
         android:layout_marginEnd="4dp"
-        android:textColor="#FFFFFF"
+        android:textColor="#cccccc"
         android:background="#33414b"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

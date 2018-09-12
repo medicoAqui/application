@@ -24,6 +24,13 @@ public class Splash extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
+        SharedPreferences preferences = getSharedPreferences("INFORMACOES_LOGIN_AUTOMATICO", 0);
+        /* DESCOMENTAR ESTE BLOCO PARA LIMPAR O CACHE */
+        /*preferences.edit().remove("email").commit();
+        preferences.edit().remove("password").commit();
+        preferences.edit().remove("perfil").commit();*/
+
+
         new Handler().postDelayed(new Runnable() {
             /*
              * Exibindo splash com um timer.
@@ -34,6 +41,7 @@ public class Splash extends Activity {
                 // E inicia a activity principal
 
                 SharedPreferences prefs = getSharedPreferences("INFORMACOES_LOGIN_AUTOMATICO", MODE_PRIVATE);
+
                 login= prefs.getString("email", null);
                 senha= prefs.getString("password", null);
                 perfil= prefs.getString("perfil", null);
