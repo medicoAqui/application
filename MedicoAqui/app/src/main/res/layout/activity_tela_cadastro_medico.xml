@@ -77,7 +77,7 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="20dp"
                 android:ems="10"
-                android:hint="CPF"
+                android:hint="CRM"
                 android:inputType="number"
                 android:maxLength="11"
                 tools:layout_editor_absoluteX="85dp"
@@ -141,6 +141,30 @@
 
 
             <View
+                android:id="@+id/divider8"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?android:attr/listDivider" />
+
+            <EditText
+                android:id="@+id/Text_CPF"
+                android:layout_width="210dp"
+                android:layout_height="49dp"
+                android:layout_marginBottom="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="20dp"
+                android:ems="10"
+                android:hint="CPF"
+                android:inputType="number"
+                android:visibility="visible"
+                app:layout_constraintBottom_toTopOf="@+id/Text_Sobrenome"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.306"
+                app:layout_constraintStart_toStartOf="@+id/guideline3"
+                app:layout_constraintTop_toTopOf="@+id/guideline4" />
+
+            <View
                 android:id="@+id/divider"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
@@ -161,7 +185,25 @@
             <View
                 android:id="@+id/divider7"
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="wrap_content"
+                android:background="?android:attr/listDivider" />
+
+            <EditText
+                android:id="@+id/Text_Date"
+                android:layout_width="210dp"
+                android:layout_height="46dp"
+                android:layout_marginBottom="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:ems="10"
+                android:hint="Data de Nascimento"
+                android:inputType="date" />
+
+            <View
+                android:id="@+id/divider9"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:background="?android:attr/listDivider" />
 
             <Button
@@ -173,8 +215,6 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="20dp"
                 android:text="Cadastrar" />
-
-
 
 
         </LinearLayout>

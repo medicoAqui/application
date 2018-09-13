@@ -1,7 +1,5 @@
 package com.example.gabriela.medicoaqui.Activity.Activitys;
 
-import com.example.gabriela.medicoaqui.Activity.Entities.Cliente;
-import com.example.gabriela.medicoaqui.Activity.Entities.Medico;
 import com.example.gabriela.medicoaqui.Activity.JsonOperators.JSONReader;
 import com.example.gabriela.medicoaqui.Activity.Service.HttpConnections;
 import com.example.gabriela.medicoaqui.R;
@@ -25,10 +23,6 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 import org.json.*;
-
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
 
 
 public class TelaCadastro extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
@@ -161,7 +155,7 @@ public class TelaCadastro extends AppCompatActivity implements AdapterView.OnIte
         input_nome = findViewById(R.id.Text_Nome);
         input_sobrenome = findViewById(R.id.Text_Sobrenome);
         input_email = findViewById(R.id.Text_Email);
-        input_cpf = findViewById(R.id.Text_CPF);
+        input_cpf = findViewById(R.id.Text_CRM);
         input_password = findViewById(R.id.Text_Pass);
         input_telefone = findViewById(R.id.Text_Telefone);
     }
