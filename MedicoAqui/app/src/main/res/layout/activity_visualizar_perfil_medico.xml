@@ -45,11 +45,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/perfil_10" />
+        app:srcCompat="@drawable/medico_perfil" />
 
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab_perfil"
+        android:id="@+id/fab_perfil_medico"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
@@ -71,19 +71,19 @@
         android:layout_marginTop="40dp"
         android:text="Nome:"
         app:layout_constraintBottom_toTopOf="@+id/textView3"
-        app:layout_constraintEnd_toStartOf="@+id/nomeCliente"
+        app:layout_constraintEnd_toStartOf="@+id/nomeMedico"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView4" />
 
     <TextView
-        android:id="@+id/nomeCliente"
+        android:id="@+id/nomeMedico"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:layout_marginEnd="40dp"
         android:layout_marginStart="12dp"
         android:layout_marginTop="40dp"
-        app:layout_constraintBottom_toTopOf="@+id/telefoneCliente"
+        app:layout_constraintBottom_toTopOf="@+id/telefoneMedico"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView2"
         app:layout_constraintTop_toBottomOf="@+id/imageView4" />
@@ -98,22 +98,22 @@
         android:layout_marginTop="16dp"
         android:text="Telefone:"
         app:layout_constraintBottom_toTopOf="@+id/textView4"
-        app:layout_constraintEnd_toStartOf="@+id/telefoneCliente"
+        app:layout_constraintEnd_toStartOf="@+id/telefoneMedico"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
     <TextView
-        android:id="@+id/telefoneCliente"
+        android:id="@+id/telefoneMedico"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:layout_marginEnd="40dp"
         android:layout_marginStart="12dp"
         android:layout_marginTop="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/emailCliente"
+        app:layout_constraintBottom_toTopOf="@+id/emailMedico"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView3"
-        app:layout_constraintTop_toBottomOf="@+id/nomeCliente" />
+        app:layout_constraintTop_toBottomOf="@+id/nomeMedico" />
 
     <TextView
         android:id="@+id/textView4"
@@ -125,7 +125,7 @@
         android:layout_marginTop="16dp"
         android:text="Email:"
         app:layout_constraintBottom_toTopOf="@+id/textview5"
-        app:layout_constraintEnd_toStartOf="@+id/emailCliente"
+        app:layout_constraintEnd_toStartOf="@+id/emailMedico"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
@@ -139,35 +139,35 @@
         android:layout_marginTop="16dp"
         android:text="Gênero:"
         app:layout_constraintBottom_toTopOf="@+id/textView14"
-        app:layout_constraintEnd_toStartOf="@+id/sexoCliente"
+        app:layout_constraintEnd_toStartOf="@+id/sexoMedico"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
     <TextView
-        android:id="@+id/emailCliente"
+        android:id="@+id/emailMedico"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:layout_marginEnd="40dp"
         android:layout_marginStart="12dp"
         android:layout_marginTop="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/sexoCliente"
+        app:layout_constraintBottom_toTopOf="@+id/sexoMedico"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView4"
-        app:layout_constraintTop_toBottomOf="@+id/telefoneCliente" />
+        app:layout_constraintTop_toBottomOf="@+id/telefoneMedico" />
 
     <TextView
-        android:id="@+id/sexoCliente"
+        android:id="@+id/sexoMedico"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:layout_marginEnd="40dp"
         android:layout_marginStart="12dp"
         android:layout_marginTop="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/cpfCliente"
+        app:layout_constraintBottom_toTopOf="@+id/cpfMedico"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textview5"
-        app:layout_constraintTop_toBottomOf="@+id/emailCliente" />
+        app:layout_constraintTop_toBottomOf="@+id/emailMedico" />
 
     <TextView
         android:id="@+id/textView14"
@@ -179,12 +179,12 @@
         android:layout_marginTop="16dp"
         android:text="CRM:"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/cpfCliente"
+        app:layout_constraintEnd_toStartOf="@+id/cpfMedico"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textview5" />
 
     <TextView
-        android:id="@+id/cpfCliente"
+        android:id="@+id/cpfMedico"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="117dp"
@@ -194,7 +194,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView14"
-        app:layout_constraintTop_toBottomOf="@+id/sexoCliente" />
+        app:layout_constraintTop_toBottomOf="@+id/sexoMedico" />
 
 
 </android.support.constraint.ConstraintLayout>
