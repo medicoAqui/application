@@ -56,7 +56,7 @@
                 android:ems="10"
                 android:hint="Sobrenome"
                 android:inputType="textPersonName"
-                app:layout_constraintBottom_toTopOf="@+id/Text_CRM"
+                app:layout_constraintBottom_toTopOf="@+id/Text_CPF"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.306"
                 app:layout_constraintStart_toStartOf="@+id/guideline3"
@@ -69,7 +69,7 @@
                 android:background="?android:attr/listDivider" />
 
             <EditText
-                android:id="@+id/Text_CRM"
+                android:id="@+id/Text_CPF"
                 android:layout_width="210dp"
                 android:layout_height="46dp"
                 android:layout_marginBottom="20dp"

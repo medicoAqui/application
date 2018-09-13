@@ -1,6 +1,5 @@
 package com.example.gabriela.medicoaqui.Activity.Activitys;
 
-import com.example.gabriela.medicoaqui.Activity.JsonOperators.JSONReader;
 import com.example.gabriela.medicoaqui.Activity.Service.HttpConnections;
 import com.example.gabriela.medicoaqui.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -10,7 +9,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import android.support.annotation.NonNull;
-import android.support.v7.app.AlertDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -28,7 +26,6 @@ import org.json.*;
 public class TelaCadastro extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     private JSONObject jsonTT = new JSONObject();
-    private JSONReader jsonre = new JSONReader();
     private static HttpConnections http = new HttpConnections();
 
     // Declaring names of variables
@@ -39,17 +36,16 @@ public class TelaCadastro extends AppCompatActivity implements AdapterView.OnIte
     private static final String TAG = "EmailPassword";
     private FirebaseAuth mAuth;
     // Henrique Autenticacao - 24/05 - FIM
-    public String vida;
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tela_cadastro);
-        // Henrique Autenticacao - 24/05 - INICIO
+
         mAuth = FirebaseAuth.getInstance();
 
-        // Henrique Autenticacao - 24/05 - FIM
         final Spinner spinSexo = findViewById(R.id.spinner);                     // Getting the instance of Spinner
         Button botaoCadastrar = findViewById(R.id.button_tela_cadastro);         // Declaring Button Cadastro
         botaoCadastrar.setOnClickListener(new View.OnClickListener() {
@@ -155,18 +151,11 @@ public class TelaCadastro extends AppCompatActivity implements AdapterView.OnIte
         input_nome = findViewById(R.id.Text_Nome);
         input_sobrenome = findViewById(R.id.Text_Sobrenome);
         input_email = findViewById(R.id.Text_Email);
-        input_cpf = findViewById(R.id.Text_CRM);
+        input_cpf = findViewById(R.id.Text_CPF);
         input_password = findViewById(R.id.Text_Pass);
         input_telefone = findViewById(R.id.Text_Telefone);
     }
 
-    private void showMessage(String frase) {
-        AlertDialog.Builder dialogo = new AlertDialog.Builder(TelaCadastro.this);
-        dialogo.setTitle("Atenção!");                              // Setando título
-        dialogo.setMessage(frase);                                 // Setando mensagem
-        dialogo.setNeutralButton("OK", null);         // Setando botão
-        dialogo.show();                                            // Chamando o AlertDialog
-    }
 
     public boolean cadastroIsValid(String nome, String email, String cpf, String password, String telefone, String sexo){
         return (isNotEmpty(nome) && isNotEmpty(email) && isNotEmpty(cpf)
