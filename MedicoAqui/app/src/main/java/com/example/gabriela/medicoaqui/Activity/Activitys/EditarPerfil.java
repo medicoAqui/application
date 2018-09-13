@@ -35,8 +35,7 @@ public class EditarPerfil extends AppCompatActivity {
     private static HttpConnections http = new HttpConnections();
     private FirebaseAuth firebaseAuth;
 
-
-    public String nome, sobrenome, email, cpf, password, telefone, sexo;
+    public String nome, cpf, password, telefone, sexo;
 
     private static final String TAG = "EditarPerfil";
 
@@ -49,12 +48,12 @@ public class EditarPerfil extends AppCompatActivity {
         final android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(EditarPerfil.this);
 
         final EditText nomeEdit = findViewById(R.id.nomeEdit);
-        final EditText emailEdit = findViewById(R.id.emailEdit);
+        //final EditText emailEdit = findViewById(R.id.emailEdit);
         final EditText sexoEdit = findViewById(R.id.sexoEdit);
         final EditText telefoneEdit = findViewById(R.id.telefoneEdit);
 
         nomeEdit.setText(TelaLogin.getClientePerfil().getNome());
-        emailEdit.setText(TelaLogin.getClientePerfil().getEmail());
+        //emailEdit.setText(TelaLogin.getClientePerfil().getEmail());
         sexoEdit.setText(TelaLogin.getClientePerfil().getGenero());
         telefoneEdit.setText(TelaLogin.getClientePerfil().getTelefone());
 
@@ -64,13 +63,13 @@ public class EditarPerfil extends AppCompatActivity {
             public void onClick(View v) {
 
                 nome = nomeEdit.getText().toString();
-                email = emailEdit.getText().toString();
+                //email = emailEdit.getText().toString();
                 sexo = sexoEdit.getText().toString();
                 telefone = telefoneEdit.getText().toString();
 
-                if (!(nome.isEmpty()) && !(telefone.isEmpty()) && !(email.isEmpty()) && !(sexo.isEmpty())) {
+                if (!(nome.isEmpty()) && !(telefone.isEmpty()) && !(sexo.isEmpty())) {
 
-                    if (email.contains("@") && ((email.contains(".com") || email.contains(".br") || email.contains(".org")))) {
+                    //if (email.contains("@") && ((email.contains(".com") || email.contains(".br") || email.contains(".org")))) {
 
                         if (telefone.length() == 11 || telefone.length() == 10) {
 
@@ -88,11 +87,11 @@ public class EditarPerfil extends AppCompatActivity {
                             android.app.AlertDialog dialog = builder.create();
                             dialog.show();
                         }
-                    } else {
+                    /*} else {
                         builder.setMessage("O e-mail é inválido.");
                         android.app.AlertDialog dialog = builder.create();
                         dialog.show();
-                    }
+                    }*/
                 } else {
                     builder.setMessage("Não é permitido campos em branco.");
                     android.app.AlertDialog dialog = builder.create();
@@ -154,7 +153,7 @@ public class EditarPerfil extends AppCompatActivity {
 
         TelaLogin.clientePerfil.setNome(nome);
         TelaLogin.clientePerfil.setTelefone(telefone);
-        TelaLogin.clientePerfil.setEmail(email);
+        //TelaLogin.clientePerfil.setEmail(email);
         TelaLogin.clientePerfil.setGenero(sexo);
 
     }
@@ -162,7 +161,7 @@ public class EditarPerfil extends AppCompatActivity {
     private void setValuesEditToJson() throws JSONException {
 
         EditPerfilJsonTT.put("name", nome);
-        EditPerfilJsonTT.put("email", email);
+        //EditPerfilJsonTT.put("email", email);
         EditPerfilJsonTT.put("sexo", sexo);
         EditPerfilJsonTT.put("telefone", telefone);
 

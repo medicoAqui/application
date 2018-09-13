@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activity.Activitys.EditarPerfil">
+    tools:context=".Activity.Activitys.EditarPerfilMedico">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
@@ -45,7 +45,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/perfil_10" />
+        app:srcCompat="@drawable/medico_perfil" />
 
 
     <TextView
@@ -56,12 +56,12 @@
         android:layout_marginStart="48dp"
         android:layout_marginTop="54dp"
         android:text="Nome:"
-        app:layout_constraintEnd_toStartOf="@+id/nomeEdit"
+        app:layout_constraintEnd_toStartOf="@+id/nomeEditMedico"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView4" />
 
     <EditText
-        android:id="@+id/nomeEdit"
+        android:id="@+id/nomeEditMedico"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="6dp"
@@ -69,7 +69,7 @@
         android:layout_marginStart="12dp"
         android:layout_marginTop="42dp"
         android:textColorLink="@android:color/holo_blue_bright"
-        app:layout_constraintBottom_toTopOf="@+id/telefoneEdit"
+        app:layout_constraintBottom_toTopOf="@+id/telefoneEditMedico"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView2"
         app:layout_constraintTop_toBottomOf="@+id/imageView4" />
@@ -82,12 +82,12 @@
         android:layout_marginStart="50dp"
         android:layout_marginTop="40dp"
         android:text="Telefone:"
-        app:layout_constraintEnd_toStartOf="@+id/telefoneEdit"
+        app:layout_constraintEnd_toStartOf="@+id/telefoneEditMedico"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
     <EditText
-        android:id="@+id/telefoneEdit"
+        android:id="@+id/telefoneEditMedico"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="6dp"
@@ -95,10 +95,10 @@
         android:layout_marginStart="12dp"
         android:layout_marginTop="10dp"
         android:textColorLink="@android:color/holo_blue_bright"
-        app:layout_constraintBottom_toTopOf="@+id/sexoEdit"
+        app:layout_constraintBottom_toTopOf="@+id/sexoEditMedico"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView3"
-        app:layout_constraintTop_toBottomOf="@+id/nomeEdit" />
+        app:layout_constraintTop_toBottomOf="@+id/nomeEditMedico" />
 
     <TextView
         android:id="@+id/textView4"
@@ -108,12 +108,12 @@
         android:layout_marginStart="50dp"
         android:layout_marginTop="40dp"
         android:text="Sexo:"
-        app:layout_constraintEnd_toStartOf="@+id/sexoEdit"
+        app:layout_constraintEnd_toStartOf="@+id/sexoEditMedico"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
     <EditText
-        android:id="@+id/sexoEdit"
+        android:id="@+id/sexoEditMedico"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="39dp"
@@ -121,14 +121,14 @@
         android:layout_marginStart="12dp"
         android:layout_marginTop="10dp"
         android:textColorLink="@android:color/holo_blue_bright"
-        app:layout_constraintBottom_toTopOf="@+id/button_edita_perfil"
+        app:layout_constraintBottom_toTopOf="@+id/button_edita_perfil_medico"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView4"
-        app:layout_constraintTop_toBottomOf="@+id/telefoneEdit" />
+        app:layout_constraintTop_toBottomOf="@+id/telefoneEditMedico" />
 
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/button_edita_perfil"
+        android:id="@+id/button_edita_perfil_medico"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
@@ -139,21 +139,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@android:drawable/ic_menu_save" />
-
-    <Button
-        android:onClick="changePassword"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|center"
-        android:layout_margin="@dimen/fab_margin"
-        android:text=" Alterar Senha "
-        android:layout_marginBottom="4dp"
-        android:layout_marginEnd="4dp"
-        android:textColor="#cccccc"
-        android:background="#33414b"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
 
 </android.support.constraint.ConstraintLayout>
 

@@ -13,7 +13,7 @@ import com.example.gabriela.medicoaqui.R;
 
 public class VisualizarPerfilMedico extends AppCompatActivity {
 
-    public String nome, sobrenome, email, cpf, password, telefone, sexo;
+    public String nomeMedico, sobrenomeMedico, emailMedico, cpfMedico, passwordMedico, telefoneMedico, sexoMedico;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,26 +21,26 @@ public class VisualizarPerfilMedico extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_visualizar_perfil_medico);
         
-        final TextView nomeCliente = findViewById(R.id.nomeCliente);
-        final TextView emailCliente = findViewById(R.id.emailCliente);
-        final TextView cpfCliente = findViewById(R.id.cpfCliente);
-        final TextView sexoCliente = findViewById(R.id.sexoCliente);
-        final TextView telefoneCliente = findViewById(R.id.telefoneCliente);
+        final TextView nomeMedico = findViewById(R.id.nomeMedico);
+        final TextView emailMedico = findViewById(R.id.emailMedico);
+        final TextView cpfMedico = findViewById(R.id.cpfMedico);
+        final TextView sexoMedico = findViewById(R.id.sexoMedico);
+        final TextView telefoneMedico = findViewById(R.id.telefoneMedico);
 
-        nomeCliente.setText(TelaLogin.medicoLogado.getNome());
-        emailCliente.setText(TelaLogin.medicoLogado.getEmail());
-        cpfCliente.setText(TelaLogin.medicoLogado.getCrm());
-        sexoCliente.setText(TelaLogin.medicoLogado.getGenero());
-        telefoneCliente.setText(TelaLogin.medicoLogado.getTelefone());
+        nomeMedico.setText(TelaLogin.getMedicoLogado().getNome());
+        emailMedico.setText(TelaLogin.getMedicoLogado().getEmail());
+        cpfMedico.setText(TelaLogin.getMedicoLogado().getCrm());
+        sexoMedico.setText(TelaLogin.getMedicoLogado().getGenero());
+        telefoneMedico.setText(TelaLogin.getMedicoLogado().getTelefone());
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_perfil);
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_perfil_medico);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
 
-                Intent it = new Intent(VisualizarPerfilMedico.this, EditarPerfil.class);
+                Intent it = new Intent(VisualizarPerfilMedico.this, EditarPerfilMedico.class);
                 startActivity(it);
 
             }

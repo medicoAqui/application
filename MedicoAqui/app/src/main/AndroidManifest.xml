@@ -83,6 +83,10 @@
             android:label="EditarPerfil"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
+            android:name=".Activity.Activitys.EditarPerfilMedico"
+            android:label="EditarPerfilMedico"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
             android:name=".Activity.Activitys.VisualizarHistorico"
             android:label="@string/title_activity_visualizar_historico"
             android:theme="@style/AppTheme.NoActionBar" />

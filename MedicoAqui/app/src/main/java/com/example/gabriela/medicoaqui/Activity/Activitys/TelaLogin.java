@@ -767,11 +767,11 @@ public class TelaLogin extends AppCompatActivity implements LoaderCallbacks<Curs
         clientePerfil = cliente;
     }
 
-    private void setMedicoLogado(Medico medico) {
-        this.medicoLogado = medico;
+    private static void setMedicoLogado(Medico medico) {
+        medicoLogado = medico;
     }
 
     public static Cliente getClientePerfil() { return clientePerfil; }
 
-    public Medico getMedicoLogado() { return this.medicoLogado; }
+    public static Medico getMedicoLogado() { return medicoLogado; }
 }
