@@ -1,18 +1,26 @@
 package com.example.gabriela.medicoaqui.Activity.Activitys;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 
 import com.example.gabriela.medicoaqui.Activity.Service.HttpConnections;
 import com.example.gabriela.medicoaqui.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 
 import org.json.JSONException;
@@ -25,16 +33,26 @@ public class TelaCadastroMedico extends AppCompatActivity implements AdapterView
 
     EditText input_nome, input_sobrenome, input_email, input_cpf, input_crm, input_password, input_telefone;
     String nome, sobrenome, email, cpf, password, telefone, sexo, crm;
+
+    // Autenticacao Firebase - INICIO
+    private static final String TAG = "EmailPasswordMedico";
+    private FirebaseAuth mAuth;
+    // Autenticacao Firebase - FIM
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tela_cadastro_medico);
+
+        mAuth = FirebaseAuth.getInstance();
+
         final Spinner spinSexo = findViewById(R.id.spinner_cadastro_medico);
         Button botaoCadastrar2 = findViewById(R.id.button_tela_cadastro2);
         botaoCadastrar2.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
+
 
                 findInputs();                                                    // Find inputs by id
                 setStrings(spinSexo);                                            // Set inputs in Strings
@@ -49,6 +67,25 @@ public class TelaCadastroMedico extends AppCompatActivity implements AdapterView
 
                             try {
                                 setValuesToJson();                               // Fill JSON Object
+
+                                // Autenticacao Firebase - INICIO
+                                mAuth.createUserWithEmailAndPassword(email, password)
+                                        .addOnCompleteListener(TelaCadastroMedico.this, new OnCompleteListener<AuthResult>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                                if (task.isSuccessful()) {
+                                                    // Sign in success, update UI with the signed-in user's information
+                                                    Log.d(TAG, "createUserWithEmail:success");
+                                                    FirebaseUser user = mAuth.getCurrentUser();
+
+                                                } else {
+                                                    // If sign in fails, display a message to the user.
+                                                    Log.w(TAG, "createUserWithEmail:failure", task.getException());
+                                                    Toast.makeText(TelaCadastroMedico.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
+                                                }
+                                            }
+                                        });
+                                // Autenticacao Firebase - FIM
 
 
                                 new Thread(new Runnable() {

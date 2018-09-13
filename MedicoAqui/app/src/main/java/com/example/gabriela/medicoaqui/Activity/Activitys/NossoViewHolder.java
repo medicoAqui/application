@@ -16,7 +16,9 @@ public class NossoViewHolder extends RecyclerView.ViewHolder {
     final TextView crm;
     final TextView especialidade;
     final TextView consultorio;
+
     public Button desmarcar_consulta;
+    public Button remarcar_consulta;
 
 
     public NossoViewHolder(View view) {
@@ -29,6 +31,7 @@ public class NossoViewHolder extends RecyclerView.ViewHolder {
         consultorio = (TextView) view.findViewById(R.id.consulta_consultorio);
 
         desmarcar_consulta = (Button) itemView.findViewById(R.id.button_desmarcar_consulta);
+        remarcar_consulta = (Button) itemView.findViewById(R.id.button_remarcar_consulta);
 
     }
 

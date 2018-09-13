@@ -97,6 +97,21 @@ public class NossoAdapter extends RecyclerView.Adapter {
             }
         });
 
+        holder.remarcar_consulta.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                try {
+                    desmarcarConsulta(position);
+
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+                //AgendaPaciente.
+            }
+        });
+
         medico = new Medico(null, null, null, null, null, null, null, null, null);
 
     }

@@ -11,7 +11,7 @@
     <LinearLayout
         android:id="@+id/layout_minha_consulta"
         android:layout_width="340dp"
-        android:layout_height="160dp"
+        android:layout_height="220dp"
         android:background="@drawable/screen_border"
         android:gravity="top"
         android:orientation="horizontal"
@@ -70,6 +70,13 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="Desmarcar consulta" />
+
+            <Button
+                android:id="@+id/button_remarcar_consulta"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Remarcar consulta" />
 
         </LinearLayout>
 
