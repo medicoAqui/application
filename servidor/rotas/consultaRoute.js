@@ -269,7 +269,7 @@ consultaRouter.post('/add', function(req,res){
     }else{
         var novaconsulta = new Consulta(req.body);
         if(req.body.cliente == null){
-            novaConsulta.cliente = null;
+            novaConsulta.cliente = "horario com vaga";
             novaConsulta.save(function(err, consulta) {
                 if (err) {
                     res.status(400).send(err);

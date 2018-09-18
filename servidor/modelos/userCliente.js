@@ -27,12 +27,7 @@ var usuarioSchema = new Schema({
     telefone:{
 	    type:String,
         required:true
-    },
-    DataNascimento:{
-		type:String,
-		required:true
-	}
-
+    }
 });
 
 var usuario = mongoose.model('Usuario',usuarioSchema);

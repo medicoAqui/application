@@ -4,7 +4,6 @@ var medicoRouter =  express.Router();
 var Medico = require('../modelos/userMedico.js');
 var Consulta = require('../modelos/consulta');
 var Especialidade = require('../modelos/especialidade');
-var Med_Espe = require('../modelos/medico_especialidades');
 var Consultorio = require('../modelos/consultorio');
 
 
@@ -142,6 +141,7 @@ medicoRouter.post('/medicosByEspecialidadeAndEstadoCidade',function(req,res){
     }
   });
 });
+
 medicoRouter.post('/TmedicosByEspecialidadeAndEstadoCidade',function(req,res){
 
   Consultorio.find({cidade: req.body.cidade, uf: req.body.uf}).exec(function(err, consu){
@@ -162,83 +162,6 @@ medicoRouter.post('/TmedicosByEspecialidadeAndEstadoCidade',function(req,res){
 
 
 
-
-/*
-medicoRouter.post('/EspecialidadesByCidadeAndUF',function(req,res){
-
-  Endereco.find({cidade: req.body.cidade, uf: req.body.uf }).exec(function(err,endereco){
-        
-        if(err){
-            res.senStatus(400).send('Endereco nao encontrado no sistema');
-        }else{
-            Consultorio.find({endereco :endereco}).exec(function(err,consultorio){
-                console.log(consultorio+" parte 2");
-                if(err){
-                    res.sendStatus(400).send('Consultorio nao encontrado no sistema');
-
-                }else{
-                    Medico.find({consultorio :consultorio}).populate('especialidades').exec(function(err,medico){
-                        console.log(medico+ "parte3");
-                        console.log(toString(medico.name));
-                       // console.log(medico.name + " parte3.1");
-
-                        if(err){
-                            res.sandStatus(400).send('Medico nao encontrado no sistema');
-
-                        }else{
-                            res.send(medico);
-                        }                    
-
-
-
-                    });
-                }
-
-            });
-        }
-    });
-});
-
-medicoRouter.post('/testeE', function(req,res){
-    var eu;
-
-    Endereco.find({cidade: req.body.cidade, uf: req.body.uf }).exec(function(err,endereco){
-        
-        if(err){
-            res.senStatus(400).send('Endereco nao encontrado no sistema');
-        }else{
-            Consultorio.find({endereco :endereco}).exec(function(err,consultorio){
-                console.log(consultorio+" parte 2");
-                if(err){
-                    res.sendStatus(400).send('Consultorio nao encontrado no sistema');
-
-                }else{
-                    Medico.find({consultorio :consultorio}).populate('especialidades').exec(function(err,medico){
-                        console.log(medico+ "parte3");
-                        console.log(toString(medico.name));
-                       // console.log(medico.name + " parte3.1");
-
-                        if(err){
-                            res.sandStatus(400).send('Medico nao encontrado no sistema');
-
-                        }else{
-                            res.send(medico);
-                        }                                          
-
-
-
-                    });
-                }
-
-            });
-        }
-    });
-    
-
-});
-
-
-*/
 
 medicoRouter.put('/:id', function(req,res){
     var corpo = req.body;
