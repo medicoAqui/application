@@ -26,7 +26,7 @@ public class AlterarSenhaActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
     private EditText etPassword;
-    private EditText etPasswordAgain;
+    private EditText etNewPasswordAgain;
     private EditText etNewPassword;
     private FirebaseAuth firebaseAuth;
 
@@ -49,26 +49,27 @@ public class AlterarSenhaActivity extends AppCompatActivity {
 
     private void init(){
         etPassword = findViewById(R.id.etPassword);
-        etPasswordAgain =  findViewById(R.id.etPasswordAgain);
         etNewPassword = findViewById(R.id.etNewPassword);
+        etNewPasswordAgain =  findViewById(R.id.etNewPasswordAgain);
+
     }
 
 
     public void change( View view ){
         final SharedPreferences.Editor editor = getSharedPreferences(NOME_PREFERENCE, MODE_PRIVATE).edit();
         SharedPreferences prefs = getSharedPreferences("INFORMACOES_LOGIN_AUTOMATICO", MODE_PRIVATE);
-        if (null != etPassword && null != etPasswordAgain && null != etNewPassword
-                && null != etPassword.getText() && null != etPasswordAgain.getText() && null != etNewPassword.getText()
-                && null != etPasswordAgain.getText().toString() && null != etPassword.getText().toString()
+        if (null != etPassword && null != etNewPasswordAgain && null != etNewPassword
+                && null != etPassword.getText() && null != etNewPasswordAgain.getText() && null != etNewPassword.getText()
+                && null != etNewPasswordAgain.getText().toString() && null != etPassword.getText().toString()
                 && null != etNewPassword.getText().toString()) {
-            if("".equals(etPassword.getText().toString()) || "".equals(etPasswordAgain.getText().toString())
+            if("".equals(etPassword.getText().toString()) || "".equals(etNewPasswordAgain.getText().toString())
                     || "".equals(etNewPassword.getText().toString())) {
                 Toast.makeText(
                         AlterarSenhaActivity.this,
                         "Os campos não podem ser vazios",
                         Toast.LENGTH_SHORT
                 ).show();
-            }else if(!etPassword.getText().toString().equals(etPasswordAgain.getText().toString())){
+            }else if(!etNewPassword.getText().toString().equals(etNewPasswordAgain.getText().toString())){
                 Toast.makeText(
                         AlterarSenhaActivity.this,
                         "Os campos Digite senha e Digite a senha novamente devem ser iguais.",
@@ -85,7 +86,7 @@ public class AlterarSenhaActivity extends AppCompatActivity {
                 final String newPassword = etNewPassword.getText().toString();
                 //precisa reautenticar caso o usuario tenha perdido a sessao
                 AuthCredential credential = EmailAuthProvider
-                        .getCredential(user.getEmail(), etPasswordAgain.getText().toString());
+                        .getCredential(user.getEmail(), etPassword.getText().toString());
                 user.reauthenticate(credential)
                         .addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
