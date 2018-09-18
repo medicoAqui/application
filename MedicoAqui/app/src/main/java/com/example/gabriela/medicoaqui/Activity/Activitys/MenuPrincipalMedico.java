@@ -18,7 +18,6 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class MenuPrincipalMedico extends AppCompatActivity {
 
-    String resposta = "Init";
     private static HttpConnections http = new HttpConnections();
     private FirebaseAuth mAuth;
     private static final String TAG = "MenuPrincipalMedico";
@@ -27,18 +26,6 @@ public class MenuPrincipalMedico extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_principal_medico);
-
-
-        /*final Button button_consulta_menu = (Button) findViewById(R.id.button_consulta_menu);
-        button_consulta_menu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                Intent it = new Intent(MenuPrincipalMedico.this, Localizacao.class);
-                startActivity(it);
-
-            }
-        });*/
 
 
         final Button button_agenda_medico = (Button) findViewById(R.id.button_agenda_medico);

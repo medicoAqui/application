@@ -1,9 +1,8 @@
 package com.example.gabriela.medicoaqui.Activity.Activitys;
 
-import android.content.Intent;
+
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.annotation.StringRes;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -168,8 +167,6 @@ public class MarcarConsultaActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                /*String dia = String.valueOf(data.getDate())+"/"+String.valueOf(data.getMonth())+"/"+String.valueOf(data.getYear());
-                String res = spinEspecialidade.getSelectedItem().toString() +"-"+ spinMedicos.getSelectedItem().toString() +"-"+ dia;*/
                 String res = lista_consultas.get(0).getHora();
 
                 // preparando AlertDialog: instanciando e setando valores o objeto AlertDialog

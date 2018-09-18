@@ -68,20 +68,11 @@ public class NossoAdapter extends RecyclerView.Adapter {
             e.printStackTrace();
         }
 
-        /*try {
-            retornaConsultorioByID(consulta.getConsultorio());
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }*/
 
-
-        //retornaMedicoByID(consulta.getMedico());
         holder.medico.setText(medico.getNome());
         holder.crm.setText(medico.getCrm());
 
-        //holder.medico.setText(consulta.getMedico());
         holder.dataHora.setText(consulta.getDataConsulta() + " " + consulta.getHora());
-        //idConsulta = consulta.getIdConsulta();
 
         holder.desmarcar_consulta.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -93,7 +84,6 @@ public class NossoAdapter extends RecyclerView.Adapter {
                     e.printStackTrace();
                 }
 
-                //AgendaPaciente.
             }
         });
 
@@ -108,7 +98,6 @@ public class NossoAdapter extends RecyclerView.Adapter {
                     e.printStackTrace();
                 }
 
-                //AgendaPaciente.
             }
         });
 
@@ -210,31 +199,4 @@ public class NossoAdapter extends RecyclerView.Adapter {
         }).start();
 
     }
-
-    //private static AlertDialog alerta;
-
-    /*
-    private static AlertDialog alerta;
-    public  void dialogo_desmarcar(final String idConsulta) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(AgendaPaciente);
-        builder.setTitle("Desmarcar consulta");
-        builder.setMessage("Você deseja confirmar o cancelamento da consulta agendada?");
-        builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface arg0, int arg1) {
-                try {
-                    desmarcarConsulta(idConsulta);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                alerta.dismiss();
-            }
-        });
-        builder.setNegativeButton("Não", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface arg0, int arg1) {
-                alerta.dismiss();
-            }
-        });
-        alerta = builder.create();
-        alerta.show();
-    }*/
 }

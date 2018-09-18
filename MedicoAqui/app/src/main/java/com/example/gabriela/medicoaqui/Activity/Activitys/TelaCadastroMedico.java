@@ -14,6 +14,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 
+import com.example.gabriela.medicoaqui.Activity.Entities.Consultorio;
 import com.example.gabriela.medicoaqui.Activity.Service.HttpConnections;
 import com.example.gabriela.medicoaqui.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -32,7 +33,9 @@ public class TelaCadastroMedico extends AppCompatActivity implements AdapterView
     private static HttpConnections http = new HttpConnections();
 
     EditText input_nome, input_sobrenome, input_email, input_cpf, input_crm, input_password, input_telefone;
-    String nome, sobrenome, email, cpf, password, telefone, sexo, crm;
+    String nome, sobrenome, email, cpf, password, telefone, sexo, crm, especialidade;
+    //Consultorio consultorio = new Consultorio("Santa Angelica", "Cicero Jacinto", "Proximo ao açude"
+    //, "Catolé", "Campina Grande", "PB", "58410276", "154");
 
     // Autenticacao Firebase - INICIO
     private static final String TAG = "EmailPasswordMedico";
@@ -47,6 +50,7 @@ public class TelaCadastroMedico extends AppCompatActivity implements AdapterView
         mAuth = FirebaseAuth.getInstance();
 
         final Spinner spinSexo = findViewById(R.id.spinner_cadastro_medico);
+        final Spinner spinner_cadastro_especialidade = findViewById(R.id.spinner_cadastro_especialidade);
         Button botaoCadastrar2 = findViewById(R.id.button_tela_cadastro2);
         botaoCadastrar2.setOnClickListener(new View.OnClickListener() {
 
@@ -55,7 +59,7 @@ public class TelaCadastroMedico extends AppCompatActivity implements AdapterView
 
 
                 findInputs();                                                    // Find inputs by id
-                setStrings(spinSexo);                                            // Set inputs in Strings
+                setStrings(spinSexo, spinner_cadastro_especialidade);                                            // Set inputs in Strings
 
                 final android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(TelaCadastroMedico.this);
                 builder.setTitle("Inserindo usuário");
@@ -128,6 +132,11 @@ public class TelaCadastroMedico extends AppCompatActivity implements AdapterView
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinSexo.setAdapter(adapter);
         spinSexo.setOnItemSelectedListener(this);
+
+        ArrayAdapter<CharSequence> adapter2 = ArrayAdapter.createFromResource(this, R.array.lista_especialidades, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner_cadastro_especialidade.setAdapter(adapter2);
+        spinner_cadastro_especialidade.setOnItemSelectedListener(this);
     }
 
     private void setValuesToJson() throws JSONException {
@@ -135,12 +144,14 @@ public class TelaCadastroMedico extends AppCompatActivity implements AdapterView
         jsonTT.put("email", email);
         jsonTT.put("sexo", sexo);
         jsonTT.put("cpf", cpf);
-        //jsonTT.put("password", password);
-        jsonTT.put("telefone", telefone);
+        jsonTT.put("password", password);
+        //jsonTT.put("telefone", telefone);
         jsonTT.put("crm", crm);
+        jsonTT.put("especialidade",especialidade);
+        jsonTT.put("consultorio", "5b9601fbb95c601ed80eaf24");
     }
 
-    private void setStrings(Spinner spinSexo) {
+    private void setStrings(Spinner spinSexo, Spinner spinner_cadastro_especialidade) {
         nome = input_nome.getText().toString();
         sobrenome = input_sobrenome.getText().toString();
         email = input_email.getText().toString();
@@ -149,6 +160,7 @@ public class TelaCadastroMedico extends AppCompatActivity implements AdapterView
         telefone = input_telefone.getText().toString();
         sexo = (String) spinSexo.getSelectedItem();
         crm = input_crm.getText().toString();
+        especialidade = (String) spinner_cadastro_especialidade.getSelectedItem();
     }
 
     private void findInputs() {

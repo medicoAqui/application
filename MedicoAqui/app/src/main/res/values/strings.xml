@@ -19,6 +19,20 @@
         <item>Masculino</item>
         <item>Feminino</item>
     </string-array>
+
+    <string-array name="lista_especialidades">
+        <item></item>
+        <item>Cardiologia</item>
+        <item>Acupuntura</item>
+        <item>Dermatologia</item>
+        <item>Endocrinologia</item>
+        <item>Infectologia</item>
+        <item>Ginecologia</item>
+        <item>Nefrologia</item>
+        <item>Otorrinolaringologia</item>
+        <item>Ortopedia</item>
+        <item>Pediatria</item>
+    </string-array>
     <string name="title_activity_tela_cadastro">Cadastro</string>
     <string name="title_activity_tela">Tela</string>
     <string name="title_activity_lista_de_consultas">Lista de Consultas</string>

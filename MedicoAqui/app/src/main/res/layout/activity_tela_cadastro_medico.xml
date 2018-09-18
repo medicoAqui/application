@@ -189,6 +189,24 @@
                 android:layout_height="wrap_content"
                 android:background="?android:attr/listDivider" />
 
+            <Spinner
+                android:id="@+id/spinner_cadastro_especialidade"
+                android:layout_width="210dp"
+                android:layout_height="49dp"
+                android:layout_marginBottom="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                tools:ignore="MissingConstraints"
+                tools:layout_editor_absoluteX="8dp"
+                tools:layout_editor_absoluteY="0dp" />
+
+            <View
+                android:id="@+id/divider10"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?android:attr/listDivider" />
+
             <Button
                 android:id="@+id/button_tela_cadastro2"
                 android:layout_width="match_parent"

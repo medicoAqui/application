@@ -35,10 +35,8 @@ public class AgendaPaciente  extends AppCompatActivity {
     static JSONReader jsonReader = new JSONReader();
     static HttpConnections http = new HttpConnections();
     static ArrayList<Consulta> lista_consultas_entity = new ArrayList();
-    //static ArrayList<String> lista_consultas = new ArrayList<String>(){{add("Selecione");}};
     public static String consulta;
-    //public static Consulta consultaInfo;
-    //public static String idConsulta;
+
     public Boolean flagCarregaConsultasCalled;
 
     public RecyclerView recyclerView;
@@ -127,9 +125,7 @@ public class AgendaPaciente  extends AppCompatActivity {
                     e.printStackTrace();
                 }
                 HashSet<Consulta> consultasEntity = jsonReader.getConsultasEntity(consultasBD);
-                //HashSet<String> consultasStr = jsonReader.getConsultas(consultasBD);
                 lista_consultas_entity.addAll(consultasEntity);
-                //lista_consultas.addAll(consultasStr);
                 flagCarregaConsultasCalled = true;
             }
         });
@@ -164,126 +160,6 @@ public class AgendaPaciente  extends AppCompatActivity {
 
     }
 
-    /*    AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Consulta marcada!");
-        builder.setView(view);
-        alerta = builder.create();
-        alerta.show();
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Desmarcar consulta");
-        builder.setMessage("Você deseja confirmar o cancelamento da consulta agendada?");
-
-        builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface arg0, int arg1) {
-                try {
-                    desmarcarConsulta(idConsulta);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                alerta.dismiss();
-            }
-        });
-
-        builder.setNegativeButton("Não", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface arg0, int arg1) {
-                alerta.dismiss();
-            }
-        });
-
-        alerta = builder.create();
-        alerta.show();
-
-        private void carregaConsultas() throws JSONException {
-
-        Log.d(TAG, "carregaConsultas() called");
-
-        lista_consultas_entity.clear();
-        final JSONObject jsonTT = new JSONObject();
-
-        String cpf_cliente = TelaLogin.getClientePerfil().getCpf();
-        jsonTT.put("cpf", cpf_cliente);
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                String consultasBD = null;
-                try {
-                    consultasBD = http.sendPost("http://medicoishere.herokuapp.com/consulta/consultasByCpfCliente", jsonTT.toString());
-
-                    //String consultasBD = http.get("https://medicoishere.herokuapp.com/consulta/consultas");
-                    HashSet<Consulta> consultasEntity = jsonReader.getConsultasEntity(consultasBD);
-                    //HashSet<String> consultasStr = jsonReader.getConsultas(consultasBD);
-                    lista_consultas_entity.addAll(consultasEntity);
-                    //lista_consultas.addAll(consultasStr);
-
-                //criaReciclerView();
-                } catch (HttpConnections.MinhaException e) {
-                    e.printStackTrace();
-                }
-
-            }
-        }).start();
-
-    }
-
-
-    public void dialogo_desmarcar(final String idConsulta) {
-
-        LayoutInflater li = getLayoutInflater();
-
-        View view = li.inflate(R.layout.activity_dialogo_desmarcar_consulta, null);
-
-        view.findViewById(R.id.bt).setOnClickListener(new View.OnClickListener() {
-            public void onClick(View arg0) {
-                alerta.dismiss();
-                Intent it = new Intent(AgendaPaciente.this, AgendaPaciente.class);
-                startActivity(it);
-
-            }
-        });
-
-    }
-
-     public void desmarcarConsulta(String idConsulta) throws JSONException {
-
-        //put /idconsulta
-
-        Log.d(TAG, "desmarcarConsulta() called");
-
-        final JSONObject jsonTT = new JSONObject();
-
-        jsonTT.put("status", "C"); //Status Cancelado - Cliente
-        jsonTT.put("cliente", null);
-
-        final String url = "https://medicoishere.herokuapp.com/consulta/" + idConsulta;
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-            String consultasBD = null;
-                try {
-                    http.put(url, jsonTT.toString());
-                } catch (HttpConnections.MinhaException e) {
-                    e.printStackTrace();
-                }
-            }
-        }).start();
-
-    }
-
-        public static Consulta getConsultaEntity() {
-
-        Consulta consultaEntity = new Consulta(null, null, null, null, null, null, null,null, null);
-
-        for (int i = 0; i < lista_consultas_entity.size(); i++) {
-            String consultaConfere = lista_consultas_entity.get(i).getMedico() + " - " + lista_consultas_entity.get(i).getDataConsulta() + " - " + lista_consultas_entity.get(i).getHora();
-            if (consultaConfere.equals(consulta) ) {
-                consultaEntity = lista_consultas_entity.get(i);
-            }
-        }
-
-        return consultaEntity;
-    }*/
 
 }
 

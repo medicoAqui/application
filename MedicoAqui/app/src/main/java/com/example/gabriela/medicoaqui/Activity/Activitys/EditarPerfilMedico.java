@@ -2,26 +2,16 @@ package com.example.gabriela.medicoaqui.Activity.Activitys;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.gabriela.medicoaqui.Activity.Entities.Cliente;
 import com.example.gabriela.medicoaqui.Activity.Service.HttpConnections;
 import com.example.gabriela.medicoaqui.R;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseUser;
+
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -61,7 +51,6 @@ public class EditarPerfilMedico extends AppCompatActivity {
 
                 if (!(nomeMedico.isEmpty()) && !(telefoneMedico.isEmpty()) && !(sexoMedico.isEmpty())) {
 
-                    //if (email.contains("@") && ((email.contains(".com") || email.contains(".br") || email.contains(".org")))) {
 
                     if (telefoneMedico.length() == 11 || telefoneMedico.length() == 10) {
 
@@ -79,11 +68,7 @@ public class EditarPerfilMedico extends AppCompatActivity {
                         android.app.AlertDialog dialog = builder.create();
                         dialog.show();
                     }
-                    /*} else {
-                        builder.setMessage("O e-mail é inválido.");
-                        android.app.AlertDialog dialog = builder.create();
-                        dialog.show();
-                    }*/
+
                 } else {
                     builder.setMessage("Não é permitido campos em branco.");
                     android.app.AlertDialog dialog = builder.create();

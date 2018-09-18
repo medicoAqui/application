@@ -14,24 +14,18 @@ import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.ImageButton;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import com.example.gabriela.medicoaqui.Activity.Entities.Consulta;
 import com.example.gabriela.medicoaqui.Activity.JsonOperators.JSONReader;
 import com.example.gabriela.medicoaqui.Activity.Service.HttpConnections;
 import com.example.gabriela.medicoaqui.R;
-import com.example.gabriela.medicoaqui.Activity.Activitys.Medicos;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.HashSet;
-import java.util.TimeZone;
 
 public class DataHoraConsulta   extends AppCompatActivity {
 
@@ -40,15 +34,11 @@ public class DataHoraConsulta   extends AppCompatActivity {
     JSONObject jsonTT = new JSONObject();
     JSONReader jsonReader = new JSONReader();
     HttpConnections http = new HttpConnections();
-    Date data;
     String dataStr;
     String hora;
-    String id_consulta;
     String statusDisponivel = "D";
     String statusAgendado = "A";
     String statusCancelado = "C";
-    String crm;
-    DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 
     ArrayList<String> lista_hora = new ArrayList<String>() {{
         add("Selecione");
@@ -135,9 +125,6 @@ public class DataHoraConsulta   extends AppCompatActivity {
 
                     marcarConsulta(getIdConsulta(hora));
                     dialogo_marcar_consulta();
-                    //Toast.makeText(DataHoraConsulta.this, "Solicitação de consulta enviada", Toast.LENGTH_SHORT).show();
-                    //Intent it = new Intent(DataHoraConsulta.this, AgendaPaciente.class);
-                    //startActivity(it);
 
                 }
             });

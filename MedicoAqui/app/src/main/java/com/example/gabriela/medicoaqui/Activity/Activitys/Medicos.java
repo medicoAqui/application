@@ -109,8 +109,6 @@ public class Medicos extends AppCompatActivity {
                         telefoneMedico.setText(medicoInfo.getTelefone());
                         emailMedico.setText(medicoInfo.getEmail());
 
-                        //spinner_cidade.setSelection(0);
-                        //carregaCidades(buscaIDEstado(estado));
                     }
                 }
 
@@ -124,10 +122,6 @@ public class Medicos extends AppCompatActivity {
             button_medicos.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
-                    //cidade_uf.setNomeCidade(cidade);
-                    //cidade_uf.setNomeEstado(estado);
-
 
                     Intent it = new Intent(Medicos.this, DataHoraConsulta.class);
                     startActivity(it);

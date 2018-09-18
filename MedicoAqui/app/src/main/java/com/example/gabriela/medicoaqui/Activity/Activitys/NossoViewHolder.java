@@ -7,7 +7,6 @@ import android.widget.Button;
 import android.widget.TextView;
 import com.example.gabriela.medicoaqui.R;
 
-import org.w3c.dom.Text;
 
 public class NossoViewHolder extends RecyclerView.ViewHolder {
 

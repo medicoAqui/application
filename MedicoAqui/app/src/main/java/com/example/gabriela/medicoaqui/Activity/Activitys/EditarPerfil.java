@@ -2,29 +2,18 @@ package com.example.gabriela.medicoaqui.Activity.Activitys;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.gabriela.medicoaqui.Activity.Entities.Cliente;
 import com.example.gabriela.medicoaqui.Activity.Service.HttpConnections;
 import com.example.gabriela.medicoaqui.R;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthCredential;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.EmailAuthProvider;
+
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
+
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -48,12 +37,10 @@ public class EditarPerfil extends AppCompatActivity {
         final android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(EditarPerfil.this);
 
         final EditText nomeEdit = findViewById(R.id.nomeEdit);
-        //final EditText emailEdit = findViewById(R.id.emailEdit);
         final EditText sexoEdit = findViewById(R.id.sexoEdit);
         final EditText telefoneEdit = findViewById(R.id.telefoneEdit);
 
         nomeEdit.setText(TelaLogin.getClientePerfil().getNome());
-        //emailEdit.setText(TelaLogin.getClientePerfil().getEmail());
         sexoEdit.setText(TelaLogin.getClientePerfil().getGenero());
         telefoneEdit.setText(TelaLogin.getClientePerfil().getTelefone());
 
