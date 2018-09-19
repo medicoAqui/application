@@ -749,7 +749,6 @@ public class TelaLogin extends AppCompatActivity implements LoaderCallbacks<Curs
             String crm = jsonObjectMedico.getString("crm");
             String sexo = jsonObjectMedico.getString("sexo");
             String id = jsonObjectMedico.getString("_id");
-            String dataNascimento = jsonObjectMedico.getString("DataNascimento");
             // FALTAM ATRIBUTOS
             medico.setEmail(email);
             medico.setNome(nome);
