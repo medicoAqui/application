@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -168,14 +169,13 @@ public class DisponibilizaConsulta extends AppCompatActivity {
                         public void run() {
                             try {
                                 http.sendPost("https://medicoishere.herokuapp.com/consulta/add", jsonTT.toString());
-
+                                Log.d("#############", "##################");
                             } catch (HttpConnections.MinhaException e) {
                                 e.printStackTrace();
                             }
                         }
                     });
                     thr_EnviaConsulta.start();
-                    thr_EnviaConsulta.interrupt();
 
                     String res = "Cadastro de consulta realizado com sucesso.";
                     AlertDialog.Builder dialogo = new AlertDialog.Builder(DisponibilizaConsulta.this);
