@@ -85,7 +85,7 @@
         android:layout_height="50dp"
         android:layout_marginEnd="30dp"
         android:layout_marginStart="30dp"
-        android:layout_marginTop="183dp"
+        android:layout_marginTop="188dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/spinner_mes"
         app:layout_constraintTop_toTopOf="parent" />
