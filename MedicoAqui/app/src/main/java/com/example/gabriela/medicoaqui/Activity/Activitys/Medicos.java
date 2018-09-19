@@ -161,9 +161,9 @@ public class Medicos extends AppCompatActivity {
         final JSONObject jsonTT = new JSONObject();
 
         try {
+            jsonTT.put("especialidade", especialidade);
             jsonTT.put("uf", Localizacao.getSiglaUFLocalizacao());
             jsonTT.put("cidade", Localizacao.getCidadeLocalizacao());
-            jsonTT.put("nomeEspecialidade", especialidade);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -177,7 +177,8 @@ public class Medicos extends AppCompatActivity {
                     lista_medicos_entity.clear();
                     String medicosBD = null;
                     // Erro para corrigir - retorna exceção na linha abaixo, precisa validar
-                    medicosBD = http.sendPost("https://medicoishere.herokuapp.com/medico/medicosByEspecialidadeAndEstadoCidade", jsonTT.toString());
+                    medicosBD = http.sendPost("https://medicoishere.herokuapp.com/medico/TmedicosByEspecialidadeAndEstadoCidade", jsonTT.toString());
+                    medicosBD.toString();
                     HashSet<String> medicos = jsonReader.getMedicosByEspecialidade(medicosBD);
                     HashSet<Medico> medicosEntity = jsonReader.getMedicosByEspecialidadeEntity(medicosBD);
                     lista_medicos.addAll(medicos);

@@ -29,9 +29,9 @@ import java.util.Iterator;
 import java.util.List;
 
 
-public class MarcarConsultaActivity extends AppCompatActivity {
+public class MarcarConsultaActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
-    ArrayList<String> lista_especialidades = new ArrayList<String>(){{add("Selecione");}};
+    //ArrayList<String> lista_especialidades = new ArrayList<String>(){{add("Selecione");}};
     ArrayList<String> lista_horarios = new ArrayList<String>(){{add("Selecione");}};
     ArrayList<String> lista_medicos = new ArrayList<String>(){{add("Selecione");}};
     ArrayList<Medico> lista_entity_medico = new ArrayList<>();
@@ -52,11 +52,16 @@ public class MarcarConsultaActivity extends AppCompatActivity {
         final Date data = new Date();
         Button botaoConsulta = findViewById(R.id.button_consulta);
 
-        dataAdapter(spinEspecialidade, lista_especialidades);
+        //dataAdapter(spinEspecialidade, lista_especialidades);
+        ArrayAdapter<CharSequence> adapter2 = ArrayAdapter.createFromResource(this, R.array.lista_especialidades, android.R.layout.simple_spinner_item);
+        adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinEspecialidade.setAdapter(adapter2);
+        spinEspecialidade.setOnItemSelectedListener(this);
+
         dataAdapter(spinHorario, lista_horarios);
         dataAdapter(spinMedicos, lista_medicos);
 
-        carregaEspecialidadesEmLista();
+        //carregaEspecialidadesEmLista();
 
 
 
@@ -197,7 +202,7 @@ public class MarcarConsultaActivity extends AppCompatActivity {
     }
 
 
-    private void carregaEspecialidadesEmLista() {
+    /*private void carregaEspecialidadesEmLista() {
 
         new Thread(new Runnable() {
             @Override
@@ -209,7 +214,7 @@ public class MarcarConsultaActivity extends AppCompatActivity {
                 lista_especialidades.addAll(especialidades);
             }
         }).start();
-    }
+    }*/
 
 
     private void carregaMedicosEmListaEntity(String especialidade) {
@@ -296,4 +301,13 @@ public class MarcarConsultaActivity extends AppCompatActivity {
         }).start();
     }
 
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
+    }
 }

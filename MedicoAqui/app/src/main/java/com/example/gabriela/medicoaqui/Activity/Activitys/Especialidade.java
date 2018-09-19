@@ -41,11 +41,12 @@ public class Especialidade  extends AppCompatActivity {
 
         final Button button_especialidade = findViewById(R.id.button_especialidade);
 
-        ArrayAdapter<String> dataAdapterespecialidades = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, lista_especialidades);
-        dataAdapterespecialidades.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner_especialidade.setAdapter(dataAdapterespecialidades);
+        ArrayAdapter<CharSequence> adapter2 = ArrayAdapter.createFromResource(this, R.array.lista_especialidades, android.R.layout.simple_spinner_item);
+        adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner_especialidade.setAdapter(adapter2);
 
-        carregaEspecialidadesEmLista();
+
+        //carregaEspecialidadesEmLista();
 
         spinner_especialidade.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
@@ -70,7 +71,7 @@ public class Especialidade  extends AppCompatActivity {
         button_especialidade.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                especialidade = spinner_especialidade.getSelectedItem().toString();
                 Intent it = new Intent(Especialidade.this, Medicos.class);
                 startActivity(it);
 

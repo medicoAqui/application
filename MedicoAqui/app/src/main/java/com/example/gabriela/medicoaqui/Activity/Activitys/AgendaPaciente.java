@@ -112,7 +112,9 @@ public class AgendaPaciente  extends AppCompatActivity {
 
         lista_consultas_entity.clear();
         final JSONObject jsonTT = new JSONObject();
-        jsonTT.put("cpf", cliente.getCpf()); //Status Cancelado - Cliente
+
+        //jsonTT.put("cpf", cliente.getCpf()); //Status Cancelado - Cliente
+        jsonTT.put("cliente", cliente.getId());
         jsonTT.put("status", "A");
 
         Thread thr_carregaConsultasAgendaCliente = new Thread(new Runnable() {
@@ -120,7 +122,8 @@ public class AgendaPaciente  extends AppCompatActivity {
             public void run() {
                 String consultasBD = null;
                 try {
-                    consultasBD = http.sendPost("https://medicoishere.herokuapp.com/consulta/consultasByCpfClienteAndStatus",jsonTT.toString());
+                    consultasBD = http.sendPost("https://medicoishere.herokuapp.com/consulta/TconsultasByCpfClienteAndStatus",jsonTT.toString());
+                    //consultasBD = http.sendPost("https://medicoishere.herokuapp.com/consulta/consultasByCpfClienteAndStatus",jsonTT.toString());
                 } catch (HttpConnections.MinhaException e) {
                     e.printStackTrace();
                 }

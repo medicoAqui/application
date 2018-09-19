@@ -134,7 +134,7 @@ public class TelaCadastroMedico extends AppCompatActivity implements AdapterView
         spinSexo.setOnItemSelectedListener(this);
 
         ArrayAdapter<CharSequence> adapter2 = ArrayAdapter.createFromResource(this, R.array.lista_especialidades, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner_cadastro_especialidade.setAdapter(adapter2);
         spinner_cadastro_especialidade.setOnItemSelectedListener(this);
     }
