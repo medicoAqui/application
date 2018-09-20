@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class JSONReader {
 
@@ -153,23 +154,20 @@ public class JSONReader {
             JSONObject jsonObjectNome;
             if (nomesArrayExtJson.length() > 0) {
                 for (int i = 0; i < nomesArrayExtJson.length(); i++) {
-                    nomesArrayIntJson = new JSONArray(nomesArrayExtJson.getString(i));
-                    for (int j = 0; j < nomesArrayIntJson.length(); j++) {
-                        jsonObjectNome = new JSONObject(nomesArrayIntJson.getString(j));
+                    jsonObjectNome = new JSONObject(nomesArrayExtJson.getString(i));
 
-                        Log.d("Acompanhando medico ", jsonObjectNome.toString());
-                        String email = jsonObjectNome.getString("email");
-                        String nome = jsonObjectNome.getString("name");
-                        String crm = jsonObjectNome.getString("crm");
-                        String sexo = jsonObjectNome.getString("sexo");
-                        String id = jsonObjectNome.getString("_id");
-                        String cpf = jsonObjectNome.getString("cpf");
-                        //String telefone = jsonObjectNome.getString("telefone");
-                        //String dataNascimento = jsonObjectNome.getString("DataNascimento");
+                    Log.d("Acompanhando medico ", jsonObjectNome.toString());
+                    String email = jsonObjectNome.getString("email");
+                    String nome = jsonObjectNome.getString("name");
+                    String crm = jsonObjectNome.getString("crm");
+                    String sexo = jsonObjectNome.getString("sexo");
+                    String id = jsonObjectNome.getString("_id");
+                    String cpf = jsonObjectNome.getString("cpf");
+                    //String telefone = jsonObjectNome.getString("telefone");
+                    //String dataNascimento = jsonObjectNome.getString("DataNascimento");
 
-                        Medico medico = new Medico(nome, cpf, null, sexo, id, email, null, null, crm);
-                        medicos.add(medico);
-                    }
+                    Medico medico = new Medico(nome, cpf, null, sexo, id, email, null, null, crm);
+                    medicos.add(medico);
                 }
             }
             else {
@@ -186,18 +184,14 @@ public class JSONReader {
 
         try {
             JSONArray nomesArrayExtJson = new JSONArray(jsonString);
-            JSONArray nomesArrayIntJson;
             JSONObject jsonObjectNome;
 
             if (nomesArrayExtJson.length()>0) {
                 for (int i = 0; i < nomesArrayExtJson.length(); i++) {
-                    nomesArrayIntJson = new JSONArray(nomesArrayExtJson.getString(i));
-                    for (int j = 0; j < nomesArrayIntJson.length(); j++) {
-                        jsonObjectNome = new JSONObject(nomesArrayIntJson.getString(j));
+                        jsonObjectNome = new JSONObject(nomesArrayExtJson.getString(i));
                         //Log.i("Nome: ", "nome=" + jsonObjectNome.getString("name"));
                         String nome = jsonObjectNome.getString("name");
                         nomes.add(nome.substring(0, 1).toUpperCase().concat(nome.substring(1)));
-                   }
                 }
             }
             else {
